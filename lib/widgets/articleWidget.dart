@@ -8,6 +8,8 @@ class ArticleWidget extends StatefulWidget {
 class _ArticleWidgetState extends State<ArticleWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Text('article'),
+    );
   }
 }
