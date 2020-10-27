@@ -1,7 +1,12 @@
 import 'dart:ui';
+import 'package:energia_app/screens/aboutUs.dart';
 import 'package:energia_app/screens/mainHome.dart';
+import 'package:energia_app/screens/pinnedItems.dart';
 import 'package:energia_app/screens/profile.dart';
+import 'package:energia_app/screens/projects.dart';
 import 'package:energia_app/widgets/menuWidget.dart';
+import 'package:energia_app/widgets/messagesWidget.dart';
+import 'package:energia_app/widgets/notificationsWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
@@ -57,6 +62,13 @@ class _MyAppState extends State<MyApp> {
             sliderMain: MainHome()),
       ),
       routes: {
+        '/profile':(context)=> new ProfileWidget(),
+        '/notifications':(context)=> new NotificationsWidget(),
+        '/messages':(context)=> new MessagesWidget(),
+        '/pinnedItems':(context)=> new PinnedItems(),
+        '/aboutUs':(context)=> new AboutUs(),
+        '/Projects':(context)=> new Projects(),
+        '/profile':(context)=> new ProfileWidget(),
         '/profile':(context)=> new ProfileWidget(),
       },
     );
