@@ -62,14 +62,11 @@ class _MyAppState extends State<MyApp> {
             sliderMain: MainHome()),
       ),
       routes: {
-        '/profile':(context)=> new ProfileWidget(),
-        '/notifications':(context)=> new NotificationsWidget(),
-        '/messages':(context)=> new MessagesWidget(),
+        '/profile':(context)=> new Profile(),
         '/pinnedItems':(context)=> new PinnedItems(),
         '/aboutUs':(context)=> new AboutUs(),
-        '/Projects':(context)=> new Projects(),
-        '/profile':(context)=> new ProfileWidget(),
-        '/profile':(context)=> new ProfileWidget(),
+        '/projects':(context)=> new Projects(),
+
       },
     );
   }

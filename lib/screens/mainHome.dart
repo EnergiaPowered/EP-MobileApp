@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:energia_app/widgets/articleWidget.dart';
 import 'package:energia_app/widgets/eventsWidget.dart';
 import 'package:energia_app/widgets/homeWidget.dart';
+import 'package:energia_app/widgets/messagesWidget.dart';
 import 'package:flutter/material.dart';
 
 class MainHome extends StatefulWidget {
@@ -16,7 +17,7 @@ class _MainHomeState extends State<MainHome> {
     HomeWidget(),
     ArticleWidget(),
     EventsWidget(),
-    HomeWidget(),
+    MessagesWidget(),
   ];
   @override
   Widget build(BuildContext context) {
