@@ -1,13 +1,14 @@
-import '../screens/article_details_screen.dart';
-import 'package:flutter/material.dart';
 
-class ArticleWidget extends StatefulWidget {
+import 'package:flutter/material.dart';
+import '../screens/event_deta_detials.dart';
+
+class EventWidget extends StatefulWidget {
 
   @override
-  _ArticleWidgetState createState() => _ArticleWidgetState();
+  _EventWidgetState createState() => _EventWidgetState();
 }
 
-class _ArticleWidgetState extends State<ArticleWidget> {
+class _EventWidgetState extends State<EventWidget> {
   @override
   Widget build(BuildContext context) {
      Widget gradientContainer = Container(
@@ -24,10 +25,6 @@ class _ArticleWidgetState extends State<ArticleWidget> {
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
         ));
-   
-   
-   
-   
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -35,15 +32,15 @@ class _ArticleWidgetState extends State<ArticleWidget> {
           children: <Widget>[
             Container(
                 margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                child: Text("Upcoming Articles",style: TextStyle(
+                child: Text("Upcoming Events",style: TextStyle(
                     fontWeight: FontWeight.w900,
-                   fontSize: 17.0,
+                    fontSize: 17.0,
                     color: Theme.of(context).textSelectionColor
                 ),)),
-          gradientContainer,
+           gradientContainer,
             InkWell(
               onTap: () => Navigator.of(context)
-                  .pushNamed(ArticleDetailsScreen.routPage),
+                  .pushNamed(EventDetailsScreen.routPage),
                           child: Container(
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
 
@@ -58,7 +55,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
             Divider(),
             Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Text("Previous Articles",style: TextStyle(
+                child: Text("Previous Events",style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 17.0,
                     color: Theme.of(context).textSelectionColor
