@@ -25,8 +25,7 @@ class _EventsWidgetState extends State<EventsWidget> {
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
         ));
-    return Scaffold(
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -73,7 +72,7 @@ class _EventsWidgetState extends State<EventsWidget> {
             ),
           ],
         ),
-      ),
-    );
+      );
+
   }
 }

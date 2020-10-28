@@ -14,7 +14,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
         child: Container(
           width: 80,
-          height: 3,
+          height: 4,
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,

@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   curved_navigation_bar: ^0.3.4
   flutter_slider_drawer: ^1.0.3
+  search_page: ^1.1.1
 
 dev_dependencies:
   flutter_test:
