@@ -1,18 +1,17 @@
 
+
+import 'package:energia_app/viewModels/menuDrawerViewModel.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget  extends StatelessWidget {
-  final Function(String) onItemClick;
-
-  const MenuWidget({Key key, this.onItemClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.only(top: 30),
+      color: const Color(0xFF03144c),
+      padding: const EdgeInsets.only(top: 30,left: 9),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
             height: 30,
@@ -28,39 +27,62 @@ class MenuWidget  extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+
           Text(
             'Alrashidi',
             style: TextStyle(
-                color: Colors.black,
+                color: Theme.of(context).backgroundColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 30,
+                fontSize: 25,
+                fontFamily: 'BalsamiqSans'),
+          ),Text(
+            'Bio',
+            style: TextStyle(
+                color: Theme.of(context).backgroundColor,
+                fontWeight: FontWeight.normal,
+                fontSize: 18,
                 fontFamily: 'BalsamiqSans'),
           ),
           SizedBox(
             height: 20,
           ),
-          sliderItem('Home', Icons.home),
-          sliderItem('Add Post', Icons.add_circle),
-          sliderItem('Notification', Icons.notifications_active),
-          sliderItem('Likes', Icons.favorite),
-          sliderItem('Setting', Icons.settings),
-          sliderItem('LogOut', Icons.arrow_back_ios)
+          sliderItem('Profile', Icons.person_pin,context),
+          sliderItem("Pinned Items", Icons.pin_drop,context),
+          sliderItem("About Us", Icons.book,context),
+          sliderItem('Projects', Icons.assignment,context),
+
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,),
+                SizedBox(
+                  width: 18,
+                ),
+                Text("LogOut",
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Theme.of(context).backgroundColor,),),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
-
-  Widget sliderItem(String title, IconData icons) => ListTile(
+  Widget sliderItem(String title, IconData icons,BuildContext context) => ListTile(
       title: Text(
         title,
-        style:
-        TextStyle(color: Colors.black, fontFamily: 'BalsamiqSans_Regular'),
+        style: TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 18,
+          color: Colors.white),
       ),
       leading: Icon(
-        icons,
-        color: Colors.black,
+        icons,color: Colors.white,size: 28,
       ),
       onTap: () {
-        onItemClick(title);
+        MenuDrawerViewModel drawerViewModel = new MenuDrawerViewModel();
+        drawerViewModel.onClickItem(title, context);
       });
 }

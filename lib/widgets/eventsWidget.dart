@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import '../screens/event_deta_detials.dart';
 
-class EventWidget extends StatefulWidget {
+class EventsWidget extends StatefulWidget {
 
   @override
-  _EventWidgetState createState() => _EventWidgetState();
+  _EventsWidgetState createState() => _EventsWidgetState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _EventsWidgetState extends State<EventsWidget> {
   @override
   Widget build(BuildContext context) {
      Widget gradientContainer = Container(
