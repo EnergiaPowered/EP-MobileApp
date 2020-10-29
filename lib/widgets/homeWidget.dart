@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:energia_app/widgets/eventListWidget.dart';
 import 'package:flutter/material.dart';
 
 class HomeWidget extends StatefulWidget {
@@ -10,6 +10,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     Widget gradientContainer = Container(
         margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
         child: Container(
@@ -39,16 +40,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Theme.of(context).textSelectionColor),
                 )),
             gradientContainer,
-            Container(
-              margin: EdgeInsets.fromLTRB(50, 10, 0, 10),
-              height: 180,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    topLeft: Radius.circular(30)),
-              ),
-            ),
+            EventListWidget(size),
             Divider(),
             Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),

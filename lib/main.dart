@@ -34,19 +34,17 @@ class _MyAppState extends State<MyApp> {
     fontFamily: 'Lato',
     iconTheme: IconThemeData(color: Colors.white),
   );
-
-  ThemeData lightTheme = ThemeData(
-    backgroundColor: Colors.white,
-    primaryColor: const Color(0xFF03144c),
-    textSelectionColor: const Color(0xFF03144c),
-  );
   GlobalKey<SliderMenuContainerState> _key =
       new GlobalKey<SliderMenuContainerState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: lightTheme,
+        theme: ThemeData(
+          backgroundColor: Colors.white,
+          primaryColor: const Color(0xFF03144c),
+          textSelectionColor: const Color(0xFF03144c),
+        ),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
         body: SliderMenuContainer(
@@ -82,6 +80,7 @@ class _MyAppState extends State<MyApp> {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           EventDetailsScreen.routPage: (ctx) => EventDetailsScreen(),
           '/profile': (context) => new Profile(),
+          '/home': (context) => new MyApp(),
           '/pinnedItems': (context) => new PinnedItems(),
           '/aboutUs': (context) => new AboutUs(),
           '/projects': (context) => new Projects(),
