@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:energia_app/screens/inbox_screen.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import './screens/article_details_screen.dart';
 import './screens/event_deta_detials.dart';
@@ -84,6 +85,7 @@ class _MyAppState extends State<MyApp> {
           '/pinnedItems': (context) => new PinnedItems(),
           '/aboutUs': (context) => new AboutUs(),
           '/projects': (context) => new Projects(),
+          InBoxScreen.routeName:(_) =>  InBoxScreen(), 
         });
   }
 }
