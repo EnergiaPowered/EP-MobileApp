@@ -1,3 +1,4 @@
+import 'package:energia_app/widgets/language_swich.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
@@ -10,7 +11,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   bool inputChanged = false;
   //TODO get profile data using the uid
-  Widget generateTextField(String hint, TextEditingController controller) {
+  Widget generateTextField(String hint, TextEditingController controller,) {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextField(
@@ -84,22 +85,19 @@ class _EditProfileState extends State<EditProfile> {
             Container(
               width: double.infinity,
               height: 3,
-              margin: EdgeInsets.only(left: 50, right: 10, top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      stops: [0.1, 0.9],
-                      colors: [Theme.of(context).primaryColor, Colors.white])),
+              margin: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: MediaQuery.of(context).size.width * 1 / 6),
+              color: Theme.of(context).primaryColor,
             ),
+            SwitchLanguage(false),
             generateTextField(
-                'User name', TextEditingController(text: 'Khlid Ali')),
+                'Password', TextEditingController(text: '********')),
             generateTextField(
                 'About', TextEditingController(text: 'Computer Engineer')),
-            generateTextField(
-                'User phone', TextEditingController(text: '01123827968')),
-            generateTextField('Email',
-                TextEditingController(text: 'Khalid.ahmed99@eng-st.cu.edu.eg')),
+              generateTextField('Email',
+                TextEditingController(
+                  text: 'Khalid.ahmed99@eng-st.cu.edu.eg')),
           ],
         ),
       ),
