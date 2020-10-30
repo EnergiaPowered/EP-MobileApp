@@ -1,115 +1,35 @@
-import 'package:energia_app/models/chat_room.dart';
 import 'package:energia_app/models/message.dart';
 import 'package:energia_app/widgets/message_item.dart';
 import 'package:flutter/material.dart';
 
-class InBoxScreen extends StatelessWidget {
+class InBoxMessages extends StatelessWidget {
   static const String routeName = '/inbox-screen';
   final messagesDemo = [
-    {
-      'chatId': '1',
-      'messages': [
-        Message('hey there how are you mane ? how are things', 'me',
-            DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '5',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '4',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '2',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'him', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '3',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '6',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-    {
-      'chatId': '7',
-      'messages': [
-        Message('hey there', 'me', DateTime.now().millisecond),
-      ]
-    },
-  ];
-  List<Message> chatMsgs(String chatId) {
-    for (Map<String, Object> chat in messagesDemo) {
-      if (chat['chatId'] == chatId) return (chat['messages']);
-    }
-    return null;
-  }
-
-  String roomImgUrl(ChatRoom room) {
-    if (room.member1Id == 'me') // change with user id
-      return room.member1ImgUrl;
-    return room.member2ImgUrl;
-  }
+    Message('hey there how are you mane ? how are things', 'me',
+        DateTime.now().millisecond),
+    Message('hey there', 'him', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'him', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'him', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+    Message('hey there', 'me', DateTime.now().millisecond),
+  ].reversed.toList();
 
   @override
   Widget build(BuildContext context) {
-    ChatRoom room = ModalRoute.of(context).settings.arguments; // room id
-    List<Message> msgs = chatMsgs(room.id);
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
-        ],
-        elevation: 7,
-        title: Text(room.title),
-        
-        leading: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Image.network(
-            roomImgUrl(room),
-            fit: BoxFit.cover,
-          ),
-        ),
+        title: Text('Admins'),
+        leading: Image.network(
+            'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg,'),
       ),
-      body: msgs == null || msgs.length == 0
+      body: messagesDemo == null || messagesDemo.length == 0
           ? Center(
               child: Text('No messages, type a message !'),
             )
@@ -117,19 +37,20 @@ class InBoxScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      controller:
-                          new ScrollController(initialScrollOffset: 0.0),
-                      itemCount: msgs.length,
-                      itemBuilder: (_, idx) {
-                        return MessageItem(msgs[idx]);
-                      }),
+                    shrinkWrap: true,
+                    controller: new ScrollController(initialScrollOffset: 0.0),
+                    itemCount: messagesDemo.length,
+                    reverse: true,
+                    itemBuilder: (_, idx) {
+                      return MessageItem(messagesDemo[idx]);
+                    },
+                  ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(20.0)),
-                  margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 5.0),
+                  margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 10.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

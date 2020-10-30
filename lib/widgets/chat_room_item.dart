@@ -17,7 +17,7 @@ class ChatRoomItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
-          InBoxScreen.routeName,
+          InBoxMessages.routeName,
           arguments: room,
         );
       },
@@ -35,7 +35,9 @@ class ChatRoomItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
                   radius: 40,
-                  child: Image.network(roomImgUrl),
+                  child: Container(
+                    decoration: BoxDecoration(shape: BoxShape.circle,borderRadius: BorderRadius.circular(2)),
+                    child: Image.network(roomImgUrl,)),
                 ),
               ),
               Expanded(

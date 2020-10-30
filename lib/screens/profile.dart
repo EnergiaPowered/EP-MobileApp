@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:energia_app/screens/edit_profile.dart';
 import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:energia_app/widgets/eventListWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,9 +73,13 @@ class _ProfileWidgetState extends State<Profile> {
                             color: Colors.grey[300],
                             borderRadius:
                                 BorderRadius.all(Radius.circular(13.0))),
-                        child: Icon(
-                          Icons.edit,
-                          size: 30,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(EditProfile.routeName);
+                          },
+                          icon: Icon(Icons.edit),
+                          iconSize: 30,
                           color: Theme.of(context).primaryColor,
                         )),
                     SizedBox(

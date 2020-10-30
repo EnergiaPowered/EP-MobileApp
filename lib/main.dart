@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:energia_app/screens/edit_profile.dart';
 import 'package:energia_app/screens/inbox_screen.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import './screens/article_details_screen.dart';
@@ -48,34 +49,39 @@ class _MyAppState extends State<MyApp> {
         ),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-        body: SliderMenuContainer(
-          drawerIconColor: Colors.white,
-            appBarColor: const Color(0xFF03144c),
-            key: _key,
-            trailing:Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-                Icon(Icons.search,color: Colors.white,),
-                SizedBox(width: 8),
-                Icon(Icons.notifications,color: Colors.white,),
-                SizedBox(width: 8),
-          ],
-        ),
-            appBarPadding: const EdgeInsets.only(top: 30),
-            sliderMenuOpenOffset: 250,
-            appBarHeight: 60,
-            title: Text(
-              'Energia Power',
-              style: TextStyle(fontSize: 25,
-                  color: Colors.white,
-                  fontFamily: 'assets/fonts/Lato-Regular.ttf',
-                  fontWeight: FontWeight.w700),
-            ),
-
-            sliderMenu: MenuWidget(
-            ),
-            sliderMain: MainHome()),
+          body: SliderMenuContainer(
+              drawerIconColor: Colors.white,
+              appBarColor: const Color(0xFF03144c),
+              key: _key,
+              trailing: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 8),
+                ],
+              ),
+              appBarPadding: const EdgeInsets.only(top: 30),
+              sliderMenuOpenOffset: 250,
+              appBarHeight: 60,
+              title: Text(
+                'Energia Power',
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontFamily: 'assets/fonts/Lato-Regular.ttf',
+                    fontWeight: FontWeight.w700),
+              ),
+              sliderMenu: MenuWidget(),
+              sliderMain: MainHome()),
         ),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
@@ -85,7 +91,8 @@ class _MyAppState extends State<MyApp> {
           '/pinnedItems': (context) => new PinnedItems(),
           '/aboutUs': (context) => new AboutUs(),
           '/projects': (context) => new Projects(),
-          InBoxScreen.routeName:(_) =>  InBoxScreen(), 
+          InBoxMessages.routeName: (_) => InBoxMessages(),
+          EditProfile.routeName: (_) => EditProfile(),
         });
   }
 }
