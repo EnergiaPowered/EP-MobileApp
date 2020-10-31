@@ -42,7 +42,7 @@ class _MainHomeState extends State<MainHome> {
             color: Theme.of(context).backgroundColor,
           ),
           Icon(
-            Icons.mark_chat_unread_outlined,
+            Icons.chat,
             size: 35,
             color: Theme.of(context).backgroundColor,
           ),

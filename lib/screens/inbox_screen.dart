@@ -57,7 +57,7 @@ class InBoxMessages extends StatelessWidget {
                       IconButton(
                         padding: EdgeInsets.all(5),
                         icon: Icon(
-                          Icons.emoji_emotions_outlined,
+                          Icons.insert_emoticon,
                           size: 35,
                           color: Colors.grey,
                         ),
@@ -84,7 +84,7 @@ class InBoxMessages extends StatelessWidget {
                       IconButton(
                         padding: EdgeInsets.all(5),
                         icon: Icon(
-                          Icons.camera_alt_rounded,
+                          Icons.camera_alt,
                           size: 35,
                           color: Colors.grey,
                         ),

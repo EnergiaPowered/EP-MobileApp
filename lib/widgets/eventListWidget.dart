@@ -42,7 +42,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                           itemCount: eventList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              onTap:()=> print("object"),
+                              onTap: () => print("object"),
                               child: Container(
                                   width: 250,
                                   height: 250,
@@ -69,25 +69,29 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                   fontWeight: FontWeight.bold,
                                                 )),
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Row(
                                                 children: <Widget>[
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: <Widget>[
                                                       listitle(
                                                           "${eventList[index].date}",
-                                                          Icon(Icons.date_range)),
+                                                          Icon(Icons
+                                                              .date_range)),
                                                       listitle(
                                                           "${eventList[index].eventLocation}",
-                                                          Icon(
-                                                              Icons.location_on)),
+                                                          Icon(Icons
+                                                              .location_on)),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            const EdgeInsets
+                                                                    .only(
                                                                 left: 16.0,
                                                                 top: 8.0),
                                                         child: Text(
@@ -108,13 +112,27 @@ class _EventListWidgetState extends State<EventListWidget> {
                                         ),
                                       ),
                                       ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                         child: Image.network(
-                                          '${eventList[index].imageUrl}',
-                                          fit: BoxFit.cover,
-                                          height: 130,
-                                          width: 180,
-                                        ),
+                                            '${eventList[index].imageUrl}',
+                                            fit: BoxFit.cover,
+                                            height: 130,
+                                            width: 180,
+                                            loadingBuilder:
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent
+                                                        loadingProgress) {
+                                          if (loadingProgress == null)
+                                            return child;
+                                          return Image.asset(
+                                            'assets/images/image.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 130,
+                                            width: 180,
+                                          );
+                                        }),
                                       ),
                                     ],
                                   )),

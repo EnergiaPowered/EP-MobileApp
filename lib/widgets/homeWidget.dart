@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:energia_app/widgets/articleListWidget.dart';
 import 'package:energia_app/widgets/eventListWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -52,16 +53,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Theme.of(context).textSelectionColor),
                 )),
             gradientContainer,
-            Container(
-              margin: EdgeInsets.fromLTRB(50, 10, 0, 10),
-              height: 195,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    topLeft: Radius.circular(30)),
-              ),
-            ),
+            ArticleListWidget(size),
+//            Container(
+//              margin: EdgeInsets.fromLTRB(50, 10, 0, 10),
+//              height: 195,
+//              decoration: BoxDecoration(
+//                color: Theme.of(context).primaryColor,
+//                borderRadius: BorderRadius.only(
+//                    bottomLeft: Radius.circular(30),
+//                    topLeft: Radius.circular(30)),
+//              ),
+
+
           ],
         ),
       ),

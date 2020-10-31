@@ -67,21 +67,23 @@ class _ProfileWidgetState extends State<Profile> {
                 ),
                 Row(
                   children: <Widget>[
-                    Container(
-                        padding: EdgeInsets.all(4.0),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(13.0))),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(EditProfile.routeName);
-                          },
-                          icon: Icon(Icons.edit),
-                          iconSize: 30,
-                          color: Theme.of(context).primaryColor,
-                        )),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context)
+                            .pushNamed(EditProfile.routeName);
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(13.0))),
+                          child: Icon(
+                            Icons.edit,
+                            size: 30,
+                            color: Theme.of(context).primaryColor,
+                          )),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
@@ -96,6 +98,7 @@ class _ProfileWidgetState extends State<Profile> {
                           size: 30,
                           color: Theme.of(context).primaryColor,
                         )),
+
                   ],
                 )
               ],

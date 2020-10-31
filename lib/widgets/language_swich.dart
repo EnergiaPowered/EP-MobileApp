@@ -21,7 +21,7 @@ class _SwitchLanguageState extends State<SwitchLanguage> {
               children: [
                 Text(
                   'Switch to Arabic',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
                 Text('change language of the App to Arabic'),
               ],
