@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1068816673794",
+    "firebase_url": "https://energiaapp-3eaa3.firebaseio.com",
+    "project_id": "energiaapp-3eaa3",
+    "storage_bucket": "energiaapp-3eaa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068816673794:android:14214fcc1496ed2ce54b1b",
+        "android_client_info": {
+          "package_name": "com.alrashididiv.energia_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0RzmKbpzM7I1A1aTtTIDKGK6HDrxJIMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
