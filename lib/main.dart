@@ -100,6 +100,7 @@ class _MyAppState extends State<MyApp> {
           '/pinnedItems': (context) => new PinnedItems(),
           '/aboutUs': (context) => new AboutUs(),
           '/projects': (context) => new Projects(),
+          '/messages': (context) => new InBoxMessages(),
           InBoxMessages.routeName: (_) => InBoxMessages(),
           EditProfile.routeName: (_) => EditProfile(),
         });

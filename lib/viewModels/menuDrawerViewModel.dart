@@ -10,7 +10,7 @@ class MenuDrawerViewModel {
      case "Notifications":
      Navigator.of(context).pushNamed('/notifications');
      break;
-     case "Messages":
+     case "Message Us":
      Navigator.of(context).pushNamed('/messages');
      break;
      case "Pinned Items":

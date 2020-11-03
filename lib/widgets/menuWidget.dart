@@ -47,6 +47,7 @@ class MenuWidget  extends StatelessWidget {
             height: 20,
           ),
           sliderItem('Profile', Icons.person_pin,context),
+          sliderItem("Message Us", Icons.message,context),
           sliderItem("Pinned Items", Icons.pin_drop,context),
           sliderItem("About Us", Icons.book,context),
           sliderItem('Projects', Icons.assignment,context),
