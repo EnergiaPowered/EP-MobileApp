@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:energia_app/screens/profile.dart';
 import 'package:energia_app/widgets/articleWidget.dart';
 import 'package:energia_app/widgets/eventsWidget.dart';
 import 'package:energia_app/widgets/homeWidget.dart';
@@ -17,7 +18,6 @@ class _MainHomeState extends State<MainHome> {
     HomeWidget(),
     EventsWidget(),
     ArticleWidget(),
-    InBoxMessages(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,6 @@ class _MainHomeState extends State<MainHome> {
           ),
           Icon(
             Icons.library_books,
-            size: 35,
-            color: Theme.of(context).backgroundColor,
-          ),
-          Icon(
-            Icons.chat,
             size: 35,
             color: Theme.of(context).backgroundColor,
           ),
