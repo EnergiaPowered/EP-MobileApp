@@ -50,39 +50,46 @@ class _MyAppState extends State<MyApp> {
         ),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: SliderMenuContainer(
-              drawerIconColor: Colors.white,
-              appBarColor: const Color(0xFF03144c),
-              key: _key,
-              trailing: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-                ],
-              ),
-              appBarPadding: const EdgeInsets.only(top: 30),
-              sliderMenuOpenOffset: 250,
-              appBarHeight: 60,
-              title: Text(
-                'Energia Power',
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontFamily: 'assets/fonts/Lato-Regular.ttf',
-                    fontWeight: FontWeight.w700),
-              ),
-              sliderMenu: MenuWidget(),
-              sliderMain: MainHome()),
+          body: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: SliderMenuContainer(
+              
+                drawerIconColor: Colors.white,
+                appBarColor: const Color(0xFF03144c),
+                key: _key,
+                trailing: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 8),
+                    Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+                appBarPadding: const EdgeInsets.only(top: 30),
+                
+                sliderMenuOpenOffset: 250,
+                appBarHeight: 60,
+                title: Text(
+                  'Energia Power',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontFamily: 'assets/fonts/Lato-Regular.ttf',
+                      fontWeight: FontWeight.w700),
+                ),
+                sliderMenu: MenuWidget(),
+                sliderMain: MainHome()),
+          ),
         ),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
