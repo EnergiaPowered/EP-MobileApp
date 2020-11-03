@@ -1,17 +1,18 @@
+import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:energia_app/screens/edit_profile.dart';
-import 'package:energia_app/screens/inbox_screen.dart';
+import './screens/edit_profile.dart';
+import './screens/expandedarticles.dart';
+import './screens/inbox_screen.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import './screens/article_details_screen.dart';
 import './screens/event_deta_detials.dart';
 import './widgets/menuWidget.dart';
-import 'package:energia_app/screens/aboutUs.dart';
-import 'package:energia_app/screens/mainHome.dart';
-import 'package:energia_app/screens/pinnedItems.dart';
-import 'package:energia_app/screens/profile.dart';
-import 'package:energia_app/screens/projects.dart';
-import 'package:energia_app/widgets/menuWidget.dart';
-import 'package:flutter/material.dart';
+import './screens/aboutUs.dart';
+import './screens/mainHome.dart';
+import './screens/pinnedItems.dart';
+import './screens/profile.dart';
+import './screens/projects.dart';
+import './widgets/menuWidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -85,6 +86,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
+          ExpandedArticles.routPage: (context) => ExpandedArticles(),
           EventDetailsScreen.routPage: (ctx) => EventDetailsScreen(),
           '/profile': (context) => new Profile(),
           '/home': (context) => new MyApp(),

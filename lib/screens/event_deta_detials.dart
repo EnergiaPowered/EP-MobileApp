@@ -10,8 +10,10 @@ class EventDetailsScreen extends StatefulWidget {
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final mediaSize = MediaQuery.of(context).size;
+
     Widget gradientContainer = Container(
-        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+        margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
         child: Container(
           width: 60,
           height: 3,
@@ -83,14 +85,28 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ),
       ),
-      body: Column(
+/*----------------------------------------------------------------------------------------------------------------------------------------------- */
+
+      body:
+          /*
+          main column
+        */
+          Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /*
+              Stack of The Top Widget with some information 
+        */
           Stack(
+            alignment: Alignment.topCenter,
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(10, 70, 10, 10),
-                height: 150,
+                margin: EdgeInsets.fromLTRB(
+                    mediaSize.width / 30,
+                    mediaSize.height / 15,
+                    mediaSize.width / 30,
+                    mediaSize.height / 50),
+                height: mediaSize.height / 4,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
@@ -98,15 +114,59 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                       topLeft: Radius.circular(60)),
                 ),
               ),
+              Positioned(
+                child: Image.asset(
+                  'assets/images/articlepaper.png',
+                  scale: 7,
+                ),
+              ),
+              Positioned(
+                  top: mediaSize.height / 5,
+                  child: Text(
+                    "Mobile Development",
+                    style: TextStyle(color: Colors.white),
+                  )),
+              Positioned(
+                bottom: mediaSize.height / 50,
+                left: mediaSize.width / 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.thumb_up_alt_outlined,
+                          color: Colors.white),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.textsms, color: Colors.white),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.push_pin_outlined, color: Colors.white),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
+/*----------------------------------------------------------------------------------------------------------------------------------------------- */
+
           Divider(),
+          /*
+              Container Of Comments 
+        */
           Container(
             height: 50,
           ),
           Divider(),
+/*----------------------------------------------------------------------------------------------------------------------------------------------- */
+
+          /*
+              Container Of Bottom informations 
+        */
           Container(
-            height: 200,
+            height: mediaSize.height / 2.35,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,8 +183,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   Container(
                       margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Container(
-                        width: 80,
-                        height: 3,
+                        width: mediaSize.width / 3,
+                        height: mediaSize.height / 200,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                               begin: Alignment.centerLeft,
@@ -157,7 +217,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             fontSize: 20.0,
                             color: Theme.of(context).textSelectionColor),
                       )),
-                      gradientContainer,
+                  gradientContainer,
                   Container(
                     margin: EdgeInsets.only(left: 30, right: 30, top: 5),
                     height: 130,
