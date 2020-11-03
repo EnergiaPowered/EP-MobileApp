@@ -1,10 +1,10 @@
 
 
-import 'package:energia_app/viewModels/menuDrawerViewModel.dart';
+import '../viewModels/menuDrawerViewModel.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget  extends StatelessWidget {
-
+static const routPage = '/menuWidget';
   @override
   Widget build(BuildContext context) {
     return Container(

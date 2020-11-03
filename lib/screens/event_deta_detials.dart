@@ -1,3 +1,4 @@
+import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatefulWidget {
@@ -27,63 +28,22 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ));
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 100),
-        child: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                color: Theme.of(context).backgroundColor,
-                spreadRadius: 5,
-                blurRadius: 2)
-          ]),
-          width: MediaQuery.of(context).size.width,
-          height: 70,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25))),
-            child: Container(
-              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Icon(
-                        Icons.menu,
-                        size: 30,
-                        color: Theme.of(context).backgroundColor,
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 13.0, top: 5),
-                    child: Text(
-                      "Energia Power",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.search,
-                        color: Theme.of(context).backgroundColor,
+       drawer: LocalDrawer(),
+      appBar: AppBar(
+toolbarHeight: mediaSize.height/15,
+        shape: RoundedRectangleBorder(
+
+      borderRadius: BorderRadius.vertical(
+        bottom: Radius.circular(30),
+      ),),
+
+       title: Padding(
+         padding:  EdgeInsets.only(left:mediaSize.width/4.5),
+         child:Text(
+                        "Event",
+                        style: Theme.of(context).appBarTheme.textTheme.title
                       ),
-                      SizedBox(width: 8),
-                      Icon(
-                        Icons.notifications,
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                      SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+       ),
       ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
