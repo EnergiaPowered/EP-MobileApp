@@ -29,6 +29,9 @@ dependencies:
   intl: ^0.16.1
   bubble: ^1.1.9+1
   toast: ^0.1.5
+  image_picker: ^0.6.5+3
+  firebase_database:
+  firebase_storage: ^4.0.1
 
 dev_dependencies:
   flutter_test:
