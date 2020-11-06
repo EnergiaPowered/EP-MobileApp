@@ -312,14 +312,12 @@ class _ArticleWidgetState extends State<ArticleWidget> {
             Container(
               width: mediaSize.width / 1.1,
               child: Container(
-                margin: EdgeInsets.only(left: mediaSize.width / 10),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: localListupcomming.length,
-                    itemBuilder: (context, i) {
-                      return localListprev[i];
-                    }),
+                margin: EdgeInsets.only(left: mediaSize.width / 20),
+                child: ListWheelScrollView(
+                  diameterRatio: mediaSize.height/400,
+                        itemExtent: mediaSize.height/3.2,
+                        children: localListprev,
+                    ),
               ),
               margin: EdgeInsets.fromLTRB(
                   mediaSize.width / 7, mediaSize.height / 60, 0, 0),
