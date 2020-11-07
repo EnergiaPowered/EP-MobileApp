@@ -1,15 +1,17 @@
-
+import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../viewModels/menuDrawerViewModel.dart';
 import 'package:flutter/material.dart';
 
-class MenuWidget  extends StatelessWidget {
-static const routPage = '/menuWidget';
+class MenuWidget extends StatelessWidget {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static const routPage = '/menuWidget';
   @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF03144c),
-      padding: const EdgeInsets.only(top: 30,left: 9),
+      padding: const EdgeInsets.only(top: 30, left: 9),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -21,13 +23,11 @@ static const routPage = '/menuWidget';
             backgroundColor: Colors.grey,
             child: CircleAvatar(
               radius: 60,
-
             ),
           ),
           SizedBox(
             height: 20,
           ),
-
           Text(
             'Alrashidi',
             style: TextStyle(
@@ -35,7 +35,8 @@ static const routPage = '/menuWidget';
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
                 fontFamily: 'BalsamiqSans'),
-          ),Text(
+          ),
+          Text(
             'Bio',
             style: TextStyle(
                 color: Theme.of(context).backgroundColor,
@@ -46,24 +47,40 @@ static const routPage = '/menuWidget';
           SizedBox(
             height: 20,
           ),
-          sliderItem('Profile', Icons.person_pin,context),
-          sliderItem("Message Us", Icons.message,context),
-          sliderItem("Pinned Items", Icons.pin_drop,context),
-          sliderItem("About Us", Icons.book,context),
-          sliderItem('Projects', Icons.assignment,context),
-
+          sliderItem('Profile', Icons.person_pin, context),
+          sliderItem("Message Us", Icons.message, context),
+          sliderItem("Pinned Items", Icons.pin_drop, context),
+          sliderItem("About Us", Icons.book, context),
+          sliderItem('Projects', Icons.assignment, context),
           Expanded(
             child: Row(
               children: <Widget>[
-                Icon(Icons.arrow_back_ios,color: Colors.white,size: 30,),
+                Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 30,
+                ),
                 SizedBox(
                   width: 18,
                 ),
-                Text("LogOut",
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 18,
-                    color: Theme.of(context).backgroundColor,),),
+                GestureDetector(
+                  onTap: () {
+                    _firebaseAuth.signOut();
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "LogOut",
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                      color: Theme.of(context).backgroundColor,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -71,19 +88,23 @@ static const routPage = '/menuWidget';
       ),
     );
   }
-  Widget sliderItem(String title, IconData icons,BuildContext context) => ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          fontWeight: FontWeight.normal,
-          fontSize: 18,
-          color: Colors.white),
-      ),
-      leading: Icon(
-        icons,color: Colors.white,size: 28,
-      ),
-      onTap: () {
-        MenuDrawerViewModel drawerViewModel = new MenuDrawerViewModel();
-        drawerViewModel.onClickItem(title, context);
-      });
+
+  Widget sliderItem(String title, IconData icons, BuildContext context) =>
+      ListTile(
+          title: Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 18,
+                color: Colors.white),
+          ),
+          leading: Icon(
+            icons,
+            color: Colors.white,
+            size: 28,
+          ),
+          onTap: () {
+            MenuDrawerViewModel drawerViewModel = new MenuDrawerViewModel();
+            drawerViewModel.onClickItem(title, context);
+          });
 }
