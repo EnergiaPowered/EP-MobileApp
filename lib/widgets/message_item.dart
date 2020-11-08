@@ -1,18 +1,25 @@
 import 'package:bubble/bubble.dart';
-import 'package:energia_app/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class MessageItem extends StatelessWidget {
-  final Message msg;
-  MessageItem(this.msg);
+  final String text;
+  final String uid;
+  final int timestamp;
+  final Key key;
+  MessageItem({
+    @required this.text,
+    @required this.uid,
+    @required this.timestamp,
+    @required this.key,
+  });
   List<Widget> getlist(BuildContext ctx) {
     return [
       Container(
         padding: EdgeInsets.all(5.0),
         child: Text(
           DateFormat('jm').format(
-            DateTime(msg.date),
+            DateTime.fromMillisecondsSinceEpoch(timestamp),
           ),
         ),
       ),
@@ -21,24 +28,22 @@ class MessageItem extends StatelessWidget {
           margin: BubbleEdges.only(
               top: 10,
               bottom: 10,
-              left: msg.autherId == 'me' ? 0 : 5,
-              right: msg.autherId == 'me' ? 5 : 0),
-          alignment:
-              msg.autherId == 'me' ? Alignment.topRight : Alignment.topLeft,
+              left: uid == 'me' ? 0 : 5,
+              right: uid == 'me' ? 5 : 0),
+          alignment: uid == 'me' ? Alignment.topRight : Alignment.topLeft,
           nipWidth: 8,
           nipHeight: 24,
-          nip: msg.autherId == 'me' ? BubbleNip.rightTop : BubbleNip.leftTop,
-          color:
-              msg.autherId == 'me' ? Colors.grey.shade300 : Color(0xFF03144c),
+          nip: uid == 'me' ? BubbleNip.rightTop : BubbleNip.leftTop,
+          color: uid == 'me' ? Colors.grey.shade300 : Color(0xFF03144c),
           child: Container(
             constraints:
                 BoxConstraints(maxWidth: MediaQuery.of(ctx).size.width * 2 / 3),
             child: Text(
-              msg.body,
+              text,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20,
-                color: msg.autherId == 'me' ? Colors.black : Colors.white,
+                color: uid == 'me' ? Colors.black : Colors.white,
               ),
             ),
           ),
@@ -50,9 +55,8 @@ class MessageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: msg.autherId == 'me'
-          ? getlist(context)
-          : getlist(context).reversed.toList(),
+      children:
+          uid == 'me' ? getlist(context) : getlist(context).reversed.toList(),
     );
   }
 }
