@@ -33,7 +33,9 @@ class _MessaagesListViewState extends State<MessaagesListView> {
           print(snapshot.data.toString());
           final msgs = snapshot.data.documents;
           return msgs.length == 0
-              ? Center(child: Text('No Messages!, type a message :) '))
+              ? Center(
+                  child: Text('No Messages!, type a message :) '),
+                )
               : ListView.builder(
                   reverse: true,
                   itemCount: msgs.length,

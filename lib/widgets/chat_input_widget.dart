@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
-import 'package:energia_app/widgets/chat_image_picker.dart';
+import 'package:flutter/services.dart';
+import '../widgets/chat_image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import '../widgets/message_item.dart';
@@ -14,15 +14,15 @@ class ChatInputWidget extends StatefulWidget {
 
 class _ChatInputWidgetState extends State<ChatInputWidget> {
   final _textController = new TextEditingController();
-  bool _isEmojiOpened = false;
+  bool _isEmojiShown = false;
   String _textMessage = '';
-  bool isKeyboardOpened = false;
-  final chatRef = FirebaseFirestore.instance.collection('chats');
-  void sendMessage(String text, MessageType type) {
+  bool _isKeyboardShown = false;
+  final _chatRef = FirebaseFirestore.instance.collection('chats');
+  void _sendMessage(String text, MessageType type) {
     if (type == MessageType.TEXT) {
       FocusScope.of(context).unfocus();
       _textController.clear();
-      chatRef.add(
+      _chatRef.add(
         {
           'text': text.trim(),
           'date': DateTime.now().millisecondsSinceEpoch,
@@ -38,7 +38,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
   }
 
   void _uploadImage(String path) async {
-    DocumentReference docRef = await chatRef.add(
+    DocumentReference docRef = await _chatRef.add(
       {
         'text': 'null',
         'date': DateTime.now().millisecondsSinceEpoch,
@@ -52,11 +52,11 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     StorageUploadTask uploadTask = storageReference.putFile(File(path));
     await uploadTask.onComplete;
     storageReference.getDownloadURL().then((fileURL) {
-      chatRef.doc(docRef.id).update({'text': fileURL});
+      _chatRef.doc(docRef.id).update({'text': fileURL});
     });
   }
 
-  Widget _openEmojis(BuildContext context) {
+  Widget get _emojiPicker {
     return EmojiPicker(
       rows: 3,
       columns: 7,
@@ -72,10 +72,10 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     );
   }
 
-  Future<bool> onBackPress() {
-    if (_isEmojiOpened) {
+  Future<bool> _onBackPress() {
+    if (_isEmojiShown) {
       setState(() {
-        _isEmojiOpened = false;
+        _isEmojiShown = false;
       });
     } else {
       Navigator.pop(context);
@@ -83,15 +83,38 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     return Future.value(false);
   }
 
+  Future _hideKeyboard() async {
+    await SystemChannels.textInput.invokeMethod('TextInput.hide');
+    await Future.delayed(Duration(milliseconds: 100));
+  }
+
+  void _onEmojiIconPressed() async {
+    await _hideKeyboard();
+    if (_isKeyboardShown) {
+      FocusScope.of(context).unfocus();
+    }
+    _isKeyboardShown = false;
+    setState(() {
+      _isEmojiShown = !_isEmojiShown;
+    });
+  }
+
+  void _hideEmojiPicker() {
+    if (_isEmojiShown)
+      setState(() {
+        _isEmojiShown = false;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onBackPress,
+      onWillPop: _onBackPress,
       child: Container(
         decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(20.0)),
-        margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 10.0),
+        margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 10.0, top: 5.0),
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
@@ -105,15 +128,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                     size: 35,
                     color: Colors.grey,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _isEmojiOpened = !_isEmojiOpened;
-                      if (isKeyboardOpened) {
-                        FocusScope.of(context).unfocus();
-                        isKeyboardOpened = !isKeyboardOpened;
-                      }
-                    });
-                  },
+                  onPressed: _onEmojiIconPressed,
                 ),
                 Expanded(
                   child: Container(
@@ -123,10 +138,8 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                       expands: false,
                       autocorrect: true,
                       onTap: () {
-                        isKeyboardOpened = true;
-                        setState(() {
-                          _isEmojiOpened = false;
-                        });
+                        _hideEmojiPicker();
+                        _isKeyboardShown = true;
                       },
                       onChanged: (text) {
                         setState(() {
@@ -145,7 +158,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                     ),
                   ),
                 ),
-                ChatImagePicker(sendMessage),
+                ChatImagePicker(_sendMessage),
                 IconButton(
                   padding: EdgeInsets.all(5),
                   icon: Icon(
@@ -158,14 +171,14 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                   onPressed: _textMessage.trim().isEmpty
                       ? null
                       : () {
-                          sendMessage(_textMessage, MessageType.TEXT);
+                          _sendMessage(_textMessage, MessageType.TEXT);
                         },
                 ),
               ],
             ),
-            _isEmojiOpened
+            _isEmojiShown
                 ? SingleChildScrollView(
-                    child: _openEmojis(context),
+                    child: _emojiPicker,
                     scrollDirection: Axis.horizontal,
                   )
                 : Container(),
