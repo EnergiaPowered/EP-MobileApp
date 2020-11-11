@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.bold,
             )))),
         debugShowCheckedModeBanner: false,
-        home: App(),
+        home: InBoxMessages(), //App(),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           LocalDrawer.routPage: (context) => LocalDrawer(),

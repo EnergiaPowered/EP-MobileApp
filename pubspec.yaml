@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^0.5.1
   cloud_firestore: ^0.14.3
   path: ^1.7.0
+  emoji_picker: ^0.1.0
 
 dev_dependencies:
   flutter_test:

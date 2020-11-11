@@ -10,7 +10,7 @@ class MessaagesListView extends StatefulWidget {
 class _MessaagesListViewState extends State<MessaagesListView> {
   final chatRef = FirebaseFirestore.instance
       .collection('chats')
-      .orderBy('date', descending: false)
+      .orderBy('date', descending: true)
       .limitToLast(50)
       .snapshots();
   @override
@@ -40,6 +40,7 @@ class _MessaagesListViewState extends State<MessaagesListView> {
                     text: msgs[idx]['text'],
                     uid: msgs[idx]['uid'],
                     timestamp: msgs[idx]['date'],
+                    type: msgs[idx]['type'],
                     key: ValueKey(msgs[idx]['date']),
                   );
                 });
