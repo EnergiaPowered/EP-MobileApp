@@ -59,7 +59,14 @@ class MessageItem extends StatelessWidget {
                 ? Container(
                     margin: EdgeInsets.all(10),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        topRight:
+                            uid == 'me' ? Radius.zero : Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        topLeft:
+                            uid == 'me' ? Radius.circular(10) : Radius.zero,
+                      ),
                       child: Image.network(
                         text,
                         scale: 0.5,

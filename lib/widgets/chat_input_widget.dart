@@ -14,7 +14,9 @@ class ChatInputWidget extends StatefulWidget {
 
 class _ChatInputWidgetState extends State<ChatInputWidget> {
   final _textController = new TextEditingController();
+  bool _isEmojiOpened = false;
   String _textMessage = '';
+  bool isKeyboardOpened = false;
   final chatRef = FirebaseFirestore.instance.collection('chats');
   void sendMessage(String text, MessageType type) {
     if (type == MessageType.TEXT) {
@@ -32,6 +34,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     } else {
       _uploadImage(text);
     }
+    _textMessage = '';
   }
 
   void _uploadImage(String path) async {
@@ -53,7 +56,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     });
   }
 
-  Widget _openEmojis() {
+  Widget _openEmojis(BuildContext context) {
     return EmojiPicker(
       rows: 3,
       columns: 7,
@@ -61,19 +64,34 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
       recommendKeywords: ["racing", "horse"],
       numRecommended: 10,
       onEmojiSelected: (emoji, category) {
-        print(emoji);
+        setState(() {
+          _textMessage += emoji.emoji;
+          _textController.text = _textMessage;
+        });
       },
     );
   }
 
+  Future<bool> onBackPress() {
+    if (_isEmojiOpened) {
+      setState(() {
+        _isEmojiOpened = false;
+      });
+    } else {
+      Navigator.pop(context);
+    }
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(20.0)),
-      margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 10.0),
+    return WillPopScope(
+      onWillPop: onBackPress,
       child: Container(
+        decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(20.0)),
+        margin: EdgeInsets.only(left: 7.0, right: 7.0, bottom: 10.0),
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
@@ -87,7 +105,15 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                     size: 35,
                     color: Colors.grey,
                   ),
-                  onPressed: _openEmojis,
+                  onPressed: () {
+                    setState(() {
+                      _isEmojiOpened = !_isEmojiOpened;
+                      if (isKeyboardOpened) {
+                        FocusScope.of(context).unfocus();
+                        isKeyboardOpened = !isKeyboardOpened;
+                      }
+                    });
+                  },
                 ),
                 Expanded(
                   child: Container(
@@ -96,6 +122,12 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                       minLines: 1,
                       expands: false,
                       autocorrect: true,
+                      onTap: () {
+                        isKeyboardOpened = true;
+                        setState(() {
+                          _isEmojiOpened = false;
+                        });
+                      },
                       onChanged: (text) {
                         setState(() {
                           _textMessage = text;
@@ -119,7 +151,9 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                   icon: Icon(
                     Icons.send,
                     size: 35,
-                    color: Color(0xFF03144c),
+                    color: _textMessage.trim().isNotEmpty
+                        ? Color(0xFF03144c)
+                        : Colors.grey,
                   ),
                   onPressed: _textMessage.trim().isEmpty
                       ? null
@@ -129,7 +163,12 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                 ),
               ],
             ),
-            // SingleChildScrollView(child: _openEmojis()),
+            _isEmojiOpened
+                ? SingleChildScrollView(
+                    child: _openEmojis(context),
+                    scrollDirection: Axis.horizontal,
+                  )
+                : Container(),
           ],
         ),
       ),

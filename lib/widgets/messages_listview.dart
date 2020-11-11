@@ -15,36 +15,39 @@ class _MessaagesListViewState extends State<MessaagesListView> {
       .snapshots();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: chatRef,
-      builder: (ctx, snapshot) {
-        if (snapshot == null) {
-          return Center(
-            child: Text('Empty chat'),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        print(snapshot.data.toString());
-        final msgs = snapshot.data.documents;
-        return msgs.length == 0
-            ? Center(child: Text('No Messages!, type a message :) '))
-            : ListView.builder(
-                reverse: true,
-                itemCount: msgs.length,
-                itemBuilder: (_, idx) {
-                  return MessageItem(
-                    text: msgs[idx]['text'],
-                    uid: msgs[idx]['uid'],
-                    timestamp: msgs[idx]['date'],
-                    type: msgs[idx]['type'],
-                    key: ValueKey(msgs[idx]['date']),
-                  );
-                });
-      },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: StreamBuilder(
+        stream: chatRef,
+        builder: (ctx, snapshot) {
+          if (snapshot == null) {
+            return Center(
+              child: Text('Empty chat'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          print(snapshot.data.toString());
+          final msgs = snapshot.data.documents;
+          return msgs.length == 0
+              ? Center(child: Text('No Messages!, type a message :) '))
+              : ListView.builder(
+                  reverse: true,
+                  itemCount: msgs.length,
+                  itemBuilder: (_, idx) {
+                    return MessageItem(
+                      text: msgs[idx]['text'],
+                      uid: msgs[idx]['uid'],
+                      timestamp: msgs[idx]['date'],
+                      type: msgs[idx]['type'],
+                      key: ValueKey(msgs[idx]['date']),
+                    );
+                  });
+        },
+      ),
     );
   }
 }
