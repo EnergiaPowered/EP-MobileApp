@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SwitchLanguage extends StatefulWidget {
   bool value;
   SwitchLanguage(this.value);
@@ -21,7 +22,7 @@ class _SwitchLanguageState extends State<SwitchLanguage> {
               children: [
                 Text(
                   'Switch to Arabic',
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 Text('change language of the App to Arabic'),
               ],

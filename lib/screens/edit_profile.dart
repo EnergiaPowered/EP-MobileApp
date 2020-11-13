@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:energia_app/widgets/language_swich.dart';
@@ -7,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:toast/toast.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 class EditProfile extends StatefulWidget {
   static const String routeName = '/edit-profile';
   @override
@@ -14,13 +14,19 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   File _pickedProfileImage;
-  DatabaseReference ref = FirebaseDatabase.instance.reference().child('LogedId').child('personel data');
+  DatabaseReference ref = FirebaseDatabase.instance
+      .reference()
+      .child('LogedId')
+      .child('personel data');
 
   bool inputChanged = false;
+  // ignore: todo
   //TODO get profile data using the uid
-  Widget generateTextField(String hint, TextEditingController controller,) {
+  Widget generateTextField(
+    String hint,
+    TextEditingController controller,
+  ) {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextField(
@@ -36,15 +42,16 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
   void _pickImage() async {
     // ignore: deprecated_member_use
-    final pickedImageFile = await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 20);
+    final pickedImageFile = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 20);
     setState(() {
       _pickedProfileImage = pickedImageFile;
-
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,9 +87,10 @@ class _EditProfileState extends State<EditProfile> {
                     backgroundColor: const Color(0xFF03144c),
                     child: CircleAvatar(
                       radius: 60,
-                      backgroundImage: _pickedProfileImage != null ? FileImage(_pickedProfileImage) :
-                      NetworkImage('https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg'),
-
+                      backgroundImage: _pickedProfileImage != null
+                          ? FileImage(_pickedProfileImage)
+                          : NetworkImage(
+                              'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg'),
                     ),
                   ),
                   Positioned(
@@ -95,7 +103,9 @@ class _EditProfileState extends State<EditProfile> {
                             Icons.add_a_photo,
                             color: const Color(0xFF03144c),
                           ),
-                          onPressed: () {  _pickImage(); }),
+                          onPressed: () {
+                            _pickImage();
+                          }),
                     ),
                   ),
                 ]),
@@ -115,8 +125,7 @@ class _EditProfileState extends State<EditProfile> {
             generateTextField(
                 'About', TextEditingController(text: 'Computer Engineer')),
             generateTextField('Email',
-                TextEditingController(
-                    text: 'Khalid.ahmed99@eng-st.cu.edu.eg')),
+                TextEditingController(text: 'Khalid.ahmed99@eng-st.cu.edu.eg')),
           ],
         ),
       ),
@@ -124,25 +133,25 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _sendToServer() {
-
-
     var data = {
       "name": 'name',
-      "profilePhoto":'123',
+      "profilePhoto": '123',
     };
     ref.set(data).then((v) {
-      _pickedProfileImage!=null?uploadImage(_pickedProfileImage):  null;
-
+      // ignore: unnecessary_statements
+      _pickedProfileImage != null ? uploadImage(_pickedProfileImage) : null;
     });
   }
+
   uploadImage(File image) async {
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('/fileName');
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('/fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
+    // ignore: unused_local_variable
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     final url = await firebaseStorageRef.getDownloadURL();
 
-    await ref
-        .update({
+    await ref.update({
       'image_url': url,
     }).then((value) => null);
   }

@@ -1,6 +1,5 @@
 import 'package:energia_app/screens/expandedarticles.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
-import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:flutter/material.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
@@ -31,22 +30,19 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     return Scaffold(
       drawer: LocalDrawer(),
       appBar: AppBar(
-toolbarHeight: mediaSize.height/15,
+        toolbarHeight: mediaSize.height / 15,
         shape: RoundedRectangleBorder(
-
-      borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(30),
-      ),),
-
-       title: Padding(
-         padding:  EdgeInsets.only(left:mediaSize.width/5),
-         child:Text(
-                        "Articles",
-                        style: Theme.of(context).appBarTheme.textTheme.title
-                      ),
-       ),
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.only(left: mediaSize.width / 5),
+          child: Text("Articles",
+              style: Theme.of(context).appBarTheme.textTheme.headline6),
+        ),
       ),
-     
+
       /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
       body:

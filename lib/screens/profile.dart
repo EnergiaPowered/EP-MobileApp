@@ -16,6 +16,7 @@ class _ProfileWidgetState extends State<Profile> {
   ProfileViewModel profileViewModel;
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     profileViewModel = new ProfileViewModel();
     super.initState();
@@ -68,9 +69,8 @@ class _ProfileWidgetState extends State<Profile> {
                 Row(
                   children: <Widget>[
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context)
-                            .pushNamed(EditProfile.routeName);
+                      onTap: () {
+                        Navigator.of(context).pushNamed(EditProfile.routeName);
                       },
                       child: Container(
                           padding: EdgeInsets.all(4.0),
@@ -98,7 +98,6 @@ class _ProfileWidgetState extends State<Profile> {
                           size: 30,
                           color: Theme.of(context).primaryColor,
                         )),
-
                   ],
                 )
               ],

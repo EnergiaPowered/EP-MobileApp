@@ -13,7 +13,6 @@ import './screens/mainHome.dart';
 import './screens/pinnedItems.dart';
 import './screens/profile.dart';
 import './screens/projects.dart';
-import './widgets/menuWidget.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
             textSelectionColor: const Color(0xFF03144c),
             appBarTheme: AppBarTheme(
                 textTheme: TextTheme(
-                    title: TextStyle(
+                    headline6: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
             )))),

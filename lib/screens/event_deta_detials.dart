@@ -28,22 +28,19 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ));
     return Scaffold(
-       drawer: LocalDrawer(),
+      drawer: LocalDrawer(),
       appBar: AppBar(
-toolbarHeight: mediaSize.height/15,
+        toolbarHeight: mediaSize.height / 15,
         shape: RoundedRectangleBorder(
-
-      borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(30),
-      ),),
-
-       title: Padding(
-         padding:  EdgeInsets.only(left:mediaSize.width/4.5),
-         child:Text(
-                        "Event",
-                        style: Theme.of(context).appBarTheme.textTheme.title
-                      ),
-       ),
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.only(left: mediaSize.width / 4.5),
+          child: Text("Event",
+              style: Theme.of(context).appBarTheme.textTheme.headline6),
+        ),
       ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 

@@ -1,10 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:energia_app/screens/profile.dart';
-import 'package:energia_app/widgets/articleWidget.dart';
-import 'package:energia_app/widgets/eventsWidget.dart';
-import 'package:energia_app/widgets/homeWidget.dart';
-import 'package:energia_app/screens/inbox_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/articleWidget.dart';
+import '../widgets/eventsWidget.dart';
+import '../widgets/homeWidget.dart';
 
 class MainHome extends StatefulWidget {
   @override
