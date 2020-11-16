@@ -138,7 +138,6 @@ class _EditProfileState extends State<EditProfile> {
       "profilePhoto": '123',
     };
     ref.set(data).then((v) {
-      // ignore: unnecessary_statements
       _pickedProfileImage != null ? uploadImage(_pickedProfileImage) : null;
     });
   }
@@ -147,7 +146,6 @@ class _EditProfileState extends State<EditProfile> {
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('/fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    // ignore: unused_local_variable
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     final url = await firebaseStorageRef.getDownloadURL();
 

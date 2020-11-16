@@ -91,8 +91,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.thumb_up_alt_outlined,
-                          color: Colors.white),
+                      icon: Icon(Icons.thumb_up, color: Colors.white),
                     ),
                     IconButton(
                       onPressed: () {},
@@ -100,7 +99,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.push_pin_outlined, color: Colors.white),
+                      icon: Icon(Icons.fiber_pin, color: Colors.white),
                     ),
                   ],
                 ),
