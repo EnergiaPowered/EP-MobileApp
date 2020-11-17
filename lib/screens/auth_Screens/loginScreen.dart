@@ -1,5 +1,6 @@
 import 'package:energia_app/components/constants.dart';
 import 'package:energia_app/components/fadeAnimation.dart';
+import 'package:energia_app/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -361,7 +362,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           email: '+201000000000@energia.com',
                                           password: '12345678');
                                   //////////////////////////
-
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Home(),
+                                    ),
+                                  );
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
                                   /*  print('phone:$phone , password:$password');
@@ -426,7 +431,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Expanded(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
