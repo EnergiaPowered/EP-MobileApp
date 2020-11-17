@@ -30,8 +30,16 @@ dependencies:
   bubble: ^1.1.9+1
   toast: ^0.1.5
   image_picker: ^0.6.5+3
-  firebase_database:
+  firebase_database: ^4.2.0
   firebase_storage: ^4.0.1
+  flutter_pin_code_fields: ^1.1.0
+  simple_animations: ^1.3.3
+  firebase_auth: ^0.18.2
+  firebase_core: ^0.5.1
+  cloud_firestore: ^0.14.3
+  path: ^1.7.0
+  emoji_picker: ^0.1.0
+  flutter_keyboard_visibility: ^3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +63,8 @@ flutter:
     - assets/images/articlepaper.png
     - assets/images/
     - assets/fonts/
+    - assets/images/ebackground.png
+    - assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

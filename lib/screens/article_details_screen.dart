@@ -30,22 +30,19 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     return Scaffold(
       drawer: LocalDrawer(),
       appBar: AppBar(
-toolbarHeight: mediaSize.height/15,
+        toolbarHeight: mediaSize.height / 15,
         shape: RoundedRectangleBorder(
-
-      borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(30),
-      ),),
-
-       title: Padding(
-         padding:  EdgeInsets.only(left:mediaSize.width/5),
-         child:Text(
-                        "Articles",
-                        style: Theme.of(context).appBarTheme.textTheme.title
-                      ),
-       ),
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+        title: Padding(
+          padding: EdgeInsets.only(left: mediaSize.width / 5),
+          child: Text("Articles",
+              style: Theme.of(context).appBarTheme.textTheme.headline6),
+        ),
       ),
-     
+
       /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
       body:
@@ -98,8 +95,7 @@ toolbarHeight: mediaSize.height/15,
                     children: [
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.thumb_up_alt_outlined,
-                            color: Colors.white),
+                        icon: Icon(Icons.thumb_up, color: Colors.white),
                       ),
                       IconButton(
                         onPressed: () {},
@@ -107,8 +103,7 @@ toolbarHeight: mediaSize.height/15,
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon:
-                            Icon(Icons.push_pin_outlined, color: Colors.white),
+                        icon: Icon(Icons.fiber_pin, color: Colors.white),
                       ),
                     ],
                   ),

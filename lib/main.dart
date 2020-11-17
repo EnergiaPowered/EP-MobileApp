@@ -1,20 +1,23 @@
+import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import './screens/edit_profile.dart';
 import './screens/expandedarticles.dart';
 import './screens/inbox_screen.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import './screens/article_details_screen.dart';
 import './screens/event_deta_detials.dart';
-import './widgets/menuWidget.dart';
 import './screens/aboutUs.dart';
-import './screens/mainHome.dart';
 import './screens/pinnedItems.dart';
 import './screens/profile.dart';
 import './screens/projects.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -37,8 +40,6 @@ class _MyAppState extends State<MyApp> {
     fontFamily: 'Lato',
     iconTheme: IconThemeData(color: Colors.white),
   );
-  GlobalKey<SliderMenuContainerState> _key =
-      new GlobalKey<SliderMenuContainerState>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,44 +50,12 @@ class _MyAppState extends State<MyApp> {
             textSelectionColor: const Color(0xFF03144c),
             appBarTheme: AppBarTheme(
                 textTheme: TextTheme(
-                    title: TextStyle(
+                    headline6: TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.bold,
             )))),
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: SliderMenuContainer(
-              shadowSpreadRadius: 20,
-              drawerIconColor: Colors.white,
-              appBarColor: const Color(0xFF03144c),
-              key: _key,
-              trailing: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.search,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 8),
-                ],
-              ),
-              appBarPadding: const EdgeInsets.only(top: 30),
-              sliderMenuOpenOffset: 250,
-              appBarHeight: 60,
-              title: Text('Energia Power',
-                  style: TextStyle(
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-              sliderMenu: MenuWidget(),
-              sliderMain: MainHome()),
-        ),
+        home: LoginScreen(), //App(),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           LocalDrawer.routPage: (context) => LocalDrawer(),

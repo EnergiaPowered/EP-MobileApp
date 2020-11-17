@@ -66,7 +66,7 @@ class _ExpandedArticlesState extends State<ExpandedArticles> {
                           color: Colors.grey[200]),
                       child: IconButton(
                           icon: Icon(
-                            Icons.push_pin_outlined,
+                            Icons.fiber_pin,
                             color: Colors.black,
                             size: 20,
                           ),
@@ -84,62 +84,59 @@ class _ExpandedArticlesState extends State<ExpandedArticles> {
               Container(
                 height: 30,
                 child: Padding(
-                  padding: const EdgeInsets.only(left:8.0,right: 10),
+                  padding: const EdgeInsets.only(left: 8.0, right: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                            IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.thumb_up_alt_outlined,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      Text('Like',style: TextStyle(fontWeight: FontWeight.bold),)
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.thumb_up,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          Text(
+                            'Like',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
-
-
-
-
-
-
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                              IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.textsms,
-                            color: Theme.of(context).primaryColor),
-                      
-                      ),
-                      Text('Comment',style: TextStyle(fontWeight: FontWeight.bold),)
-                        ],
-                      ),
-
-
-
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.zoom_out_map,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      Text('Expand' , style: TextStyle(fontWeight: FontWeight.bold),)
+                            onPressed: () {},
+                            icon: Icon(Icons.textsms,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          Text(
+                            'Comment',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
-                    
-                   
-                     
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.zoom_out_map,
+                                color: Theme.of(context).primaryColor),
+                          ),
+                          Text(
+                            'Expand',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 7,),
+              SizedBox(
+                height: 7,
+              ),
               Divider(),
             ],
           ),
