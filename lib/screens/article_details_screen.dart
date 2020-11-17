@@ -1,6 +1,5 @@
 import 'package:energia_app/screens/expandedarticles.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
-import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:flutter/material.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {

@@ -13,7 +13,6 @@ import './screens/mainHome.dart';
 import './screens/pinnedItems.dart';
 import './screens/profile.dart';
 import './screens/projects.dart';
-import './widgets/menuWidget.dart';
 
 void main() => runApp(MyApp());
 
