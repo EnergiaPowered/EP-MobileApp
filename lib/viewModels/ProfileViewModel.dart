@@ -24,8 +24,8 @@ class ProfileViewModel{
         'why flutter is best option between corss-platform languages'
         'why flutter is best option between corss-platform languages'
         'vwhy flutter is best option between corss-platform languages',
-        'Mobile embedded development',
-        "https://www.letsnurture.com/wp-content/uploads/2019/06/flutter-banner.jpg");
+        'Mobile development',
+        "https://www.letsnurture.com/wp-content/uploads/2019/06/flutter-banner.jpg",10,11,true);
 
 
     articleList.add(articleModel);
