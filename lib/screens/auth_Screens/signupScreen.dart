@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:energia_app/components/constants.dart';
 import 'package:energia_app/screens/home.dart';
+import 'package:energia_app/services/notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart' as p;
 import 'package:energia_app/components/fadeAnimation.dart';
@@ -23,6 +24,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  Notifications notifications;
   bool _obscureText = true;
   String fname, lname, phone, phoneAsEmail, email, password;
   bool fnameValid = true,
@@ -99,6 +101,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       Toast.show(ex.message, context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
     }
+  }
+
+  @override
+  void initState() {
+    notifications = new Notifications();
+
+    super.initState();
   }
 
   @override
@@ -569,6 +578,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   email: phoneAsEmail, password: password);
                           if (result != null) {
                             setUser();
+                            notifications.postNotification(
+                                "Welcome in Energia Powered",
+                                "initial notification we care about you $fname",
+                                widget.playerID);
                             await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
                                     email: phoneAsEmail, password: password);
