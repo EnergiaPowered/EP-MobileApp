@@ -68,7 +68,7 @@ class MenuWidget extends StatelessWidget {
                     _firebaseAuth.signOut();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
+                        builder: (context) => LoginScreen(""),
                       ),
                     );
                   },

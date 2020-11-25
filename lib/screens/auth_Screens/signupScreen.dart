@@ -15,6 +15,9 @@ import 'package:toast/toast.dart';
 import 'loginScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final String playerID;
+
+  const SignUpScreen(this.playerID);
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -44,7 +47,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       'email': email,
       'password': password,
       'phone': phone,
-      'image_url': imageUrl
+      'image_url': imageUrl,
+      'playerID': widget.playerID
     });
   }
 
@@ -99,6 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("playerId:${widget.playerID}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -681,7 +686,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onTap: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) =>
+                                      LoginScreen(widget.playerID)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

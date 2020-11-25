@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'signupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
+  final String playerID;
+
+  const LoginScreen(this.playerID);
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -52,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   */
   @override
   Widget build(BuildContext context) {
+    print("playerId:${widget.playerID}");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -448,7 +452,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                SignUpScreen(),
+                                                SignUpScreen(widget.playerID),
                                           ),
                                         );
                                       },

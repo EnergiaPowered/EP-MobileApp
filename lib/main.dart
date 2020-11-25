@@ -1,7 +1,9 @@
 import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
+import 'package:energia_app/services/notifications.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'dart:ui';
 import './screens/edit_profile.dart';
 import './screens/expandedarticles.dart';
@@ -25,6 +27,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String playerId = "12";
+  Notifications notifications;
   ThemeData fontTheme = ThemeData(
     textTheme: ThemeData.light().textTheme.copyWith(
         // ignore: deprecated_member_use
@@ -40,6 +44,31 @@ class _MyAppState extends State<MyApp> {
     fontFamily: 'Lato',
     iconTheme: IconThemeData(color: Colors.white),
   );
+  void initOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.inAppLaunchUrl: false
+    });
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    playerId = status.subscriptionStatus.userId;
+    setState(() {
+      playerId = playerId;
+    });
+    print("playerId: $playerId");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    initOneSignal();
+    notifications = new Notifications();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +84,7 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.bold,
             )))),
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(), //App(),
+        home: LoginScreen(playerId), //App(),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           LocalDrawer.routPage: (context) => LocalDrawer(),
