@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           new Radius.circular(30))),
                                   child: TextFormField(
                                     onChanged: (value) {
-                                      if (value.length < 6) {
+                                      if (value.length != 11) {
                                         setState(() {
                                           phoneValid = false;
                                           phone = null;
@@ -356,65 +356,64 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: kBlue,
                                 onPressed: () async {
                                   ///// Demo Login /////
-
+/* 
                                   await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
-                                          email: '+201000000000@energia.com',
-                                          password: '12345678');
+                                          email: phone, password: password);
                                   //////////////////////////
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => Home(),
                                     ),
-                                  );
+                                  ); */
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
-                                  /*  print('phone:$phone , password:$password');
-                              if (phone != null && password != null) {
-                                try {
-                                  await FirebaseAuth.instance
-                                      .signInWithEmailAndPassword(
-                                          email: phone, password: password);
+                                  print('phone:$phone , password:$password');
+                                  if (phone != null && password != null) {
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                              email: phone, password: password);
 
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ),
-                                  );
-                                } on FirebaseAuthException catch (e) {
-                                  if (e.code == 'weak-password') {
-                                    print(
-                                        'The password provided is too weak.');
-                                  } else if (e.code ==
-                                      'email-already-in-use') {
-                                    print(
-                                        'The account already exists for that email.' +
-                                            ' Meeeee');
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Home(),
+                                        ),
+                                      );
+                                    } on FirebaseAuthException catch (e) {
+                                      if (e.code == 'weak-password') {
+                                        print(
+                                            'The password provided is too weak.');
+                                      } else if (e.code ==
+                                          'email-already-in-use') {
+                                        print(
+                                            'The account already exists for that email.' +
+                                                ' Meeeee');
+                                      } else {
+                                        print(e.toString() +
+                                            'Firebase exception errorrr');
+                                      }
+                                    } on PlatformException catch (e) {
+                                      print(e.toString() + ' PlatformError');
+                                    } catch (e) {
+                                      print(e + ' Catched error');
+                                    }
+                                  } else if (phone == null &&
+                                      password != null) {
+                                    setState(() {
+                                      phoneValid = false;
+                                    });
+                                  } else if (phone != null &&
+                                      password == null) {
+                                    setState(() {
+                                      passValid = false;
+                                    });
                                   } else {
-                                    print(e.toString() +
-                                        'Firebase exception errorrr');
+                                    setState(() {
+                                      phoneValid = false;
+                                      passValid = false;
+                                    });
                                   }
-                                } on PlatformException catch (e) {
-                                  print(e.toString() + ' PlatformError');
-                                } catch (e) {
-                                  print(e + ' Catched error');
-                                }
-                              } else if (phone == null &&
-                                  password != null) {
-                                setState(() {
-                                  phoneValid = false;
-                                });
-                              } else if (phone != null &&
-                                  password == null) {
-                                setState(() {
-                                  passValid = false;
-                                });
-                              } else {
-                                setState(() {
-                                  phoneValid = false;
-                                  passValid = false;
-                                });
-                              } */
                                 },
                                 child: Text(
                                   'Login',
