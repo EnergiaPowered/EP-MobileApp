@@ -36,6 +36,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return _user != null ? Home() : LoginScreen();
+    return _user != null ? Home() : LoginScreen("");
   }
 }

@@ -41,7 +41,9 @@ dependencies:
   path: ^1.7.0
   emoji_picker: ^0.1.0
   flutter_keyboard_visibility: ^3.2.2
-
+  email_validator: '^1.0.0'
+  onesignal_flutter: ^2.6.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
