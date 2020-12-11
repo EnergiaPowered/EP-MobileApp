@@ -1,7 +1,11 @@
+import 'package:energia_app/Providers/articles.dart';
 import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+
 import 'dart:ui';
 import './screens/edit_profile.dart';
 import './screens/expandedarticles.dart';
@@ -12,6 +16,7 @@ import './screens/aboutUs.dart';
 import './screens/pinnedItems.dart';
 import './screens/profile.dart';
 import './screens/projects.dart';
+import 'Providers/article_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +48,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider( providers: [
+ChangeNotifierProvider.value(
+      value: Article(),),
+        ChangeNotifierProvider.value(
+          value: Articles(),
+        ),
+    ],
+    child:  MaterialApp(
         theme: ThemeData(
             backgroundColor: Colors.white,
             primaryColor: const Color(0xFF03144c),
@@ -68,6 +80,10 @@ class _MyAppState extends State<MyApp> {
           '/projects': (context) => new Projects(),
           InBoxMessages.routeName: (_) => InBoxMessages(),
           EditProfile.routeName: (_) => EditProfile(),
-        });
+        },
+      ),
+    
+     
+    );
   }
 }

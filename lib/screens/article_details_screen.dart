@@ -1,18 +1,24 @@
-import 'package:energia_app/screens/expandedarticles.dart';
-import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:flutter/material.dart';
+import './expandedarticles.dart';
+import '../widgets/localdrawer.dart';
+import '../Providers/article_provider.dart';
+import 'package:provider/provider.dart';
+import '../widgets/likeb_comment_adge.dart';
+import '../Providers/articles.dart';
 
-class ArticleDetailsScreen extends StatefulWidget {
+class ArticleDetailsScreen extends StatelessWidget {
   static const routPage = '/articledetailsscreen';
 
-  @override
-  _ArticleDetailsScreenState createState() => _ArticleDetailsScreenState();
-}
-
-class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
+  
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
+    //final articleData = Provider.of<Article>(context);
+    final articlesData = Provider.of<Articles>(context, listen: false);
+    final modalData = ModalRoute.of(context).settings.arguments;
+    final clickedArticle =
+        articlesData.findFromUpCommingArticlesById(modalData);
+
     Widget gradientContainer = Container(
         margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
         child: Container(
@@ -84,30 +90,38 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                 Positioned(
                     top: mediaSize.height / 5,
                     child: Text(
-                      "Mobile Development",
+                      "Mobile Development $modalData",
                       style: TextStyle(color: Colors.white),
                     )),
                 Positioned(
                   bottom: mediaSize.height / 50,
                   left: mediaSize.width / 30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.thumb_up, color: Colors.white),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.textsms, color: Colors.white),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.fiber_pin, color: Colors.white),
-                      ),
-                    ],
+                  child: Consumer<Article>(
+                    builder: (ctx, article, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                                  onPressed: () => article.toggleLike(),
+                                  icon: Icon(Icons.thumb_up,
+                                      color: article.isLiked
+                                          ? Colors.blue
+                                          : Colors.white),
+                                ),
+                              
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.textsms, color: Colors.white),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.fiber_pin, color: Colors.white),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                )
+                ),
               ],
             ),
           ),
