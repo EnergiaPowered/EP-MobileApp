@@ -1,16 +1,12 @@
 import 'package:energia_app/Providers/articles.dart';
+import 'package:energia_app/Providers/comment_provider.dart';
 import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
 import 'package:energia_app/services/notifications.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:provider/provider.dart';
-
-
-=======
 import 'package:onesignal_flutter/onesignal_flutter.dart';
->>>>>>> 4c4b0869edc3b6b2e98fb292faf99933b288dbc1
+import 'package:provider/provider.dart';
 import 'dart:ui';
 import './screens/edit_profile.dart';
 import './screens/expandedarticles.dart';
@@ -85,6 +81,9 @@ ChangeNotifierProvider.value(
       value: Article(),),
         ChangeNotifierProvider.value(
           value: Articles(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Comment(),
         ),
     ],
     child:  MaterialApp(
