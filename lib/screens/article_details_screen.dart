@@ -13,17 +13,20 @@ import '../Providers/articles.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static const routPage = '/articledetailsscreen';
-  String articleId;
 
   @override
   _ArticleDetailsScreenState createState() => _ArticleDetailsScreenState();
 }
 
 class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
-  // ignore: deprecated_member_use
+  String articleId;
+
   String currentUser;
+
   String userImage;
+
   String userPhone;
+
   Future<void> getCurrentUser() async {
     //FirebaseUser currentu = await FirebaseAuth.instance.currentUser;
     //print(currentu.uid);
@@ -33,36 +36,17 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
         await ds.get("first_name") + " " + await ds.get("last_name");
     String userph = await ds.get("phone");
     String userimg = await ds.get("image_url");
-    setState(() {
-      currentUser = userName;
-      userPhone = userph;
-      userImage = userimg;
-    });
+
+    currentUser = userName;
+    userPhone = userph;
+    userImage = userimg;
   }
 
   @override
   void initState() {
     getCurrentUser();
+    Provider.of<Articles>(context, listen: false).fetchAndSetComments("1");
     super.initState();
-  }
-
-  var _isLoading = false;
-  var _isInit = true;
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Articles>(context).fetchAndSetComments("1").then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-
-    _isInit = false;
-    super.didChangeDependencies();
   }
 
   @override
@@ -70,11 +54,11 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     final mediaSize = MediaQuery.of(context).size;
     //final articleData = Provider.of<Article>(context);
     // List<> comments =[];
-    final articlesData = Provider.of<Articles>(context, listen: false);
+    // final articlesData = Provider.of<Articles>(context);
     final modalData = ModalRoute.of(context).settings.arguments;
-    widget.articleId = modalData;
-    final clickedArticle =
-        articlesData.findFromUpCommingArticlesById(modalData);
+    articleId = modalData;
+    // final clickedArticle =
+    //     articlesData.findFromUpCommingArticlesById(modalData);
 
     Widget gradientContainer = Container(
         margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
@@ -127,7 +111,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            articlesData.fetchAndSetComments("1");
+            //articlesData.fetchAndSetComments("1");
+            print("change");
             FocusScope.of(context).requestFocus(new FocusNode());
           },
           child: SingleChildScrollView(
@@ -205,31 +190,40 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
                 Divider(),
-                Container(
-                  height: mediaSize.height * 0.1,
-                  /*
-                            Comments
-                            .........
-                          */
-                  child: Consumer<Articles>(builder: (context, article, child) {
-                    return _isLoading
-                        ? Center(
-                            child: Container(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : ListView.builder(
-                            padding: EdgeInsets.only(top: 0),
-                            itemBuilder: (BuildContext context, int index) {
-                              return CommentWidget(
-                                  comment: articlesData.comments[index].comment,
-                                  image: articlesData.comments[index].userPhoto,
-                                  name: articlesData.comments[index].name);
-                            },
-                            itemCount: articlesData.comments.length,
-                          );
-                  }),
-                ),
+                FutureBuilder(
+                    future: Provider.of<Articles>(context, listen: false)
+                        .fetchAndSetComments("1"),
+                    builder: (ctx, ss) {
+                      if (ss.connectionState == ConnectionState.done) {
+                        return Container(
+                            height: mediaSize.height * 0.1,
+                            /*
+                              Comments
+                              .........
+                            */
+                            child: Consumer<Articles>(
+                                builder: (ctx, articlesData, child) {
+                              print(
+                                  "in Builder ${ss.data.length}");
+
+                              return ListView.builder(
+                                itemCount: ss.data.length,
+                                itemBuilder: (ct, index) {
+                                  print("i listen");
+                                  return CommentWidget(
+                                      comment:
+                                          ss.data[index].comment,
+                                      image: ss.data[index].userPhoto,
+                                      name: ss.data[index].name);
+                                },
+                              );
+                            }));
+                      } else {
+                        return Center(
+                            child:
+                                Container(child: CircularProgressIndicator()));
+                      }
+                    }),
                 Divider(),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 

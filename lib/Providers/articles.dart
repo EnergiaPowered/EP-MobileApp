@@ -74,19 +74,17 @@ class Articles with ChangeNotifier {
     }
   }
 
-  Future<void> fetchAndSetComments(String articleId) async {
+  Future<List<Comment>> fetchAndSetComments(String articleId) async {
     try {
       final url =
           'https://energiaapp-3eaa3.firebaseio.com/ArticlesComments/1.json';
       final response = await http.get(url);
-      print(response.body);
       final List<Comment> loadeComments = [];
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
-        return;
+        return null;
       }
       extractedData.forEach((articleId, comment) {
-        print("i");
         loadeComments.add(
           Comment(
             articleId: articleId,
@@ -98,8 +96,8 @@ class Articles with ChangeNotifier {
       });
       _comments = loadeComments.reversed.toList();
       notifyListeners();
+      return comments;
     } catch (e) {
-      print(e);
       throw e;
     }
   }
