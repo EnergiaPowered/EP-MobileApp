@@ -17,13 +17,10 @@ class Notifications {
 
   void postNotification(String title, String body, String playerId) async {
     await OneSignal.shared.postNotification(OSCreateNotification(
-        playerIds: [playerId],
-        content: "$body",
-        heading: "$title",
-        buttons: [
-          OSActionButton(text: "Cancel", id: "id1"),
-          OSActionButton(text: "Ok", id: "id2")
-        ]));
+      playerIds: [playerId],
+      content: "$body",
+      heading: "$title",
+    ));
 
     print("postedDode");
   }

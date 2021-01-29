@@ -2,6 +2,15 @@ import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailsScreen extends StatefulWidget {
+  final String department;
+  final String date;
+  final String eventOrganizer;
+  final String eventLocation;
+  final String eventDescription;
+
+  EventDetailsScreen(this.department, this.date, this.eventOrganizer,
+      this.eventLocation, this.eventDescription);
+
   static const routPage = '/eventdetailsscreen';
 
   @override
@@ -80,7 +89,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               Positioned(
                   top: mediaSize.height / 5,
                   child: Text(
-                    "Mobile Development",
+                    widget.department,
                     style: TextStyle(color: Colors.white),
                   )),
               Positioned(
@@ -157,30 +166,57 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         ),
                       )),
                   Container(
+                    width: MediaQuery.of(context).size.width - 20,
                     margin: EdgeInsets.only(left: 30, right: 30, top: 5),
-                    height: 130,
-                    width: 500,
                     decoration: BoxDecoration(
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.all(Radius.circular(30))),
-                  ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        "About",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 20.0,
-                            color: Theme.of(context).textSelectionColor),
-                      )),
-                  gradientContainer,
-                  Container(
-                    margin: EdgeInsets.only(left: 30, right: 30, top: 5),
-                    height: 130,
-                    width: 500,
-                    decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Department:${widget.department}',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Date:${widget.date}',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'EventLocation:${widget.eventLocation}',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'EventOrganizer:${widget.eventOrganizer}',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'EventDescription:${widget.eventDescription}',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),

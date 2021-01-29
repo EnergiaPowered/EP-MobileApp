@@ -3,23 +3,30 @@ class ArticleModel {
   final String title;
   final String body;
   final String department;
-  int likesNumber;
-  int commentsNumber;
-  bool isPinned;
+  final String v;
+  final int likesNumber;
+  final int commentsNumber;
+  final bool isPinned;
 
   final String imageUrl;
 
-  ArticleModel(this.id, this.title, this.body, this.department, this.imageUrl,
-      this.likesNumber, this.commentsNumber, this.isPinned);
+  ArticleModel(
+      {this.id,
+      this.title,
+      this.body,
+      this.department,
+      this.v,
+      this.imageUrl,
+      this.likesNumber,
+      this.commentsNumber,
+      this.isPinned});
 
-//factory ArticleModel.fromJson(Map<String,dynamic> json){
-//return ArticleModel(
-//
-//  id: json['id'],
-//  title: json['title'],//
-//  body: json['body'],//
-//  department: json['department'],//
-//  imageUrl: json['imageUrl'],//
-//);
-//}
+  factory ArticleModel.fromJson(Map<String, dynamic> json) {
+    return ArticleModel(
+      id: json['id'],
+      title: json['title'], //
+      body: json['body'], //
+      v: json['__v'].toString(),
+    );
+  }
 }

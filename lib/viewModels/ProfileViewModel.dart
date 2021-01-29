@@ -1,47 +1,56 @@
 import 'package:energia_app/models/articleModel.dart';
 import 'package:energia_app/models/eventsModel.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'package:flutter/cupertino.dart';
 
-class ProfileViewModel{
-  Future<List<EventModel>> getEvents() async{
+class ProfileViewModel {
+  var baseUrl = 'https://energia-power-2020.herokuapp.com';
+  Future<List<EventModel>> getEvents() async {
+    var response = await http.get('$baseUrl/events');
 
     List<EventModel> eventList = new List<EventModel>();
 
-    EventModel eventModel = EventModel("id","Flutter Div","12-9-2021",'Soon',"eventDes","Ebda3","eventOrg","https://homepages.cae.wisc.edu/~ece533/images/airplane.png");
-
-    eventList.add(eventModel);
-    eventList.add(eventModel);
-    eventList.add(eventModel);
-    eventList.add(eventModel);
-    return eventList.toList();
+    if (response.statusCode == 200) {
+      List<dynamic> values = new List<dynamic>();
+      values = convert.json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            eventList.add(EventModel.fromJson(map));
+          }
+        }
+      }
+      return eventList;
+    } else {
+      throw Exception('error');
+    }
   }
 
-  Future<List<ArticleModel>> getArticles()async{
+  Future<List<ArticleModel>> getArticles() async {
+    var response = await http.get('$baseUrl/blogs');
 
-    List<ArticleModel> articleList= new List<ArticleModel>();
-    ArticleModel articleModel = ArticleModel('id','why flutter is best option between corss-platform languages',
-    'why flutter is best option between corss-platform languages why flutter is best option between corss-platform languages'
-        'why flutter is best option between corss-platform languages'
-        'why flutter is best option between corss-platform languages'
-        'vwhy flutter is best option between corss-platform languages',
-        'Mobile development',
-        "https://www.letsnurture.com/wp-content/uploads/2019/06/flutter-banner.jpg",10,11,true);
+    List<ArticleModel> blogs = new List<ArticleModel>();
 
-
-    articleList.add(articleModel);
-    articleList.add(articleModel);
-    articleList.add(articleModel);
-    articleList.add(articleModel);
-    articleList.add(articleModel);
-
-    return articleList.toList();
+    if (response.statusCode == 200) {
+      List<dynamic> values = new List<dynamic>();
+      values = convert.json.decode(response.body);
+      if (values.length > 0) {
+        for (int i = 0; i < values.length; i++) {
+          if (values[i] != null) {
+            Map<String, dynamic> map = values[i];
+            blogs.add(ArticleModel.fromJson(map));
+          }
+        }
+      }
+      return blogs;
+    } else {
+      throw Exception('error');
+    }
   }
 
-
-  void goBack(BuildContext context){
+  void goBack(BuildContext context) {
     Navigator.of(context).pushNamed('/home');
   }
-
-
-
 }

@@ -1,10 +1,10 @@
 import 'package:energia_app/models/eventsModel.dart';
+import 'package:energia_app/screens/event_deta_detials.dart';
 import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
 
 class EventListWidget extends StatefulWidget {
   final Size size;
-
   EventListWidget(this.size);
 
   @override
@@ -42,7 +42,19 @@ class _EventListWidgetState extends State<EventListWidget> {
                           itemCount: eventList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              onTap: () => print("object"),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            new EventDetailsScreen(
+                                                'department',
+                                                eventList[index].date,
+                                                eventList[index].eventOrganizer,
+                                                eventList[index].eventLocation,
+                                                eventList[index]
+                                                    .eventDescription)));
+                              },
                               child: Container(
                                   width: 250,
                                   height: 250,
@@ -111,7 +123,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                           ],
                                         ),
                                       ),
-                                      ClipRRect(
+                                      /* ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
@@ -133,7 +145,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                             width: 180,
                                           );
                                         }),
-                                      ),
+                                      ), */
                                     ],
                                   )),
                             );

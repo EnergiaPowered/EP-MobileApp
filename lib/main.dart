@@ -27,7 +27,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String playerId = "12";
+  String playerId = "ed905290-3c4a-4591-a781-893a9e42cd4d";
   Notifications notifications;
   ThemeData fontTheme = ThemeData(
     textTheme: ThemeData.light().textTheme.copyWith(
@@ -67,6 +67,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     initOneSignal();
     notifications = new Notifications();
+    notifications.postNotification("title", "body", playerId);
     super.initState();
   }
 
@@ -89,7 +90,8 @@ class _MyAppState extends State<MyApp> {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           LocalDrawer.routPage: (context) => LocalDrawer(),
           ExpandedArticles.routPage: (context) => ExpandedArticles(),
-          EventDetailsScreen.routPage: (ctx) => EventDetailsScreen(),
+          EventDetailsScreen.routPage: (ctx) => EventDetailsScreen('department',
+              'date', 'eventOrganizer', 'eventLocation', 'eventDescription'),
           '/profile': (context) => new Profile(),
           '/home': (context) => new MyApp(),
           '/pinnedItems': (context) => new PinnedItems(),
