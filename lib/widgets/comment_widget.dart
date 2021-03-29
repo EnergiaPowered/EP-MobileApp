@@ -16,7 +16,7 @@ class CommentWidget extends StatelessWidget {
           CircleAvatar(
             radius: 26,
             //child: Image.network(image),
-           backgroundImage:NetworkImage(image),
+            backgroundImage: NetworkImage(image),
           ),
           Container(
             margin: EdgeInsets.only(left: 5),

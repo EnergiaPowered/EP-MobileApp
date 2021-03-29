@@ -379,10 +379,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .signInWithEmailAndPassword(
                                               email: phone, password: password);
 
-                                      Navigator.of(context).push(
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
                                         MaterialPageRoute(
-                                          builder: (context) => Home(),
-                                        ),
+                                            builder: (context) => Home()),
+                                        (Route<dynamic> route) => false,
                                       );
                                     } on FirebaseAuthException catch (e) {
                                       if (e.code == 'weak-password') {
@@ -449,11 +450,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).pushReplacement(
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                SignUpScreen(widget.playerID),
-                                          ),
+                                              builder: (context) =>
+                                                  SignUpScreen(
+                                                      widget.playerID)),
+                                          (Route<dynamic> route) => false,
                                         );
                                       },
                                       child: Padding(

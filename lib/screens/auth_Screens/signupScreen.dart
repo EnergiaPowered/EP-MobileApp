@@ -585,10 +585,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
                                     email: phoneAsEmail, password: password);
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Home(),
-                              ),
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => Home()),
+                              (Route<dynamic> route) => false,
                             );
                           } else {
                             Toast.show("This number isn't exist", context,
@@ -697,10 +697,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginScreen(widget.playerID)));
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    LoginScreen(widget.playerID)),
+                            (Route<dynamic> route) => false,
+                          );
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
