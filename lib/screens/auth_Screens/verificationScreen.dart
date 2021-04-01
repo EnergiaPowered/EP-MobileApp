@@ -34,6 +34,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   void initState() {
     super.initState();
+
     /* _onVerifyCode(); */
     verifyPhone();
   }

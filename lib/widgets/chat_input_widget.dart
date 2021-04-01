@@ -1,24 +1,29 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
+import 'package:energia_app/widgets/send_image.dart';
 import 'package:flutter/services.dart';
-import '../widgets/chat_image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import '../widgets/message_item.dart';
 
 class ChatInputWidget extends StatefulWidget {
+  var channelId;
+  var curren_email;
+  var current_uid;
+  var other_uid;
+  ChatInputWidget(this.channelId,this.curren_email,this.current_uid,this.other_uid);
   @override
   _ChatInputWidgetState createState() => _ChatInputWidgetState();
 }
 
 class _ChatInputWidgetState extends State<ChatInputWidget> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   final _textController = new TextEditingController();
   bool _isEmojiShown = false;
   String _textMessage = '';
   bool _isKeyboardShown = false;
   final _chatRef = FirebaseFirestore.instance.collection('chats');
-  void _sendMessage(String text, MessageType type) {
+  /* void _sendMessage(String text, MessageType type) {
     if (type == MessageType.TEXT) {
       FocusScope.of(context).unfocus();
       _textController.clear();
@@ -27,7 +32,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
           'text': text.trim(),
           'date': DateTime.now().millisecondsSinceEpoch,
           'uid': 'me',
-          /**TODO change to uid */
+          *//**TODO change to uid *//*
           'type': 'MessageType.TEXT',
         },
       );
@@ -48,13 +53,15 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
       },
     );
     StorageReference storageReference =
-        FirebaseStorage.instance.ref().child('chats').child('me').child(path);
+    FirebaseStorage.instance.ref().child('chats').child('me').child(path);
     StorageUploadTask uploadTask = storageReference.putFile(File(path));
     await uploadTask.onComplete;
     storageReference.getDownloadURL().then((fileURL) {
       _chatRef.doc(docRef.id).update({'text': fileURL});
     });
   }
+*/
+
 
   Widget get _emojiPicker {
     return EmojiPicker(
@@ -121,15 +128,8 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  padding: EdgeInsets.all(5),
-                  icon: Icon(
-                    Icons.insert_emoticon,
-                    size: 35,
-                    color: Colors.grey,
-                  ),
-                  onPressed: _onEmojiIconPressed,
-                ),
+                SendImage(widget.current_uid,widget.channelId,
+                    widget.curren_email,widget.other_uid),
                 Expanded(
                   child: Container(
                     child: TextField(
@@ -158,7 +158,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                     ),
                   ),
                 ),
-                ChatImagePicker(_sendMessage),
+                ///   ChatImagePicker(_sendMessage),
                 IconButton(
                   padding: EdgeInsets.all(5),
                   icon: Icon(
@@ -171,16 +171,29 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                   onPressed: _textMessage.trim().isEmpty
                       ? null
                       : () {
-                          _sendMessage(_textMessage, MessageType.TEXT);
-                        },
+
+                    firestore
+                        .collection('ChatChannel')
+                        .doc(widget.channelId)
+                        .collection('messages')
+                        .add({
+                      'message': _textMessage,
+                      'type': 'text',
+                      'data': DateTime.now().toIso8601String().toString(),
+                      'sederEmail': widget.curren_email,
+                    }).whenComplete(() {
+
+                    }).then((value) => _textController.clear());
+                    ///  _sendMessage(_textMessage, MessageType.TEXT);
+                  },
                 ),
               ],
             ),
             _isEmojiShown
                 ? SingleChildScrollView(
-                    child: _emojiPicker,
-                    scrollDirection: Axis.horizontal,
-                  )
+              child: _emojiPicker,
+              scrollDirection: Axis.horizontal,
+            )
                 : Container(),
           ],
         ),

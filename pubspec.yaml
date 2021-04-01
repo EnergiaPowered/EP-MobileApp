@@ -43,7 +43,8 @@ dependencies:
   flutter_keyboard_visibility: ^3.2.2
   email_validator: '^1.0.0'
   onesignal_flutter: ^2.6.1
-  
+  photo_view:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
