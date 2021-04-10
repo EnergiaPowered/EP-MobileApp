@@ -56,8 +56,8 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                     .eventDescription)));
                               },
                               child: Container(
-                                  width: 250,
-                                  height: 250,
+                                  width: 260,
+                                  height: 280,
                                   margin:
                                       EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 5.0),
                                   child: Stack(
@@ -123,29 +123,16 @@ class _EventListWidgetState extends State<EventListWidget> {
                                           ],
                                         ),
                                       ),
-                                      /* ClipRRect(
+                                      ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
-                                        child: Image.network(
-                                            '${eventList[index].imageUrl}',
-                                            fit: BoxFit.cover,
-                                            height: 130,
-                                            width: 180,
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent
-                                                        loadingProgress) {
-                                          if (loadingProgress == null)
-                                            return child;
-                                          return Image.asset(
-                                            'assets/images/image.jpg',
-                                            fit: BoxFit.cover,
-                                            height: 130,
-                                            width: 180,
-                                          );
-                                        }),
-                                      ), */
+                                        child: Image.asset(
+                                          'assets/images/image.jpg',
+                                          fit: BoxFit.cover,
+                                          height: 120,
+                                          width: 180,
+                                        ),
+                                      ),
                                     ],
                                   )),
                             );
@@ -166,7 +153,7 @@ class _EventListWidgetState extends State<EventListWidget> {
       child: Row(
         children: <Widget>[
           icon,
-          Text(text),
+          Container(width: 180, child: Text(text)),
         ],
       ),
     );

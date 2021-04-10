@@ -1,11 +1,15 @@
 import 'package:energia_app/Providers/article_provider.dart';
 import 'package:energia_app/Providers/comment_provider.dart';
+import 'package:energia_app/models/articleModel.dart';
+import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
 import '../screens/article_details_screen.dart';
 import '../Providers/articles.dart';
 import 'package:provider/provider.dart';
 
 class ArticleWidget extends StatelessWidget {
+  List<ArticleModel> articleList = new List<ArticleModel>();
+  ProfileViewModel _profileViewModel = new ProfileViewModel();
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
@@ -170,155 +174,132 @@ class ArticleWidget extends StatelessWidget {
                         color: Theme.of(context).textSelectionColor),
                   )),
               gradientContainer,
-              Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(mediaSize.width / 30,
-                        mediaSize.height / 40, mediaSize.width / 30, 10),
-                    height: mediaSize.height / 3.5,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(60)),
-                    ),
-                  ),
-                  Positioned(
-                    top: mediaSize.height / 24,
-                    left: mediaSize.width / 6,
-                    right: mediaSize.width / 6,
-                    child: Container(
-                      width: mediaSize.width / 1,
-                      height: mediaSize.height / 4,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: localListupcomming.length,
-                        itemBuilder: (context, i) {
-                          return InkWell(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                ArticleDetailsScreen.routPage,
-                                arguments: localListupcomming[i].id),
-                            child: Container(
-                              width: mediaSize.width / 1.4,
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        mediaSize.width / 10,
-                                        mediaSize.height / 50,
-                                        mediaSize.width / 20,
-                                        mediaSize.height / 500),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0)),
+              Container(
+                height: 250,
+                margin: EdgeInsets.only(top: 10.0),
+                child: FutureBuilder<List<ArticleModel>>(
+                    future: _profileViewModel.getArticles(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        articleList = snapshot.data;
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: articleList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () => print("object"),
+                                child: Container(
+                                  decoration: BoxDecoration(
                                       color: Colors.white,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: mediaSize.height / 30,
-                                    left: mediaSize.width / 6.5,
-                                    child: Image.asset(
-                                      'assets/images/pp.png',
-                                      scale: 15,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: mediaSize.height / 10.1,
-                                    left: mediaSize.width / 10,
-                                    child: Container(
-                                      child: SingleChildScrollView(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  width: 250,
+                                  height: 250,
+                                  margin:
+                                      EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 10.0),
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: articleList[index].image_url ==
+                                                ''
+                                            ? Image.asset(
+                                                'assets/images/image.jpg',
+                                                fit: BoxFit.cover,
+                                                width: 250,
+                                                height: 250,
+                                              )
+                                            : Image.network(
+                                                "${articleList[index].image_url}",
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null)
+                                                    return child;
+                                                  return Image.asset(
+                                                    'assets/images/image.jpg',
+                                                    fit: BoxFit.cover,
+                                                    width: 250,
+                                                    height: 250,
+                                                  );
+                                                },
+                                              ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(
+                                                246, 246, 246, 0.7),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8.0))),
+                                        height: 130,
+                                        padding: EdgeInsets.all(5.0),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    mediaSize.width / 40,
-                                                    mediaSize.height / 80,
-                                                    0,
-                                                    0),
-                                                child: Text(
-                                                  "Contents",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w900,
-                                                      fontSize: 15.0,
-                                                      color: Theme.of(context)
-                                                          .textSelectionColor),
-                                                )),
-                                            gradientContainer,
-                                            /*
-                        Row Of bottom informations
-                      */
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      left:
-                                                          mediaSize.width / 25),
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      CircleAvatar(
-                                                        radius: 3,
-                                                        backgroundColor:
-                                                            Theme.of(context)
-                                                                .primaryColor,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      CircleAvatar(
-                                                        radius: 3,
-                                                        backgroundColor:
-                                                            Theme.of(context)
-                                                                .primaryColor,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      CircleAvatar(
-                                                        radius: 3,
-                                                        backgroundColor:
-                                                            Theme.of(context)
-                                                                .primaryColor,
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                /* To write towards bolits write code here */
-                                              ],
-                                            )
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text("${articleList[index].title}",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text("${articleList[index].body}",
+                                                maxLines: 2,
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
                                           ],
                                         ),
                                       ),
-                                    ),
+                                      Positioned(
+                                        child: Container(
+                                          alignment: Alignment.centerLeft,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius: BorderRadius.only(
+                                                bottomRight:
+                                                    Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                              )),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            '${articleList[index].department}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        top: 50,
+                                        left: 0,
+                                        right: 150,
+                                        bottom: 195,
+                                      )
+                                    ],
                                   ),
-                                  Positioned(
-                                    right: mediaSize.width / 10,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: Image.asset(
-                                        'assets/images/articlepaper.png',
-                                        scale: 9,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
+                                ),
+                              );
+                            });
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
               ),
               Divider(),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -336,24 +317,131 @@ class ArticleWidget extends StatelessWidget {
                   )),
               gradientContainer,
               Container(
-                width: mediaSize.width / 1.1,
-                child: Container(
-                  margin: EdgeInsets.only(left: mediaSize.width / 20),
-                  child: ListWheelScrollView(
-                    diameterRatio: mediaSize.height / 400,
-                    itemExtent: mediaSize.height / 3.2,
-                    children: localListprev,
-                  ),
-                ),
-                margin: EdgeInsets.fromLTRB(
-                    mediaSize.width / 7, mediaSize.height / 60, 0, 0),
-                height: mediaSize.height / 3.3,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(60),
-                      topLeft: Radius.circular(60)),
-                ),
+                height: 250,
+                margin: EdgeInsets.only(top: 10.0),
+                child: FutureBuilder<List<ArticleModel>>(
+                    future: _profileViewModel.getArticles(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        articleList = snapshot.data;
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: articleList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () => print("object"),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  width: 250,
+                                  height: 250,
+                                  margin:
+                                      EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 10.0),
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: <Widget>[
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: articleList[index].image_url ==
+                                                ''
+                                            ? Image.asset(
+                                                'assets/images/image.jpg',
+                                                fit: BoxFit.cover,
+                                                width: 250,
+                                                height: 250,
+                                              )
+                                            : Image.network(
+                                                "${articleList[index].image_url}",
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null)
+                                                    return child;
+                                                  return Image.asset(
+                                                    'assets/images/image.jpg',
+                                                    fit: BoxFit.cover,
+                                                    width: 250,
+                                                    height: 250,
+                                                  );
+                                                },
+                                              ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(
+                                                246, 246, 246, 0.7),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8.0))),
+                                        height: 130,
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text("${articleList[index].title}",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text("${articleList[index].body}",
+                                                maxLines: 2,
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Positioned(
+                                        child: Container(
+                                          alignment: Alignment.centerLeft,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius: BorderRadius.only(
+                                                bottomRight:
+                                                    Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                              )),
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            '${articleList[index].department}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        top: 50,
+                                        left: 0,
+                                        right: 150,
+                                        bottom: 195,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
               ),
             ],
           ),

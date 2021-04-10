@@ -71,23 +71,24 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     initOneSignal();
     notifications = new Notifications();
-    notifications.postNotification("title", "body", playerId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider( providers: [
-ChangeNotifierProvider.value(
-      value: Article(),),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: Article(),
+        ),
         ChangeNotifierProvider.value(
           value: Articles(),
         ),
         ChangeNotifierProvider.value(
           value: Comment(),
         ),
-    ],
-    child:  MaterialApp(
+      ],
+      child: MaterialApp(
         theme: ThemeData(
             backgroundColor: Colors.white,
             primaryColor: const Color(0xFF03144c),
@@ -115,8 +116,6 @@ ChangeNotifierProvider.value(
           EditProfile.routeName: (_) => EditProfile(),
         },
       ),
-    
-     
     );
   }
 }

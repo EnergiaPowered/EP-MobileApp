@@ -5,7 +5,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/cupertino.dart';
 
 class ProfileViewModel {
-  var baseUrl = 'https://energia-power-2020.herokuapp.com';
+  var baseUrl = 'https://energia21.herokuapp.com';
+
   Future<List<EventModel>> getEvents() async {
     var response = await http.get('$baseUrl/events');
 

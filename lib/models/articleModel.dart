@@ -8,7 +8,7 @@ class ArticleModel {
   final int commentsNumber;
   final bool isPinned;
 
-  final String imageUrl;
+  final String image_url;
 
   ArticleModel(
       {this.id,
@@ -16,17 +16,17 @@ class ArticleModel {
       this.body,
       this.department,
       this.v,
-      this.imageUrl,
+      this.image_url,
       this.likesNumber,
       this.commentsNumber,
       this.isPinned});
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
     return ArticleModel(
-      id: json['id'],
-      title: json['title'], //
-      body: json['body'], //
-      v: json['__v'].toString(),
-    );
+        id: json['id'],
+        title: json['title'], //
+        body: json['body'], //
+        v: json['__v'].toString(),
+        image_url: json['image_url']);
   }
 }

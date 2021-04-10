@@ -1,3 +1,5 @@
+import 'package:energia_app/models/eventsModel.dart';
+import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
 import '../screens/event_deta_detials.dart';
 
@@ -7,6 +9,8 @@ class EventsWidget extends StatefulWidget {
 }
 
 class _EventsWidgetState extends State<EventsWidget> {
+  List<EventModel> eventList = new List<EventModel>();
+  ProfileViewModel _profileViewModel = new ProfileViewModel();
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
@@ -264,39 +268,124 @@ class _EventsWidgetState extends State<EventsWidget> {
             upcomming Events part
              */
           InkWell(
-            onTap: () =>
-                Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
-            child: Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(mediaSize.width / 30,
-                      mediaSize.height / 40, mediaSize.width / 30, 10),
-                  height: mediaSize.height / 3.5,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(60)),
-                  ),
-                ),
-                Positioned(
-                  top: mediaSize.height / 24,
-                  left: mediaSize.width / 6,
-                  right: mediaSize.width / 6,
-                  child: Container(
-                    width: mediaSize.width / 1,
-                    height: mediaSize.height / 4,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: localListupcomming.length,
-                      itemBuilder: (context, i) {
-                        return localListupcomming[i];
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
+              child: Container(
+                height: 300,
+                margin: EdgeInsets.only(top: 10.0),
+                child: FutureBuilder<List<EventModel>>(
+                    future: _profileViewModel.getEvents(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        eventList = snapshot.data;
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: eventList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new EventDetailsScreen(
+                                                  'department',
+                                                  eventList[index].date,
+                                                  eventList[index]
+                                                      .eventOrganizer,
+                                                  eventList[index]
+                                                      .eventLocation,
+                                                  eventList[index]
+                                                      .eventDescription)));
+                                },
+                                child: Container(
+                                    width: 260,
+                                    height: 280,
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 5.0, 5.0, 5.0),
+                                    child: Stack(
+                                      alignment: Alignment.topCenter,
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              10.0, 30.0, 5.0, 5.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30.0)),
+                                            color: Colors.white,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: <Widget>[
+                                              Text("${eventList[index].name}",
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        listitle(
+                                                            "${eventList[index].date}",
+                                                            Icon(Icons
+                                                                .date_range)),
+                                                        listitle(
+                                                            "${eventList[index].eventLocation}",
+                                                            Icon(Icons
+                                                                .location_on)),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 16.0,
+                                                                  top: 8.0),
+                                                          child: Text(
+                                                            "${eventList[index].status}",
+                                                            style: TextStyle(
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: Image.asset(
+                                            'assets/images/image.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 120,
+                                            width: 180,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            });
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
+              )),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
           Divider(),
@@ -314,26 +403,137 @@ class _EventsWidgetState extends State<EventsWidget> {
                     color: Theme.of(context).textSelectionColor),
               )),
           gradientContainer,
-          Container(
-            width: mediaSize.width / 1.1,
-            child: Container(
-              margin: EdgeInsets.only(left: mediaSize.width / 20),
-              child:ListWheelScrollView(
-                  diameterRatio: mediaSize.height/400,
-                        itemExtent: mediaSize.height/3.2,
-                        children: localListprev,
-                    ),
-            ),
-            margin: EdgeInsets.fromLTRB(
-                mediaSize.width / 7, mediaSize.height / 60, 0, 0),
-            height: mediaSize.height / 3.3,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  topLeft: Radius.circular(60)),
-            ),
-          ),
+          InkWell(
+              onTap: () =>
+                  Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
+              child: Container(
+                height: 300,
+                margin: EdgeInsets.only(top: 10.0),
+                child: FutureBuilder<List<EventModel>>(
+                    future: _profileViewModel.getEvents(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        eventList = snapshot.data;
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: eventList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              new EventDetailsScreen(
+                                                  'department',
+                                                  eventList[index].date,
+                                                  eventList[index]
+                                                      .eventOrganizer,
+                                                  eventList[index]
+                                                      .eventLocation,
+                                                  eventList[index]
+                                                      .eventDescription)));
+                                },
+                                child: Container(
+                                    width: 260,
+                                    height: 280,
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 5.0, 5.0, 5.0),
+                                    child: Stack(
+                                      alignment: Alignment.topCenter,
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              10.0, 30.0, 5.0, 5.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30.0)),
+                                            color: Colors.white,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: <Widget>[
+                                              Text("${eventList[index].name}",
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        listitle(
+                                                            "${eventList[index].date}",
+                                                            Icon(Icons
+                                                                .date_range)),
+                                                        listitle(
+                                                            "${eventList[index].eventLocation}",
+                                                            Icon(Icons
+                                                                .location_on)),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 16.0,
+                                                                  top: 8.0),
+                                                          child: Text(
+                                                            "${eventList[index].status}",
+                                                            style: TextStyle(
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: Image.asset(
+                                            'assets/images/image.jpg',
+                                            fit: BoxFit.cover,
+                                            height: 120,
+                                            width: 180,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            });
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
+              )),
+        ],
+      ),
+    );
+  }
+
+  Widget listitle(String text, Icon icon) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, top: 4.0),
+      child: Row(
+        children: <Widget>[
+          icon,
+          Container(width: 180, child: Text(text)),
         ],
       ),
     );

@@ -280,7 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 50, vertical: 0),
+                                      horizontal: 30, vertical: 0),
                                   child: Text(
                                     'Enter your first name',
                                     style: Theme.of(context)
@@ -343,7 +343,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 50, vertical: 0),
+                                      horizontal: 30, vertical: 0),
                                   child: Text(
                                     'Enter your last name',
                                     style: Theme.of(context)
