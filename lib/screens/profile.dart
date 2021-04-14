@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:energia_app/screens/edit_profile.dart';
 import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:energia_app/widgets/eventListWidget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -14,8 +16,33 @@ class Profile extends StatefulWidget {
 
 class _ProfileWidgetState extends State<Profile> {
   ProfileViewModel profileViewModel;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var current_uid=FirebaseAuth.instance.currentUser.email.substring(2,13);
+var first_name="neme";
+var last_name="name";
+var image_url="NULL";
+var bio="bio";
   @override
   void initState() {
+    firestore
+        .collection('users')
+        .doc(current_uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        setState(() {
+          first_name=documentSnapshot.data()['first_name'];
+          last_name=documentSnapshot.data()['last_name'];
+          image_url=documentSnapshot.data()['image_url'];
+          bio=documentSnapshot.data()['bio'];
+
+
+        });
+      } else {
+
+      }
+    });
+
     // ignore: todo
     // TODO: implement initState
     profileViewModel = new ProfileViewModel();
@@ -110,8 +137,12 @@ class _ProfileWidgetState extends State<Profile> {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(80.0),
-                  child: Image.asset(
+                  child: (image_url=="NULL"||image_url==null)?Image.asset(
                     'assets/images/person.jpg',
+                    fit: BoxFit.cover,
+                    height: 130.0,
+                    width: 130.0,
+                  ):Image.network(image_url,
                     fit: BoxFit.cover,
                     height: 130.0,
                     width: 130.0,
@@ -121,7 +152,7 @@ class _ProfileWidgetState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Mahmoud Alrashidi',
+                      '$first_name $last_name',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
@@ -132,7 +163,7 @@ class _ProfileWidgetState extends State<Profile> {
                       height: 9,
                     ),
                     Text(
-                      'Mobile Div',
+                      (bio=="bio"||bio==null)?"i love energia":bio,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontWeight: FontWeight.normal,
