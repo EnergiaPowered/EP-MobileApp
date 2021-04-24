@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 import './screens/edit_profile.dart';
 import './screens/expandedarticles.dart';
@@ -66,9 +67,24 @@ class _MyAppState extends State<MyApp> {
     print("playerId: $playerId");
   }
 
+  Widget nextPage;
+  String name = '';
+
+  Future<String> shared() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    return preferences.getString('userName');
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    //
+    shared().then((value) {
+      setState(() {
+        name = value;
+      });
+    });
     initOneSignal();
     notifications = new Notifications();
     super.initState();

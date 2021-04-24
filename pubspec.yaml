@@ -44,6 +44,7 @@ dependencies:
   email_validator: '^1.0.0'
   onesignal_flutter: ^2.6.1
   photo_view:
+  shared_preferences: ^0.5.7+2
 
 dev_dependencies:
   flutter_test:

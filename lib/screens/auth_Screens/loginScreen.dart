@@ -4,6 +4,7 @@ import 'package:energia_app/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signupScreen.dart';
 
@@ -377,7 +378,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     try {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
-                                              email: phone, password: password);
+                                              email: phone, password: password)
+                                          .then((value) {
+                                        if (value.user != null) {
+                                          shared(value.user.displayName);
+                                        }
+                                      });
 
                                       Navigator.pushAndRemoveUntil(
                                         context,
@@ -490,5 +496,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  shared(String userName) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setString('userName', userName);
   }
 }
