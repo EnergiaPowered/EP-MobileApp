@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 height: 15,
               ),
-              Padding(
+              /*   Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
@@ -149,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-              ),
+              ), */
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

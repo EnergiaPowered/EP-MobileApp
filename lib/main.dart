@@ -1,6 +1,6 @@
 import 'package:energia_app/Providers/articles.dart';
 import 'package:energia_app/Providers/comment_provider.dart';
-import 'package:energia_app/screens/auth_Screens/loginScreen.dart';
+import 'package:energia_app/services/App.dart';
 import 'package:energia_app/services/notifications.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -123,7 +123,9 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.bold,
             )))),
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(playerId), //App(),
+        home: App(
+          playerId: playerId,
+        ), //LoginScreen(playerId),
         routes: {
           ArticleDetailsScreen.routPage: (context) => ArticleDetailsScreen(),
           LocalDrawer.routPage: (context) => LocalDrawer(),

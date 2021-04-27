@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 30,
                 ),
-                Padding(
+                /*   Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 10,
                   ),
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                ),
+                ), */
                 FadeAnimation(
                   1,
                   Padding(

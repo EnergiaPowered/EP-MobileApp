@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import '../screens/home.dart';
 
 class App extends StatefulWidget {
+  final String playerId;
+
+  const App({Key key, @required this.playerId}) : super(key: key);
   @override
   _AppState createState() => _AppState();
 }
@@ -36,6 +39,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return _user != null ? Home() : LoginScreen("");
+    return _user != null ? Home() : LoginScreen(widget.playerId);
   }
 }
