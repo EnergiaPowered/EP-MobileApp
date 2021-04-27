@@ -24,18 +24,6 @@ class _HomeState extends State<Home> {
           trailing: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              SizedBox(width: 8),
-              Icon(
-                Icons.notifications,
-                color: Colors.white,
-              ),
-              SizedBox(width: 8),
-            ],
           ),
           appBarPadding: const EdgeInsets.only(top: 30),
           sliderMenuOpenOffset: 250,

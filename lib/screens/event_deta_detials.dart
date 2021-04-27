@@ -45,11 +45,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             bottom: Radius.circular(30),
           ),
         ),
-        title: Padding(
-          padding: EdgeInsets.only(left: mediaSize.width / 4.5),
-          child: Text("Event",
-              style: Theme.of(context).appBarTheme.textTheme.headline6),
-        ),
+        title: Text("Event Details",
+            style: Theme.of(context).appBarTheme.textTheme.headline6),
+        centerTitle: true,
       ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
@@ -63,75 +61,75 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           /*
               Stack of The Top Widget with some information 
         */
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(
-                    mediaSize.width / 30,
-                    mediaSize.height / 15,
-                    mediaSize.width / 30,
-                    mediaSize.height / 50),
-                height: mediaSize.height / 4,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(60),
-                      topLeft: Radius.circular(60)),
-                ),
-              ),
-              Positioned(
-                child: Image.asset(
-                  'assets/images/articlepaper.png',
-                  scale: 7,
-                ),
-              ),
-              Positioned(
-                  top: mediaSize.height / 5,
-                  child: Text(
-                    widget.department,
-                    style: TextStyle(color: Colors.white),
-                  )),
-              Positioned(
-                bottom: mediaSize.height / 50,
-                left: mediaSize.width / 30,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.thumb_up, color: Colors.white),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.textsms, color: Colors.white),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.fiber_pin, color: Colors.white),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+          // Stack(
+          //   alignment: Alignment.topCenter,
+          //   children: [
+          //     Container(
+          //       margin: EdgeInsets.fromLTRB(
+          //           mediaSize.width / 30,
+          //           mediaSize.height / 15,
+          //           mediaSize.width / 30,
+          //           mediaSize.height / 50),
+          //       height: mediaSize.height / 4,
+          //       decoration: BoxDecoration(
+          //         color: Theme.of(context).primaryColor,
+          //         borderRadius: BorderRadius.only(
+          //             topRight: Radius.circular(60),
+          //             topLeft: Radius.circular(60)),
+          //       ),
+          //     ),
+          //     Positioned(
+          //       child: Image.asset(
+          //         'assets/images/articlepaper.png',
+          //         scale: 7,
+          //       ),
+          //     ),
+          //     Positioned(
+          //         top: mediaSize.height / 5,
+          //         child: Text(
+          //           widget.department,
+          //           style: TextStyle(color: Colors.white),
+          //         )),
+          //     Positioned(
+          //       bottom: mediaSize.height / 50,
+          //       left: mediaSize.width / 30,
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           IconButton(
+          //             onPressed: () {},
+          //             icon: Icon(Icons.thumb_up, color: Colors.white),
+          //           ),
+          //           IconButton(
+          //             onPressed: () {},
+          //             icon: Icon(Icons.textsms, color: Colors.white),
+          //           ),
+          //           IconButton(
+          //             onPressed: () {},
+          //             icon: Icon(Icons.fiber_pin, color: Colors.white),
+          //           ),
+          //         ],
+          //       ),
+          //     )
+          //   ],
+          // ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
-          Divider(),
-          /*
-              Container Of Comments 
-        */
-          Container(
-            height: 50,
-          ),
-          Divider(),
+          //   Divider(),
+          //   /*
+          //       Container Of Comments
+          // */
+          //   Container(
+          //     height: 50,
+          //   ),
+          //   Divider(),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
 
           /*
               Container Of Bottom informations 
         */
           Container(
-            height: mediaSize.height / 2.35,
+            height: mediaSize.height * 0.88,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,8 +164,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         ),
                       )),
                   Container(
-                    width: MediaQuery.of(context).size.width - 20,
-                    margin: EdgeInsets.only(left: 30, right: 30, top: 5),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 5),
                     decoration: BoxDecoration(
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.all(Radius.circular(30))),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:energia_app/models/articleModel.dart';
+import 'package:energia_app/screens/article_details_screen.dart';
 import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,13 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                           itemCount: articleList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              onTap: () => print("object"),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ArticleDetailsScreen(
+                                            articleModel: articleList[index],
+                                          ))),
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: Colors.white,
@@ -122,30 +129,30 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                                         ],
                                       ),
                                     ),
-                                    Positioned(
-                                      child: Container(
-                                        alignment: Alignment.centerLeft,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius: BorderRadius.only(
-                                              bottomRight:
-                                                  Radius.circular(10.0),
-                                              topRight: Radius.circular(10.0),
-                                            )),
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Text(
-                                          '${articleList[index].department}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      top: 50,
-                                      left: 0,
-                                      right: 150,
-                                      bottom: 195,
-                                    )
+                                    // Positioned(
+                                    //   child: Container(
+                                    //     alignment: Alignment.centerLeft,
+                                    //     decoration: BoxDecoration(
+                                    //         color:
+                                    //             Theme.of(context).primaryColor,
+                                    //         borderRadius: BorderRadius.only(
+                                    //           bottomRight:
+                                    //               Radius.circular(10.0),
+                                    //           topRight: Radius.circular(10.0),
+                                    //         )),
+                                    //     padding: EdgeInsets.all(8.0),
+                                    //     child: Text(
+                                    //       '${articleList[index].department}',
+                                    //       style: TextStyle(
+                                    //         color: Colors.white,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    //   top: 50,
+                                    //   left: 0,
+                                    //   right: 150,
+                                    //   bottom: 195,
+                                    // )
                                   ],
                                 ),
                               ),

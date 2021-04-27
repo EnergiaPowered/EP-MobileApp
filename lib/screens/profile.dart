@@ -17,11 +17,11 @@ class Profile extends StatefulWidget {
 class _ProfileWidgetState extends State<Profile> {
   ProfileViewModel profileViewModel;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var current_uid=FirebaseAuth.instance.currentUser.email.substring(2,13);
-var first_name="neme";
-var last_name="name";
-var image_url="NULL";
-var bio="bio";
+  var current_uid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var first_name = "neme";
+  var last_name = "name";
+  var image_url = "NULL";
+  var bio = "bio";
   @override
   void initState() {
     firestore
@@ -31,16 +31,12 @@ var bio="bio";
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          first_name=documentSnapshot.data()['first_name'];
-          last_name=documentSnapshot.data()['last_name'];
-          image_url=documentSnapshot.data()['image_url'];
-          bio=documentSnapshot.data()['bio'];
-
-
+          first_name = documentSnapshot.data()['first_name'];
+          last_name = documentSnapshot.data()['last_name'];
+          image_url = documentSnapshot.data()['image_url'];
+          bio = documentSnapshot.data()['bio'];
         });
-      } else {
-
-      }
+      } else {}
     });
 
     // ignore: todo
@@ -114,17 +110,6 @@ var bio="bio";
                     SizedBox(
                       width: 10,
                     ),
-                    Container(
-                        padding: EdgeInsets.all(4.0),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(13.0))),
-                        child: Icon(
-                          Icons.notifications,
-                          size: 30,
-                          color: Theme.of(context).primaryColor,
-                        )),
                   ],
                 )
               ],
@@ -137,16 +122,19 @@ var bio="bio";
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(80.0),
-                  child: (image_url=="NULL"||image_url==null)?Image.asset(
-                    'assets/images/person.jpg',
-                    fit: BoxFit.cover,
-                    height: 130.0,
-                    width: 130.0,
-                  ):Image.network(image_url,
-                    fit: BoxFit.cover,
-                    height: 130.0,
-                    width: 130.0,
-                  ),
+                  child: (image_url == "NULL" || image_url == null)
+                      ? Image.asset(
+                          'assets/images/person.jpg',
+                          fit: BoxFit.cover,
+                          height: 130.0,
+                          width: 130.0,
+                        )
+                      : Image.network(
+                          image_url,
+                          fit: BoxFit.cover,
+                          height: 130.0,
+                          width: 130.0,
+                        ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +151,7 @@ var bio="bio";
                       height: 9,
                     ),
                     Text(
-                      (bio=="bio"||bio==null)?"i love energia":bio,
+                      (bio == "bio" || bio == null) ? "i love energia" : bio,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontWeight: FontWeight.normal,

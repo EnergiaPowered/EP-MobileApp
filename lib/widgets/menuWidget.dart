@@ -49,9 +49,9 @@ class MenuWidget extends StatelessWidget {
           ),
           sliderItem('Profile', Icons.person_pin, context),
           sliderItem("Chat", Icons.message, context),
-          sliderItem("Pinned Items", Icons.pin_drop, context),
+          // sliderItem("Pinned Items", Icons.pin_drop, context),
           sliderItem("About Us", Icons.book, context),
-          sliderItem('Projects', Icons.assignment, context),
+          // sliderItem('Projects', Icons.assignment, context),
           Expanded(
             child: Row(
               children: <Widget>[
