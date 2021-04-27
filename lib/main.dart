@@ -109,6 +109,13 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: Colors.white,
             primaryColor: const Color(0xFF03144c),
             textSelectionColor: const Color(0xFF03144c),
+            textTheme: TextTheme(
+                headline6: TextStyle(
+              fontFamily: 'Lato',
+              fontSize: 36,
+              color: const Color(0xFF03144c),
+              fontWeight: FontWeight.bold,
+            )),
             appBarTheme: AppBarTheme(
                 textTheme: TextTheme(
                     headline6: TextStyle(
