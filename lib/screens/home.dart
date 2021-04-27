@@ -25,14 +25,17 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
-          appBarPadding: const EdgeInsets.only(top: 30),
+          appBarPadding: const EdgeInsets.only(top: 30, right: 40),
           sliderMenuOpenOffset: 250,
           appBarHeight: 60,
-          title: Text('Energia Power',
-              style: TextStyle(
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
+          title: Center(
+            child: Text('Energia Power',
+                style: TextStyle(
+                    fontFamily: 'Lato',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
+          ),
           sliderMenu: MenuWidget(),
           sliderMain: MainHome()),
     );
