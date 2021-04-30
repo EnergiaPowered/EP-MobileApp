@@ -1,9 +1,11 @@
 import 'package:energia_app/components/constants.dart';
 import 'package:energia_app/components/fadeAnimation.dart';
 import 'package:energia_app/screens/home.dart';
+import 'package:energia_app/services/notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signupScreen.dart';
@@ -23,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool passValid = true;
   String phone;
   String password;
+  String playerId = '';
 
   void obscureFuncton() {
     setState(() {
@@ -54,6 +57,15 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
   */
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print(':::::::::::::::${widget.playerID}');
+    initOneSignal();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("playerId:${widget.playerID}");
@@ -382,6 +394,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .then((value) {
                                         if (value.user != null) {
                                           shared(value.user.displayName);
+                                          Notifications notifications =
+                                              new Notifications();
+                                          notifications.postNotification(
+                                              'Welcome back',
+                                              'We wish you a useful time \n Energia Team',
+                                              playerId);
                                         }
                                       });
 
@@ -460,8 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SignUpScreen(
-                                                      widget.playerID)),
+                                                  SignUpScreen(playerId)),
                                           (Route<dynamic> route) => false,
                                         );
                                       },
@@ -502,5 +519,23 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     await preferences.setString('userName', userName);
+  }
+
+  void initOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.inAppLaunchUrl: false
+    });
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    playerId = status.subscriptionStatus.userId;
+    setState(() {
+      playerId = playerId;
+    });
+    print("playerId: $playerId");
   }
 }
