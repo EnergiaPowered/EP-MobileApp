@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('" The better is yet to come "'.toUpperCase(),
+                      Text('" Collaborate to innovate "'.toUpperCase(),
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme

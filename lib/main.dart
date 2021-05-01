@@ -140,6 +140,7 @@ class _MyAppState extends State<MyApp> {
           InBoxMessages.routeName: (_) => InBoxMessages(),
           EditProfile.routeName: (_) => EditProfile(),
         },
+        title: 'Energia Powered',
       ),
     );
   }

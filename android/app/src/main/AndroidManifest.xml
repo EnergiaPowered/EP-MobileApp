@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Energia"
+        android:label="Energia Powered"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
