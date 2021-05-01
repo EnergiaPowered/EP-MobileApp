@@ -97,7 +97,7 @@ class AboutUsBody extends StatelessWidget {
                   child: Image.network(
                     aboutObj.structureUrl,
                     filterQuality: FilterQuality.medium,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     height: MediaQuery.of(context).size.height / 2,
                     width: double.infinity,
                     loadingBuilder: (context, child, loadingProgress) {
