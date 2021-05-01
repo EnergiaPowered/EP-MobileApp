@@ -19,17 +19,17 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   File _pickedProfileImage;
 
-
   bool inputChanged = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  var current_uid=FirebaseAuth.instance.currentUser.email.substring(2,13);
+  var current_uid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
 
-  var first_name="name";
-  var last_name="name";
-  var image_url="NULL";
-  var bio="bio";
-  var email="email";
+  var first_name = "name";
+  var last_name = "name";
+  var image_url = "NULL";
+  var bio = "bio";
+  var email = "email";
+  bool textFieldEnable = false;
 
   TextEditingController frist_Name_Controler = TextEditingController();
   TextEditingController last_Name_Controler = TextEditingController();
@@ -37,13 +37,14 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController bio_Controler = TextEditingController();
   TextEditingController email_Controler = TextEditingController();
 
-
-
-
-  Widget generateTextField(String hint, TextEditingController controller,) {
+  Widget generateTextField(
+    String hint,
+    TextEditingController controller,
+  ) {
     return Container(
       margin: EdgeInsets.all(10.0),
       child: TextField(
+        enabled: textFieldEnable,
         onChanged: (value) => inputChanged = true,
         controller: controller,
         textAlign: TextAlign.start,
@@ -65,6 +66,7 @@ class _EditProfileState extends State<EditProfile> {
       _pickedProfileImage = pickedImageFile;
     });
   }
+
   @override
   void initState() {
     firestore
@@ -74,74 +76,115 @@ class _EditProfileState extends State<EditProfile> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          frist_Name_Controler.text=documentSnapshot.data()['first_name'];
-          last_Name_Controler.text=documentSnapshot.data()['last_name'];
-          image_url=documentSnapshot.data()['image_url'];
-          bio_Controler.text=documentSnapshot.data()['bio'];
-          email_Controler.text=documentSnapshot.data()['email'];
-
+          frist_Name_Controler.text = documentSnapshot.data()['first_name'];
+          last_Name_Controler.text = documentSnapshot.data()['last_name'];
+          image_url = documentSnapshot.data()['image_url'];
+          bio_Controler.text = documentSnapshot.data()['bio'];
+          email_Controler.text = documentSnapshot.data()['email'];
         });
-      } else {
-
-      }
+      } else {}
     }).whenComplete(() {
-      if (frist_Name_Controler.text==null){
+      if (frist_Name_Controler.text == null) {
         setState(() {
-          frist_Name_Controler.text="name";
+          frist_Name_Controler.text = "name";
         });
       }
-      if (email_Controler.text==null){
+      if (email_Controler.text == null) {
         setState(() {
-          email_Controler.text="email";
+          email_Controler.text = "email";
         });
       }
-      if (last_Name_Controler.text==null){
+      if (last_Name_Controler.text == null) {
         setState(() {
-          last_Name_Controler.text="name";
+          last_Name_Controler.text = "name";
         });
       }
-      if (bio_Controler.text==null){
+      if (bio_Controler.text == null) {
         setState(() {
-          bio_Controler.text="bio";
+          bio_Controler.text = "bio";
         });
       }
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.done),
-            onPressed: () {
-              if (!inputChanged&&_pickedProfileImage==null) {
-                Toast.show("Data not changed", context,
-                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-              } else {
-                HelpFun().startLoading(context);
-                if (_pickedProfileImage!=null){
-                  uploadImage(_pickedProfileImage);
-                }
-                else{
-                  _sendToServer(image_url);
-                }
+          textFieldEnable
+              ? IconButton(
+                  icon: Icon(Icons.done),
+                  onPressed: () {
+                    if (!inputChanged && _pickedProfileImage == null) {
+                      Toast.show("Data not changed", context,
+                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                    } else {
+                      HelpFun().startLoading(context);
+                      if (_pickedProfileImage != null) {
+                        uploadImage(_pickedProfileImage);
+                      } else {
+                        _sendToServer(image_url);
+                      }
 
-                ///start loading
-                 ///if (image changed)  updata image
-                ///updata data
-                ///close loading
+                      ///start loading
+                      ///if (image changed)  updata image
+                      ///updata data
+                      ///close loading
 
-              }
-            },
-          )
+                    }
+                    Navigator.of(context).pop();
+                  },
+                )
+              : SizedBox()
         ],
-        title: Text('Edit Profile'),
+        title: Text(
+          'Profile',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            !textFieldEnable
+                ? Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Edit',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              textFieldEnable = true;
+                            });
+                          },
+                          child: Container(
+                              padding: EdgeInsets.all(4.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0))),
+                              child: Icon(
+                                Icons.edit,
+                                size: 30,
+                                color: Theme.of(context).primaryColor,
+                              )),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        )
+                      ],
+                    ),
+                  )
+                : SizedBox(),
             Container(
               padding: EdgeInsets.all(15),
               width: double.infinity,
@@ -154,25 +197,28 @@ class _EditProfileState extends State<EditProfile> {
                       radius: 60,
                       backgroundImage: _pickedProfileImage != null
                           ? FileImage(_pickedProfileImage)
-                          :(image_url!="NULL"&&image_url!=null)? NetworkImage(
-                             image_url):AssetImage("assets/images/logo.png"),
+                          : (image_url != "NULL" && image_url != null)
+                              ? NetworkImage(image_url)
+                              : AssetImage("assets/images/user.png"),
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade200,
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.add_a_photo,
-                            color: const Color(0xFF03144c),
+                  textFieldEnable
+                      ? Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey.shade200,
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.add_a_photo,
+                                  color: const Color(0xFF03144c),
+                                ),
+                                onPressed: () {
+                                  _pickImage();
+                                }),
                           ),
-                          onPressed: () {
-                            _pickImage();
-                          }),
-                    ),
-                  ),
+                        )
+                      : SizedBox()
                 ]),
               ),
             ),
@@ -184,43 +230,41 @@ class _EditProfileState extends State<EditProfile> {
                   horizontal: MediaQuery.of(context).size.width * 1 / 6),
               color: Theme.of(context).primaryColor,
             ),
-           /// SwitchLanguage(false),
 
+            /// SwitchLanguage(false),
 
-           /// generateTextField('Password', TextEditingController(text: '********')),
+            /// generateTextField('Password', TextEditingController(text: '********')),
             generateTextField('first name', frist_Name_Controler),
             generateTextField('last name', last_Name_Controler),
 
             generateTextField('bio', bio_Controler),
-            generateTextField('Email',email_Controler),
+            generateTextField('Email', email_Controler),
           ],
         ),
       ),
     );
   }
 
-  _sendToServer( String url) {
-    firestore
-        .collection('users')
-        .doc(current_uid)
-        .update({
-      'first_name':frist_Name_Controler.text ,
+  _sendToServer(String url) {
+    firestore.collection('users').doc(current_uid).update({
+      'first_name': frist_Name_Controler.text,
       'last_name': last_Name_Controler.text,
-      'image_url':url ,
-      'email':email_Controler.text ,
+      'image_url': url,
+      'email': email_Controler.text,
       'bio': bio_Controler.text,
     }).whenComplete(() {
       HelpFun().closeLoading(context);
       Toast.show("Data saved", context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     });
-
   }
 
   uploadImage(File image) async {
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(current_uid).child("profile_image")
-    .child(DateTime.now().toString());
+    StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child(current_uid)
+        .child("profile_image")
+        .child(DateTime.now().toString());
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     final url = await firebaseStorageRef.getDownloadURL();

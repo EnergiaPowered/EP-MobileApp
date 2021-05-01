@@ -340,7 +340,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          Row(
+                          /*  Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               GestureDetector(
@@ -359,7 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               )
                             ],
-                          ),
+                          ), */
                           // Login ////////////////////////////////////////////////
                           Padding(
                             padding: const EdgeInsets.all(15.0),
