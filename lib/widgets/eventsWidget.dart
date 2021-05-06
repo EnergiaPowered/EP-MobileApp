@@ -290,7 +290,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                                           builder: (context) =>
                                               new EventDetailsScreen(
                                                   'department',
-                                                  eventList[index].date,
+                                                  eventList[index].startDate,
                                                   eventList[index]
                                                       .eventOrganizer,
                                                   eventList[index]
@@ -300,7 +300,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                                 },
                                 child: Container(
                                     width: 260,
-                                    height: 280,
+                                    height: 300,
                                     margin: EdgeInsets.fromLTRB(
                                         10.0, 5.0, 5.0, 5.0),
                                     child: Stack(
@@ -337,7 +337,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                                                               .start,
                                                       children: <Widget>[
                                                         listitle(
-                                                            "${eventList[index].date}",
+                                                            "End Date:${eventList[index].endDate}",
                                                             Icon(Icons
                                                                 .date_range)),
                                                         listitle(
@@ -426,7 +426,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                                           builder: (context) =>
                                               new EventDetailsScreen(
                                                   'department',
-                                                  eventList[index].date,
+                                                  eventList[index].startDate,
                                                   eventList[index]
                                                       .eventOrganizer,
                                                   eventList[index]
@@ -473,7 +473,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                                                               .start,
                                                       children: <Widget>[
                                                         listitle(
-                                                            "${eventList[index].date}",
+                                                            "${eventList[index].startDate}",
                                                             Icon(Icons
                                                                 .date_range)),
                                                         listitle(

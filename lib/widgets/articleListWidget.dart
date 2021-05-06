@@ -75,7 +75,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                                               height: 250,
                                             )
                                           : Image.network(
-                                              "${articleList[index].image_url}",
+                                              "https://drive.google.com/uc?exort=view&id=${articleList[index].image_url}",
                                               fit: BoxFit.cover,
                                               width: double.infinity,
                                               height: double.infinity,

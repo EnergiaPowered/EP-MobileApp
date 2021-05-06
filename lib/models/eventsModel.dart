@@ -1,7 +1,10 @@
 class EventModel {
   final String id;
+
+  final String image;
   final String name;
-  final String date;
+  final String startDate;
+  final String endDate;
   final String status;
   final String eventDescription;
   final String eventLocation;
@@ -10,8 +13,10 @@ class EventModel {
 
   EventModel(
       {this.id,
+      this.image,
       this.name,
-      this.date,
+      this.startDate,
+      this.endDate,
       this.status,
       this.eventDescription,
       this.eventLocation,
@@ -22,9 +27,11 @@ class EventModel {
     return EventModel(
       id: json['_id'],
       name: json['name'],
-      date: json['date'],
+      image: json['eventImageID'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
       status: json['status'],
-      eventDescription: json['eventDescription'],
+      eventDescription: json['eventMobileDescription'],
       eventLocation: json['eventLocation'],
       eventOrganizer: json['eventOrganizer'],
       v: json['__v'].toString(),

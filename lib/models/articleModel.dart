@@ -25,7 +25,7 @@ class ArticleModel {
     return ArticleModel(
         id: json['id'],
         title: json['title'], //
-        body: json['body'], //
+        body: json['bodyMobile'], //
         v: json['__v'].toString(),
         image_url: json['image_url']);
   }
