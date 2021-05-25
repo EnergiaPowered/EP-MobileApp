@@ -1,5 +1,6 @@
 import 'package:energia_app/Providers/articles.dart';
 import 'package:energia_app/Providers/comment_provider.dart';
+import 'package:energia_app/screens/SplashScreen.dart';
 import 'package:energia_app/services/App.dart';
 import 'package:energia_app/services/notifications.dart';
 import 'package:energia_app/widgets/localdrawer.dart';
@@ -107,7 +108,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         theme: ThemeData(
             backgroundColor: Colors.white,
-            primaryColor: const Color(0xFF03144c),
+            primaryColor: const Color(0xFF03144C),
             textSelectionColor: const Color(0xFF03144c),
             textTheme: TextTheme(
                 headline6: TextStyle(
@@ -123,7 +124,7 @@ class _MyAppState extends State<MyApp> {
               fontWeight: FontWeight.bold,
             )))),
         debugShowCheckedModeBanner: false,
-        home: App(
+        home: SplashScreen(
           playerId: playerId,
         ), //LoginScreen(playerId),
         routes: {

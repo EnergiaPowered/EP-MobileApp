@@ -15,6 +15,72 @@
       },
       "oauth_client": [
         {
+          "client_id": "1068816673794-q25d5u0h5ehq9f7qfod5kvhn91345p8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alrashididiv.energia_app",
+            "certificate_hash": "eaa324f89681f0a656c3f8371be6faedf0f16e63"
+          }
+        },
+        {
+          "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0RzmKbpzM7I1A1aTtTIDKGK6HDrxJIMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068816673794:android:753c178e1de06706e54b1b",
+        "android_client_info": {
+          "package_name": "com.app.powered.energia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0RzmKbpzM7I1A1aTtTIDKGK6HDrxJIMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068816673794:android:83b3acbca1919605e54b1b",
+        "android_client_info": {
+          "package_name": "com.example.master_energia_app"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "1068816673794-li0v2t44eva73viji7p3uu067pipprn0.apps.googleusercontent.com",
           "client_type": 3
         }
