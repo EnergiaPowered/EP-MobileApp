@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class ArticleListWidget extends StatefulWidget {
   final Size size;
-
-  ArticleListWidget(this.size);
+  final bool mainEvent;
+  ArticleListWidget(this.size,this.mainEvent);
 
   @override
   _EventListWidgetState createState() => _EventListWidgetState();
@@ -26,9 +26,9 @@ class _EventListWidgetState extends State<ArticleListWidget> {
       child: Container(
         width: widget.size.width,
         margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
-        height: 300,
+        height: widget.mainEvent ? 300 : widget.size.height * 0.8,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: widget.mainEvent ?Theme.of(context).primaryColor : Colors.white,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30), topLeft: Radius.circular(30)),
         ),
@@ -42,7 +42,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                     if (snapshot.hasData) {
                       articleList = snapshot.data;
                       return ListView.builder(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: widget.mainEvent? Axis.horizontal:Axis.vertical,
                           itemCount: articleList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(

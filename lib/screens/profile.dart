@@ -166,7 +166,7 @@ class _ProfileWidgetState extends State<Profile> {
                       color: Theme.of(context).textSelectionColor),
                 )),
             gradientContainer,
-            EventListWidget(size),
+            EventListWidget(size,true),
           ],
         ),
       ),

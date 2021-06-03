@@ -41,7 +41,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Theme.of(context).textSelectionColor),
                 )),
             gradientContainer,
-            EventListWidget(size),
+            EventListWidget(size,true),
             Divider(),
             Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -53,7 +53,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       color: Theme.of(context).textSelectionColor),
                 )),
             gradientContainer,
-            ArticleListWidget(size),
+            ArticleListWidget(size,true),
 //            Container(
 //              margin: EdgeInsets.fromLTRB(50, 10, 0, 10),
 //              height: 195,

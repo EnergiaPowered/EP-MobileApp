@@ -1,4 +1,4 @@
-package com.alrashididiv.energia_app
+package com.app.powered.energia
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

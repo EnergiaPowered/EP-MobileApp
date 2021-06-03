@@ -2,6 +2,7 @@ import 'package:energia_app/models/eventsModel.dart';
 import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
 import '../screens/event_deta_detials.dart';
+import 'eventListWidget.dart';
 
 class EventsWidget extends StatefulWidget {
   @override
@@ -250,279 +251,164 @@ class _EventsWidgetState extends State<EventsWidget> {
     ];
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.fromLTRB(
-                  mediaSize.width / 50, mediaSize.height / 60, 0, 0),
-              child: Text(
-                "Upcoming Events",
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 17.0,
-                    color: Theme.of(context).textSelectionColor),
-              )),
-          gradientContainer,
-          /*
-            upcomming Events part
-             */
-          InkWell(
-              onTap: () =>
-                  Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
-              child: Container(
-                height: 300,
-                margin: EdgeInsets.only(top: 10.0),
-                child: FutureBuilder<List<EventModel>>(
-                    future: _profileViewModel.getEvents(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        eventList = snapshot.data;
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: eventList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              new EventDetailsScreen(
-                                                  'department',
-                                                  eventList[index].startDate,
-                                                  eventList[index]
-                                                      .eventOrganizer,
-                                                  eventList[index]
-                                                      .eventLocation,
-                                                  eventList[index]
-                                                      .eventDescription)));
-                                },
-                                child: Container(
-                                    width: 260,
-                                    height: 300,
-                                    margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 5.0, 5.0),
-                                    child: Stack(
-                                      alignment: Alignment.topCenter,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(
-                                              10.0, 30.0, 5.0, 5.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30.0)),
-                                            color: Colors.white,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: <Widget>[
-                                              Text("${eventList[index].name}",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        listitle(
-                                                            "End Date:${eventList[index].endDate}",
-                                                            Icon(Icons
-                                                                .date_range)),
-                                                        listitle(
-                                                            "${eventList[index].eventLocation}",
-                                                            Icon(Icons
-                                                                .location_on)),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 16.0,
-                                                                  top: 8.0),
-                                                          child: Text(
-                                                            "${eventList[index].status}",
-                                                            style: TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: Image.asset(
-                                            'assets/images/image.jpg',
-                                            fit: BoxFit.cover,
-                                            height: 120,
-                                            width: 180,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            });
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    }),
-              )),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.fromLTRB(
+                    mediaSize.width / 50, mediaSize.height / 60, 0, 0),
+                child: Text(
+                  "Upcoming Events",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 17.0,
+                      color: Theme.of(context).textSelectionColor),
+                )),
+            gradientContainer,
+            /*
+              upcomming Events part
+               */
+            EventListWidget(MediaQuery.of(context).size,false)
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
-
-          Divider(),
-
-          /*
-            Previous Events part
-          */
-          Container(
-              margin: EdgeInsets.fromLTRB(mediaSize.width / 50, 0, 0, 0),
-              child: Text(
-                "Previous Events",
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 17.0,
-                    color: Theme.of(context).textSelectionColor),
-              )),
-          gradientContainer,
-          InkWell(
-              onTap: () =>
-                  Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
-              child: Container(
-                height: 300,
-                margin: EdgeInsets.only(top: 10.0),
-                child: FutureBuilder<List<EventModel>>(
-                    future: _profileViewModel.getEvents(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        eventList = snapshot.data;
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: eventList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              new EventDetailsScreen(
-                                                  'department',
-                                                  eventList[index].startDate,
-                                                  eventList[index]
-                                                      .eventOrganizer,
-                                                  eventList[index]
-                                                      .eventLocation,
-                                                  eventList[index]
-                                                      .eventDescription)));
-                                },
-                                child: Container(
-                                    width: 260,
-                                    height: 280,
-                                    margin: EdgeInsets.fromLTRB(
-                                        10.0, 5.0, 5.0, 5.0),
-                                    child: Stack(
-                                      alignment: Alignment.topCenter,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.fromLTRB(
-                                              10.0, 30.0, 5.0, 5.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30.0)),
-                                            color: Colors.white,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: <Widget>[
-                                              Text("${eventList[index].name}",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        listitle(
-                                                            "${eventList[index].startDate}",
-                                                            Icon(Icons
-                                                                .date_range)),
-                                                        listitle(
-                                                            "${eventList[index].eventLocation}",
-                                                            Icon(Icons
-                                                                .location_on)),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 16.0,
-                                                                  top: 8.0),
-                                                          child: Text(
-                                                            "${eventList[index].status}",
-                                                            style: TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: Image.asset(
-                                            'assets/images/image.jpg',
-                                            fit: BoxFit.cover,
-                                            height: 120,
-                                            width: 180,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            });
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    }),
-              )),
-        ],
+            //
+            // Divider(),
+            //
+            // /*
+            //   Previous Events part
+            // */
+            // Container(
+            //     margin: EdgeInsets.fromLTRB(mediaSize.width / 50, 0, 0, 0),
+            //     child: Text(
+            //       "Previous Events",
+            //       style: TextStyle(
+            //           fontWeight: FontWeight.w900,
+            //           fontSize: 17.0,
+            //           color: Theme.of(context).textSelectionColor),
+            //     )),
+            // gradientContainer,
+            // InkWell(
+            //     onTap: () =>
+            //         Navigator.of(context).pushNamed(EventDetailsScreen.routPage),
+            //     child: Container(
+            //       height: 300,
+            //       margin: EdgeInsets.only(top: 10.0),
+            //       child: FutureBuilder<List<EventModel>>(
+            //           future: _profileViewModel.getEvents(),
+            //           builder: (context, snapshot) {
+            //             if (snapshot.hasData) {
+            //               eventList = snapshot.data;
+            //               return ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   itemCount: eventList.length,
+            //                   itemBuilder: (BuildContext context, int index) {
+            //                     return GestureDetector(
+            //                       onTap: () {
+            //                         Navigator.push(
+            //                             context,
+            //                             MaterialPageRoute(
+            //                                 builder: (context) =>
+            //                                     new EventDetailsScreen(
+            //                                         'department',
+            //                                         eventList[index].startDate,
+            //                                         eventList[index]
+            //                                             .eventOrganizer,
+            //                                         eventList[index]
+            //                                             .eventLocation,
+            //                                         eventList[index]
+            //                                             .eventDescription)));
+            //                       },
+            //                       child: Container(
+            //                           width: 260,
+            //                           height: 280,
+            //                           margin: EdgeInsets.fromLTRB(
+            //                               10.0, 5.0, 5.0, 5.0),
+            //                           child: Stack(
+            //                             alignment: Alignment.topCenter,
+            //                             children: <Widget>[
+            //                               Container(
+            //                                 margin: EdgeInsets.fromLTRB(
+            //                                     10.0, 30.0, 5.0, 5.0),
+            //                                 decoration: BoxDecoration(
+            //                                   borderRadius: BorderRadius.all(
+            //                                       Radius.circular(30.0)),
+            //                                   color: Colors.white,
+            //                                 ),
+            //                                 child: Column(
+            //                                   mainAxisAlignment:
+            //                                       MainAxisAlignment.end,
+            //                                   children: <Widget>[
+            //                                     Text("${eventList[index].name}",
+            //                                         style: TextStyle(
+            //                                           fontSize: 20,
+            //                                           fontWeight: FontWeight.bold,
+            //                                         )),
+            //                                     Padding(
+            //                                       padding:
+            //                                           const EdgeInsets.all(8.0),
+            //                                       child: Row(
+            //                                         children: <Widget>[
+            //                                           Column(
+            //                                             crossAxisAlignment:
+            //                                                 CrossAxisAlignment
+            //                                                     .start,
+            //                                             mainAxisAlignment:
+            //                                                 MainAxisAlignment
+            //                                                     .start,
+            //                                             children: <Widget>[
+            //                                               listitle(
+            //                                                   "${eventList[index].startDate}",
+            //                                                   Icon(Icons
+            //                                                       .date_range)),
+            //                                               listitle(
+            //                                                   "${eventList[index].eventLocation}",
+            //                                                   Icon(Icons
+            //                                                       .location_on)),
+            //                                               Padding(
+            //                                                 padding:
+            //                                                     const EdgeInsets
+            //                                                             .only(
+            //                                                         left: 16.0,
+            //                                                         top: 8.0),
+            //                                                 child: Text(
+            //                                                   "${eventList[index].status}",
+            //                                                   style: TextStyle(
+            //                                                     fontSize: 17,
+            //                                                     fontWeight:
+            //                                                         FontWeight
+            //                                                             .bold,
+            //                                                   ),
+            //                                                 ),
+            //                                               ),
+            //                                             ],
+            //                                           ),
+            //                                         ],
+            //                                       ),
+            //                                     ),
+            //                                   ],
+            //                                 ),
+            //                               ),
+            //                               ClipRRect(
+            //                                 borderRadius:
+            //                                     BorderRadius.circular(10.0),
+            //                                 child: Image.asset(
+            //                                   'assets/images/image.jpg',
+            //                                   fit: BoxFit.cover,
+            //                                   height: 120,
+            //                                   width: 180,
+            //                                 ),
+            //                               ),
+            //                             ],
+            //                           )),
+            //                     );
+            //                   });
+            //             }
+            //             return Center(child: CircularProgressIndicator());
+            //           }),
+            //     )),
+          ],
+        ),
       ),
     );
   }
