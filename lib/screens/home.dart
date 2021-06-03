@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
           sliderMenuOpenOffset: 250,
           appBarHeight: 60,
           title: Center(
-            child: Text('Energia Power',
+            child: Text('Energia Powered',
                 style: TextStyle(
                     fontFamily: 'Lato',
                     fontSize: 18,
