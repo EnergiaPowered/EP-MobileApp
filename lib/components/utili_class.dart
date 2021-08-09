@@ -35,7 +35,7 @@ class HelpFun{
     Navigator.pop(context);
   }
 
-  void my_Toast(String mess,context) {
+  void myToast(String mess,context) {
     Toast.show(mess, context,
         duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
   }

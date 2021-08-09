@@ -16,7 +16,7 @@ class ArticleListWidget extends StatefulWidget {
 }
 
 class _EventListWidgetState extends State<ArticleListWidget> {
-  List<ArticleModel> articleList = new List<ArticleModel>();
+  List<ArticleModel> articleList = [];
   ProfileViewModel _profileViewModel = new ProfileViewModel();
 
   @override
@@ -67,7 +67,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                                   children: <Widget>[
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10.0),
-                                      child: articleList[index].image_url == ''
+                                      child: articleList[index].imageUrl == ''
                                           ? Image.asset(
                                               'assets/images/image.jpg',
                                               fit: BoxFit.cover,
@@ -75,7 +75,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                                               height: 250,
                                             )
                                           : Image.network(
-                                              "https://drive.google.com/uc?exort=view&id=${articleList[index].image_url}",
+                                              "https://drive.google.com/uc?exort=view&id=${articleList[index].imageUrl}",
                                               fit: BoxFit.cover,
                                               width: double.infinity,
                                               height: double.infinity,

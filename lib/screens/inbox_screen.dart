@@ -1,12 +1,12 @@
 import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:energia_app/screens/show_photo_in_one_screan.dart';
-import 'package:energia_app/widgets/messages_listview.dart';
 import 'package:flutter/material.dart';
 import '../models/message.dart';
 import '../widgets/chat_input_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+
 class InBoxMessages extends StatefulWidget {
   static const String routeName = '/inbox-screen';
 
@@ -15,33 +15,32 @@ class InBoxMessages extends StatefulWidget {
 }
 
 class _InBoxMessagesState extends State<InBoxMessages> {
-  final List<Message> messages = new List();
+  final List<Message> messages = [];
 
- /// final currUser = FirebaseAuth.instance.currentUser.email.substring(2,13);
- /// print("currUser  ${currUser.substring(2,13)}");
+  /// final currUser = FirebaseAuth.instance.currentUser.email.substring(2,13);
+  /// print("currUser  ${currUser.substring(2,13)}");
 
   var appcolor = Color(0xFF03144c);
 
   ///  FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-
   var channelId = '123';
-  var current_uid=FirebaseAuth.instance.currentUser.email.substring(2,13);
-  var current_email;
+  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentEmail;
 
-  var admin_uid;
-  var admin_email;
-
-
-
-  TextEditingController MessageControler = TextEditingController();
+  var adminUid;
+  var adminEmail;
+  var name;
+  var phone;
+  var imgUrl;
+  TextEditingController messageControler = TextEditingController();
   ScrollController scrollController = ScrollController();
 
   String playerId = "";
-  @override
-  Future<void> initState()  {
-    current_uid=FirebaseAuth.instance.currentUser.email.substring(2,13);
+
+  Future<void> initData() async {
+    currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
     firestore
         .collection('admin')
         .doc("admin")
@@ -49,32 +48,33 @@ class _InBoxMessagesState extends State<InBoxMessages> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          admin_uid = documentSnapshot.data()['uid'];
-          admin_email=documentSnapshot.data()['Email'];
+          adminUid = documentSnapshot.data()['uid'];
+          adminEmail = documentSnapshot.data()['Email'];
         });
-      } else {
-
-      }
+      } else {}
     }).whenComplete(() {
       firestore
           .collection('users')
-          .doc(current_uid)
+          .doc(currentUid)
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           setState(() {
             /// = documentSnapshot.id;
-            current_email=documentSnapshot.data()['Email'];
+            currentEmail = documentSnapshot.data()['Email'];
+             final firstName = documentSnapshot.data()['first_name'];
+            final lastName = documentSnapshot.data()['last_name'];
+            name = "$firstName $lastName";
+            phone = documentSnapshot.data()['phone'];
+            imgUrl = documentSnapshot.data()['image_url'];
           });
-        } else {
-
-        }
+        } else {}
       });
       firestore
           .collection('users')
-          .doc(current_uid)
+          .doc(currentUid)
           .collection('ChatChannel')
-          .doc(admin_uid)
+          .doc(adminUid)
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
@@ -86,9 +86,9 @@ class _InBoxMessagesState extends State<InBoxMessages> {
 
           firestore
               .collection("users")
-              .doc(current_uid)
+              .doc(currentUid)
               .collection("ChatChannel")
-              .doc(admin_uid)
+              .doc(adminUid)
               .set({
             'channelId': newChatChannel.id,
           });
@@ -96,7 +96,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
               .collection("admin")
               .doc("admin")
               .collection("ChatChannel")
-              .doc(current_uid)
+              .doc(currentUid)
               .set({"channelId": newChatChannel.id});
 
           setState(() {
@@ -105,101 +105,109 @@ class _InBoxMessagesState extends State<InBoxMessages> {
         }
       });
     });
-
-
   }
 
-
-
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-    return current_uid != null? Scaffold(
-      appBar: AppBar(
-        title: Text('Admins'),
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset('assets/images/pp.png'),
-        ),
-      ),
-      body:StreamBuilder<QuerySnapshot>(
-        stream: firestore
-            .collection('ChatChannel')
-            .doc(channelId)
-            .collection('messages')
-            .orderBy('data', descending: true)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
-
-          return Column(
-            children: [
-              Expanded(
-                child: new ListView(
-                  reverse: true,
-                  children: snapshot.data.docs.map((DocumentSnapshot document) {
-                    //
-
-                    return document.data()['type'] == 'text'
-                        ? DrowNewMessage(
-                      document.data()['message'],
-                      document.data()['sederEmail'],
-                      document.data()['data'],
-                    )
-                        : document.data()['type'] == 'image'
-                        ? DrowNewImage(
-                      document.data()['message'],
-                      document.data()['sederEmail'],
-                      document.data()['data'],
-                    )
-                        : Drowsticars(
-                      document.data()['message'],
-                      document.data()['sederEmail'],
-                      document.data()['data'],
-                    );
-                  }).toList(),
-                ),
+    return currentUid != null
+        ? Scaffold(
+            appBar: AppBar(
+              title: Text('Admins'),
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset('assets/images/pp.png'),
               ),
-              ChatInputWidget(channelId,current_email,current_uid,admin_uid)
-            ],
+            ),
+            body: StreamBuilder<QuerySnapshot>(
+              stream: firestore
+                  .collection('ChatChannel')
+                  .doc(channelId)
+                  .collection('messages')
+                  .orderBy('data', descending: true)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading");
+                }
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: new ListView(
+                        reverse: true,
+                        children:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          //
+
+                          return document.data()['type'] == 'text'
+                              ? drowNewMessage(
+                                  document.data()['message'],
+                                  document.data()['sederEmail'],
+                                  document.data()['data'],
+                                )
+                              : document.data()['type'] == 'image'
+                                  ? drowNewImage(
+                                      document.data()['message'],
+                                      document.data()['sederEmail'],
+                                      document.data()['data'],
+                                    )
+                                  : Drowsticars(
+                                      document.data()['message'],
+                                      document.data()['sederEmail'],
+                                      document.data()['data'],
+                                    );
+                        }).toList(),
+                      ),
+                    ),
+                    ChatInputWidget(
+                        channelId, currentEmail, currentUid, adminUid, name, phone, imgUrl)
+                  ],
+                );
+              },
+            ),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Admins'),
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset('assets/images/pp.png'),
+              ),
+            ),
+            body: Center(
+              child: Text('Log in first'),
+            ),
           );
-        },
-      ),
-    ):Scaffold(
-      appBar: AppBar(
-        title: Text('Admins'),
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset('assets/images/pp.png'),
-        ),
-      ),
-      body: Center(
-        child: Text('Log in first'),
-      ),
-    );
   }
-  Widget DrowNewMessage(message, senderEmail, data){
+
+  Widget drowNewMessage(message, senderEmail, data) {
     return Bubble(
       margin: BubbleEdges.only(
           top: 10,
           bottom: 10,
-          left: senderEmail == current_email ? 0 : 5,
-          right: senderEmail == current_email ? 5 : 0),
-      alignment: senderEmail == current_email ? Alignment.topRight : Alignment.topLeft,
+          left: senderEmail == currentEmail ? 0 : 5,
+          right: senderEmail == currentEmail ? 5 : 0),
+      alignment:
+          senderEmail == currentEmail ? Alignment.topRight : Alignment.topLeft,
       nipWidth: 8,
       nipHeight: 24,
-      nip: senderEmail == current_email ? BubbleNip.rightTop : BubbleNip.leftTop,
-      color: senderEmail == current_email ? Colors.grey.shade300 : Color(0xFF03144c),
+      nip: senderEmail == currentEmail ? BubbleNip.rightTop : BubbleNip.leftTop,
+      color: senderEmail == currentEmail
+          ? Colors.grey.shade300
+          : Color(0xFF03144c),
       child: Column(
-          crossAxisAlignment: senderEmail == current_email
+          crossAxisAlignment: senderEmail == currentEmail
               ? CrossAxisAlignment.start
               : CrossAxisAlignment.end,
           children: [
@@ -208,7 +216,8 @@ class _InBoxMessagesState extends State<InBoxMessages> {
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20,
-                color:senderEmail == current_email ? Colors.black : Colors.white,
+                color:
+                    senderEmail == currentEmail ? Colors.black : Colors.white,
               ),
             ),
             Container(
@@ -217,18 +226,21 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                 getdata(data),
                 style: TextStyle(
                     fontSize: 12,
-                    color: senderEmail == current_email ? Colors.black : Colors.white),
+                    color: senderEmail == currentEmail
+                        ? Colors.black
+                        : Colors.white),
               ),
             ),
           ]),
     );
   }
-  Widget DrowMessage(message, senderEmail, data) {
+
+  Widget drowMessage(message, senderEmail, data) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 7, horizontal: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: senderEmail == current_email
+        crossAxisAlignment: senderEmail == currentEmail
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start,
         children: [
@@ -238,7 +250,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: senderEmail == current_email ? appcolor : Colors.white,
+                color: senderEmail == currentEmail ? appcolor : Colors.white,
               ),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
               child: Column(
@@ -246,9 +258,8 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                   Text(
                     message,
                     style: TextStyle(
-                      color: senderEmail == current_email
-                          ? Colors.white
-                          : appcolor,
+                      color:
+                          senderEmail == currentEmail ? Colors.white : appcolor,
                       fontSize: 20,
                     ),
                   ),
@@ -258,7 +269,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                   Text(
                     getdata(data),
                     style: TextStyle(
-                        color: senderEmail == current_email
+                        color: senderEmail == currentEmail
                             ? Colors.white
                             : appcolor,
                         fontSize: 12),
@@ -272,28 +283,30 @@ class _InBoxMessagesState extends State<InBoxMessages> {
     );
   }
 
-
-
-  Widget DrowNewImage(message, senderEmail, data) {
+  Widget drowNewImage(message, senderEmail, data) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (c) {
-          return show_photo_in_one_screan(message);}));
+          return ShowPhotoInOneScrean(message);
+        }));
       },
       child: Container(
-        alignment:
-        senderEmail == current_email ? Alignment.topRight : Alignment.topLeft,
+        alignment: senderEmail == currentEmail
+            ? Alignment.topRight
+            : Alignment.topLeft,
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
-                bottomRight:
-                senderEmail == current_email ? Radius.zero : Radius.circular(10),
+                bottomRight: senderEmail == currentEmail
+                    ? Radius.zero
+                    : Radius.circular(10),
                 topRight: Radius.circular(10),
-                bottomLeft:
-                senderEmail == current_email ?Radius.circular(10) : Radius.zero,
+                bottomLeft: senderEmail == currentEmail
+                    ? Radius.circular(10)
+                    : Radius.zero,
               ),
               child: Image.network(
                 message,
@@ -310,7 +323,6 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                 },
               ),
             ),
-
             Container(
               padding: EdgeInsets.all(5.0),
               child: Text(
@@ -387,10 +399,10 @@ class _InBoxMessagesState extends State<InBoxMessages> {
     return DateFormat("yyyy/MM/dd                hh:mm").format(todayDate);
   }
 
-  DateTime returnData(data){
+  DateTime returnData(data) {
     // String string = dateFormat.format(DateTime.now());
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    return    dateFormat.parse(data);
+    return dateFormat.parse(data);
   }
 
   Widget Drowsticars(message, senderEmail, data) {
@@ -398,7 +410,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
       padding: EdgeInsets.symmetric(vertical: 7, horizontal: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: senderEmail == current_email
+        crossAxisAlignment: senderEmail == currentEmail
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start,
         children: [
@@ -408,7 +420,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: senderEmail == current_email ? appcolor : Colors.white,
+                color: senderEmail == currentEmail ? appcolor : Colors.white,
               ),
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: Column(
@@ -425,10 +437,12 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                     ),
                   ),
                   RaisedButton.icon(
-                    onPressed: () {
-
-                    },
-                    icon: Icon(Icons.location_on,color: appcolor,size: 40,),
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.location_on,
+                      color: appcolor,
+                      size: 40,
+                    ),
                     label: Text('Show location'),
                     color: Color.fromRGBO(0, 0, 0, 0),
                   ),
@@ -438,7 +452,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                   Text(
                     getdata(data),
                     style: TextStyle(
-                        color: senderEmail == current_email
+                        color: senderEmail == currentEmail
                             ? Colors.white
                             : appcolor,
                         fontSize: 12),
@@ -451,5 +465,4 @@ class _InBoxMessagesState extends State<InBoxMessages> {
       ),
     );
   }
-
 }

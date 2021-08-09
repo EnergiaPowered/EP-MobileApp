@@ -13,8 +13,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  @override
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   User _user;
 
   @override

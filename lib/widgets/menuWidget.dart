@@ -16,24 +16,24 @@ class MenuWidget extends StatefulWidget {
 class _MenuWidgetState extends State<MenuWidget> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var current_uid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
-  String first_name = "";
-  String last_name = "";
-  var image_url = "NULL";
+  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  String firstName = "";
+  String lastName = "";
+  var imageUrl = "NULL";
   var bio = "bio";
   @override
   void initState() {
     super.initState();
     firestore
         .collection('users')
-        .doc(current_uid)
+        .doc(currentUid)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          first_name = documentSnapshot.data()['first_name'];
-          last_name = documentSnapshot.data()['last_name'];
-          image_url = documentSnapshot.data()['image_url'];
+          firstName = documentSnapshot.data()['first_name'];
+          lastName = documentSnapshot.data()['last_name'];
+          imageUrl = documentSnapshot.data()['image_url'];
           bio = documentSnapshot.data()['bio'];
         });
       } else {}
@@ -58,7 +58,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               radius: 60,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(80.0),
-                child: (image_url == "NULL" || image_url == null)
+                child: (imageUrl == "NULL" || imageUrl == null)
                     ? Image.asset(
                         'assets/images/user.png',
                         fit: BoxFit.cover,
@@ -66,7 +66,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         width: 130.0,
                       )
                     : Image.network(
-                        image_url,
+                        imageUrl,
                         fit: BoxFit.cover,
                         height: 130.0,
                         width: 130.0,
@@ -80,7 +80,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
             child: Text(
-              '$first_name $last_name',
+              '$firstName $lastName',
               style: TextStyle(
                   color: Theme.of(context).backgroundColor,
                   fontWeight: FontWeight.bold,
@@ -116,19 +116,19 @@ class _MenuWidgetState extends State<MenuWidget> {
               size: 28,
             ),
             onTap: () async {
-              var value = await Navigator.of(context).push(MaterialPageRoute(
+               await Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => EditProfile(),
               ));
               firestore
                   .collection('users')
-                  .doc(current_uid)
+                  .doc(currentUid)
                   .get()
                   .then((DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists) {
                   setState(() {
-                    first_name = documentSnapshot.data()['first_name'];
-                    last_name = documentSnapshot.data()['last_name'];
-                    image_url = documentSnapshot.data()['image_url'];
+                    firstName = documentSnapshot.data()['first_name'];
+                    lastName = documentSnapshot.data()['last_name'];
+                    imageUrl = documentSnapshot.data()['image_url'];
                     bio = documentSnapshot.data()['bio'];
                   });
                 } else {}

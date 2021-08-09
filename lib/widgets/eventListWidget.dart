@@ -13,7 +13,7 @@ class EventListWidget extends StatefulWidget {
 }
 
 class _EventListWidgetState extends State<EventListWidget> {
-  List<EventModel> eventList = new List<EventModel>();
+  List<EventModel> eventList = [];
   ProfileViewModel _profileViewModel = new ProfileViewModel();
 
   @override

@@ -1,6 +1,4 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'dart:convert';
 
 class Article with ChangeNotifier {
   final String id;

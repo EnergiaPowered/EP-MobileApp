@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:energia_app/components/utili_class.dart';
-import 'package:energia_app/widgets/language_swich.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:toast/toast.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class EditProfile extends StatefulWidget {
@@ -22,20 +20,20 @@ class _EditProfileState extends State<EditProfile> {
   bool inputChanged = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  var current_uid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
 
-  var first_name = "name";
-  var last_name = "name";
-  var image_url = "NULL";
+  var firstName = "name";
+  var lastName = "name";
+  var imageUrl = "NULL";
   var bio = "bio";
   var email = "email";
   bool textFieldEnable = false;
 
-  TextEditingController frist_Name_Controler = TextEditingController();
-  TextEditingController last_Name_Controler = TextEditingController();
-  TextEditingController image_url_Controler = TextEditingController();
-  TextEditingController bio_Controler = TextEditingController();
-  TextEditingController email_Controler = TextEditingController();
+  TextEditingController fristNameControler = TextEditingController();
+  TextEditingController lastNameControler = TextEditingController();
+  TextEditingController imageUrlControler = TextEditingController();
+  TextEditingController bioControler = TextEditingController();
+  TextEditingController emailControler = TextEditingController();
 
   Widget generateTextField(
     String hint,
@@ -71,37 +69,37 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     firestore
         .collection('users')
-        .doc(current_uid)
+        .doc(currentUid)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          frist_Name_Controler.text = documentSnapshot.data()['first_name'];
-          last_Name_Controler.text = documentSnapshot.data()['last_name'];
-          image_url = documentSnapshot.data()['image_url'];
-          bio_Controler.text = documentSnapshot.data()['bio'];
-          email_Controler.text = documentSnapshot.data()['email'];
+          fristNameControler.text = documentSnapshot.data()['first_name'];
+          lastNameControler.text = documentSnapshot.data()['last_name'];
+          imageUrl = documentSnapshot.data()['image_url'];
+          bioControler.text = documentSnapshot.data()['bio'];
+          emailControler.text = documentSnapshot.data()['email'];
         });
       } else {}
     }).whenComplete(() {
-      if (frist_Name_Controler.text == null) {
+      if (fristNameControler.text == null) {
         setState(() {
-          frist_Name_Controler.text = "name";
+          fristNameControler.text = "name";
         });
       }
-      if (email_Controler.text == null) {
+      if (emailControler.text == null) {
         setState(() {
-          email_Controler.text = "email";
+          emailControler.text = "email";
         });
       }
-      if (last_Name_Controler.text == null) {
+      if (lastNameControler.text == null) {
         setState(() {
-          last_Name_Controler.text = "name";
+          lastNameControler.text = "name";
         });
       }
-      if (bio_Controler.text == null) {
+      if (bioControler.text == null) {
         setState(() {
-          bio_Controler.text = "bio";
+          bioControler.text = "bio";
         });
       }
     });
@@ -125,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
                       if (_pickedProfileImage != null) {
                         uploadImage(_pickedProfileImage);
                       } else {
-                        _sendToServer(image_url);
+                        _sendToServer(imageUrl);
                       }
 
                       ///start loading
@@ -197,8 +195,8 @@ class _EditProfileState extends State<EditProfile> {
                       radius: 60,
                       backgroundImage: _pickedProfileImage != null
                           ? FileImage(_pickedProfileImage)
-                          : (image_url != "NULL" && image_url != null)
-                              ? NetworkImage(image_url)
+                          : (imageUrl != "NULL" && imageUrl != null)
+                              ? NetworkImage(imageUrl)
                               : AssetImage("assets/images/user.png"),
                     ),
                   ),
@@ -234,11 +232,11 @@ class _EditProfileState extends State<EditProfile> {
             /// SwitchLanguage(false),
 
             /// generateTextField('Password', TextEditingController(text: '********')),
-            generateTextField('first name', frist_Name_Controler),
-            generateTextField('last name', last_Name_Controler),
+            generateTextField('first name', fristNameControler),
+            generateTextField('last name', lastNameControler),
 
-            generateTextField('bio', bio_Controler),
-            generateTextField('Email', email_Controler),
+            generateTextField('bio', bioControler),
+            generateTextField('Email', emailControler),
           ],
         ),
       ),
@@ -246,12 +244,12 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _sendToServer(String url) {
-    firestore.collection('users').doc(current_uid).update({
-      'first_name': frist_Name_Controler.text,
-      'last_name': last_Name_Controler.text,
+    firestore.collection('users').doc(currentUid).update({
+      'first_name': fristNameControler.text,
+      'last_name': lastNameControler.text,
       'image_url': url,
-      'email': email_Controler.text,
-      'bio': bio_Controler.text,
+      'email': emailControler.text,
+      'bio': bioControler.text,
     }).whenComplete(() {
       HelpFun().closeLoading(context);
       Toast.show("Data saved", context,
@@ -262,11 +260,11 @@ class _EditProfileState extends State<EditProfile> {
   uploadImage(File image) async {
     StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
-        .child(current_uid)
+        .child(currentUid)
         .child("profile_image")
         .child(DateTime.now().toString());
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    await uploadTask.onComplete;
     final url = await firebaseStorageRef.getDownloadURL();
 
     _sendToServer(url);

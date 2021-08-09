@@ -1,17 +1,20 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:energia_app/widgets/send_image.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class ChatInputWidget extends StatefulWidget {
-  var channelId;
-  var curren_email;
-  var current_uid;
-  var other_uid;
-  ChatInputWidget(this.channelId,this.curren_email,this.current_uid,this.other_uid);
+  final channelId;
+  final currenEmail;
+  final currentUid;
+  final otherUid;
+  final name;
+  final profileImage;
+  final phone;
+
+  ChatInputWidget(this.channelId, this.currenEmail, this.currentUid,
+      this.otherUid, this.phone, this.name, this.profileImage);
   @override
   _ChatInputWidgetState createState() => _ChatInputWidgetState();
 }
@@ -22,7 +25,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
   bool _isEmojiShown = false;
   String _textMessage = '';
   bool _isKeyboardShown = false;
-  final _chatRef = FirebaseFirestore.instance.collection('chats');
+  // final _chatRef = FirebaseFirestore.instance.collection('chats');
   /* void _sendMessage(String text, MessageType type) {
     if (type == MessageType.TEXT) {
       FocusScope.of(context).unfocus();
@@ -32,7 +35,6 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
           'text': text.trim(),
           'date': DateTime.now().millisecondsSinceEpoch,
           'uid': 'me',
-          *//**TODO change to uid *//*
           'type': 'MessageType.TEXT',
         },
       );
@@ -48,7 +50,6 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
         'text': 'null',
         'date': DateTime.now().millisecondsSinceEpoch,
         'uid': 'me',
-        /**TODO change to uid */
         'type': 'MessageType.IMAGE',
       },
     );
@@ -61,7 +62,6 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     });
   }
 */
-
 
   Widget get _emojiPicker {
     return EmojiPicker(
@@ -95,6 +95,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
     await Future.delayed(Duration(milliseconds: 100));
   }
 
+  // ignore: unused_element
   void _onEmojiIconPressed() async {
     await _hideKeyboard();
     if (_isKeyboardShown) {
@@ -128,8 +129,8 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SendImage(widget.current_uid,widget.channelId,
-                    widget.curren_email,widget.other_uid),
+                SendImage(widget.currentUid, widget.channelId,
+                    widget.currenEmail, widget.otherUid),
                 Expanded(
                   child: Container(
                     child: TextField(
@@ -158,42 +159,67 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                     ),
                   ),
                 ),
+
                 ///   ChatImagePicker(_sendMessage),
                 IconButton(
-                  padding: EdgeInsets.all(5),
-                  icon: Icon(
-                    Icons.send,
-                    size: 35,
-                    color: _textMessage.trim().isNotEmpty
-                        ? Color(0xFF03144c)
-                        : Colors.grey,
-                  ),
-                  onPressed: _textMessage.trim().isEmpty
-                      ? null
-                      : () {
-
-                    firestore
-                        .collection('ChatChannel')
-                        .doc(widget.channelId)
-                        .collection('messages')
-                        .add({
-                      'message': _textMessage,
-                      'type': 'text',
-                      'data': DateTime.now().toIso8601String().toString(),
-                      'sederEmail': widget.curren_email,
-                    }).whenComplete(() {
-
-                    }).then((value) => _textController.clear());
-                    ///  _sendMessage(_textMessage, MessageType.TEXT);
-                  },
-                ),
+                    padding: EdgeInsets.all(5),
+                    icon: Icon(
+                      Icons.send,
+                      size: 35,
+                      color: _textMessage.trim().isNotEmpty
+                          ? Color(0xFF03144c)
+                          : Colors.grey,
+                    ),
+                    onPressed: _textMessage.trim().isEmpty
+                        ? null
+                        : () async {
+                            String time =
+                                DateTime.now().toIso8601String().toString();
+                            firestore
+                                .collection('ChatChannel')
+                                .doc(widget.channelId)
+                                .collection('messages')
+                                .add({
+                                  'message': _textMessage,
+                                  'type': 'text',
+                                  'data': time,
+                                  'sederEmail': widget.currenEmail,
+                                })
+                                .whenComplete(() {})
+                                .then((value) {
+                                  _textController.clear();
+                                  final roomRef = firestore
+                                      .collection("rooms")
+                                      .doc(widget.channelId);
+                                  roomRef.get().then((value) {
+                                    if (value.exists) {
+                                      roomRef.update({
+                                        'message': _textMessage,
+                                        'type': 'text',
+                                        'data': time,
+                                        'status': "0"
+                                      });
+                                    } else {
+                                      roomRef.set({
+                                        'message': _textMessage,
+                                        'type': 'text',
+                                        'data': time,
+                                        'status': "0",
+                                        'photo_url': widget.profileImage,
+                                        'name': widget.name,
+                                        'phone': widget.phone,
+                                      });
+                                    }
+                                  });
+                                });
+                          }),
               ],
             ),
             _isEmojiShown
                 ? SingleChildScrollView(
-              child: _emojiPicker,
-              scrollDirection: Axis.horizontal,
-            )
+                    child: _emojiPicker,
+                    scrollDirection: Axis.horizontal,
+                  )
                 : Container(),
           ],
         ),

@@ -14,7 +14,7 @@ class _HomeState extends State<Home> {
       new GlobalKey<SliderMenuContainerState>();
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SliderMenuContainer(
           shadowSpreadRadius: 20,
@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
           appBarPadding: const EdgeInsets.only(top: 30, right: 40),
-          sliderMenuOpenOffset: 250,
+          // sliderMenuOpenOffset: 250,
           appBarHeight: 60,
           title: Center(
             child: Text('Energia Powered',

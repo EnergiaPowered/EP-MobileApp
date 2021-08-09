@@ -22,20 +22,20 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
 
-    Widget gradientContainer = Container(
-        margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
-        child: Container(
-          width: 60,
-          height: 3,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                stops: [0.3, 1],
-                colors: [Theme.of(context).primaryColor, Colors.white]),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
-        ));
+    // Widget gradientContainer = Container(
+    //     margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
+    //     child: Container(
+    //       width: 60,
+    //       height: 3,
+    //       decoration: BoxDecoration(
+    //         gradient: LinearGradient(
+    //             begin: Alignment.centerLeft,
+    //             end: Alignment.centerRight,
+    //             stops: [0.3, 1],
+    //             colors: [Theme.of(context).primaryColor, Colors.white]),
+    //         borderRadius: BorderRadius.all(Radius.circular(30)),
+    //       ),
+    //     ));
     return Scaffold(
       drawer: LocalDrawer(),
       appBar: AppBar(
@@ -141,7 +141,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 20.0,
-                            color: Theme.of(context).textSelectionColor),
+                            color: Theme.of(context).textSelectionTheme.selectionColor),
                       )),
                   Container(
                       margin: EdgeInsets.fromLTRB(10, 0, 0, 0),

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:energia_app/widgets/message_item.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

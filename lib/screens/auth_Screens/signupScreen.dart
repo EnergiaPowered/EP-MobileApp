@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       });
     } catch (ex) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.maybeOf(context).showSnackBar(
         SnackBar(
           content: Text(ex.message),
         ),

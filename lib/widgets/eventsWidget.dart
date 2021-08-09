@@ -1,7 +1,6 @@
 import 'package:energia_app/models/eventsModel.dart';
-import 'package:energia_app/viewModels/ProfileViewModel.dart';
+// import 'package:energia_app/viewModels/ProfileViewModel.dart';
 import 'package:flutter/material.dart';
-import '../screens/event_deta_detials.dart';
 import 'eventListWidget.dart';
 
 class EventsWidget extends StatefulWidget {
@@ -10,8 +9,8 @@ class EventsWidget extends StatefulWidget {
 }
 
 class _EventsWidgetState extends State<EventsWidget> {
-  List<EventModel> eventList = new List<EventModel>();
-  ProfileViewModel _profileViewModel = new ProfileViewModel();
+  List<EventModel> eventList = [];
+  // ProfileViewModel _profileViewModel = new ProfileViewModel();
   @override
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
@@ -70,7 +69,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontSize: 15.0,
-                                color: Theme.of(context).textSelectionColor),
+                                color: Theme.of(context).textSelectionTheme.selectionColor),
                           )),
                       gradientContainer,
                       /*
@@ -174,7 +173,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 fontSize: 15.0,
-                                color: Theme.of(context).textSelectionColor),
+                                color: Theme.of(context).textSelectionTheme.selectionColor),
                           )),
                       gradientContainer,
                       /*
@@ -237,12 +236,14 @@ class _EventsWidgetState extends State<EventsWidget> {
             ),
           ],
         ));
+    // ignore: unused_local_variable
     List<Widget> localListupcomming = [
       whiteContainerup,
       whiteContainerup,
       whiteContainerup,
       whiteContainerup,
     ];
+    // ignore: unused_local_variable
     List<Widget> localListprev = [
       whiteContainerpre,
       whiteContainerpre,
@@ -264,7 +265,7 @@ class _EventsWidgetState extends State<EventsWidget> {
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 17.0,
-                      color: Theme.of(context).textSelectionColor),
+                      color: Theme.of(context).textSelectionTheme.selectionColor),
                 )),
             gradientContainer,
             /*

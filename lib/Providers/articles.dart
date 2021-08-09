@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:energia_app/Providers/article_provider.dart';
 import 'package:energia_app/Providers/comment_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -55,7 +53,7 @@ class Articles with ChangeNotifier {
     try {
       Comment comment = Comment(
           articleId: myarticleId, comment: commenttext, userPhoto: photoUrl);
-      final respose = await http.post(url,
+          await http.post(url,
           body: json.encode({
             'comment': comment.comment,
             'articleId': comment.articleId,

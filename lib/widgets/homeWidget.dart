@@ -38,7 +38,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 17.0,
-                      color: Theme.of(context).textSelectionColor),
+                      color: Theme.of(context).textSelectionTheme.selectionColor),
                 )),
             gradientContainer,
             EventListWidget(size,true),
@@ -50,7 +50,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 17.0,
-                      color: Theme.of(context).textSelectionColor),
+                      color: Theme.of(context).textSelectionTheme.selectionColor),
                 )),
             gradientContainer,
             ArticleListWidget(size,true),

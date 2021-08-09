@@ -13,20 +13,20 @@ import 'package:toast/toast.dart';
 
 
 class SendImage extends StatefulWidget {
-  var channelId,current_email,current_uid;
-  String other_uid;
-  SendImage(this.current_uid,this.channelId,this.current_email,this.other_uid);
+  final channelId,currentEmail,currentUid;
+  final otherUid;
+  SendImage(this.currentUid,this.channelId,this.currentEmail,this.otherUid);
   @override
-  _SendImageState createState() => _SendImageState(channelId,current_email);
+  _SendImageState createState() => _SendImageState(channelId,currentEmail);
 }
 
 class _SendImageState extends State<SendImage> {
-  var channelId, current_email;
+  var channelId, currentEmail;
 
-  _SendImageState(this.channelId, this.current_email);
+  _SendImageState(this.channelId, this.currentEmail);
 
   var appcolor = Color(0xFF03144c);
-  File Send_Image;
+  File sendImageFile;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String playerId = "";
@@ -44,11 +44,11 @@ class _SendImageState extends State<SendImage> {
         color: appcolor,
         iconSize: 40,
         onPressed: () {
-          _SendImage();
+          _sendImage();
         });
   }
 
-  void _SendImage() async {
+  void _sendImage() async {
     // ignore: deprecated_member_use
     final picker = ImagePicker();
       await picker.getImage(source: ImageSource.gallery).then((image) {
@@ -57,7 +57,7 @@ class _SendImageState extends State<SendImage> {
             Toast.show('No Image Selected', context);
           } else {
             //Toast.show(image.path, context);
-            check_photo(image.path);
+            checkPhoto(image.path);
           }
         });
       });
@@ -126,7 +126,7 @@ class _SendImageState extends State<SendImage> {
       });
     }*/
   }
-  void check_photo(String path){
+  void checkPhoto(String path){
 
     showGeneralDialog(
         context: context,
@@ -195,7 +195,7 @@ class _SendImageState extends State<SendImage> {
         .child(DateTime.now().toString());
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(path));
 
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    await uploadTask.onComplete;
     final url = await firebaseStorageRef.getDownloadURL();
 
         firestore
@@ -206,7 +206,7 @@ class _SendImageState extends State<SendImage> {
           'message': url,
           'type': 'image',
           'data': DateTime.now().toIso8601String().toString(),
-          'sederEmail': current_email,
+          'sederEmail': currentEmail,
         }).then((value) {
 
           HelpFun().closeLoading(context);

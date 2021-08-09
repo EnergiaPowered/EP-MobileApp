@@ -10,10 +10,10 @@ class ProfileViewModel {
   Future<List<EventModel>> getEvents() async {
     var response = await http.get('$baseUrl/events');
 
-    List<EventModel> eventList = new List<EventModel>();
+    List<EventModel> eventList = [];
 
     if (response.statusCode == 200) {
-      List<dynamic> values = new List<dynamic>();
+      List<dynamic> values = [];
       values = convert.json.decode(response.body);
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
@@ -32,10 +32,10 @@ class ProfileViewModel {
   Future<List<ArticleModel>> getArticles() async {
     var response = await http.get('$baseUrl/blogs');
 
-    List<ArticleModel> blogs = new List<ArticleModel>();
+    List<ArticleModel> blogs = [];
 
     if (response.statusCode == 200) {
-      List<dynamic> values = new List<dynamic>();
+      List<dynamic> values =  [];
       values = convert.json.decode(response.body);
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {

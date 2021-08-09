@@ -8,7 +8,7 @@ class ArticleModel {
   final int commentsNumber;
   final bool isPinned;
 
-  final String image_url;
+  final String imageUrl;
 
   ArticleModel(
       {this.id,
@@ -16,7 +16,7 @@ class ArticleModel {
       this.body,
       this.department,
       this.v,
-      this.image_url,
+      this.imageUrl,
       this.likesNumber,
       this.commentsNumber,
       this.isPinned});
@@ -27,6 +27,6 @@ class ArticleModel {
         title: json['title'], //
         body: json['bodyMobile'], //
         v: json['__v'].toString(),
-        image_url: json['image_url']);
+        imageUrl: json['image_url']);
   }
 }

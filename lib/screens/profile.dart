@@ -17,23 +17,23 @@ class Profile extends StatefulWidget {
 class _ProfileWidgetState extends State<Profile> {
   ProfileViewModel profileViewModel;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var current_uid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
-  var first_name = "neme";
-  var last_name = "name";
-  var image_url = "NULL";
+  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var firstName = "neme";
+  var lastName = "name";
+  var imageUrl = "NULL";
   var bio = "bio";
   @override
   void initState() {
     firestore
         .collection('users')
-        .doc(current_uid)
+        .doc(currentUid)
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          first_name = documentSnapshot.data()['first_name'];
-          last_name = documentSnapshot.data()['last_name'];
-          image_url = documentSnapshot.data()['image_url'];
+          firstName = documentSnapshot.data()['first_name'];
+          lastName = documentSnapshot.data()['last_name'];
+          imageUrl = documentSnapshot.data()['image_url'];
           bio = documentSnapshot.data()['bio'];
         });
       } else {}
@@ -104,7 +104,7 @@ class _ProfileWidgetState extends State<Profile> {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(80.0),
-                  child: (image_url == "NULL" || image_url == null)
+                  child: (imageUrl == "NULL" || imageUrl == null)
                       ? Image.asset(
                           'assets/images/person.jpg',
                           fit: BoxFit.cover,
@@ -112,7 +112,7 @@ class _ProfileWidgetState extends State<Profile> {
                           width: 130.0,
                         )
                       : Image.network(
-                          image_url,
+                          imageUrl,
                           fit: BoxFit.cover,
                           height: 130.0,
                           width: 130.0,
@@ -122,7 +122,7 @@ class _ProfileWidgetState extends State<Profile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '$first_name $last_name',
+                      '$firstName $lastName',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _ProfileWidgetState extends State<Profile> {
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 17.0,
-                      color: Theme.of(context).textSelectionColor),
+                      color: Theme.of(context).textSelectionTheme.selectionColor),
                 )),
             gradientContainer,
             Divider(),
@@ -163,7 +163,7 @@ class _ProfileWidgetState extends State<Profile> {
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 17.0,
-                      color: Theme.of(context).textSelectionColor),
+                      color: Theme.of(context).textSelectionTheme.selectionColor),
                 )),
             gradientContainer,
             EventListWidget(size,true),

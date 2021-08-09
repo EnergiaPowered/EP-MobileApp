@@ -1,16 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:energia_app/Providers/comment_provider.dart';
 import 'package:energia_app/models/articleModel.dart';
-import 'package:energia_app/widgets/addComment_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import './expandedarticles.dart';
 import '../widgets/localdrawer.dart';
-import '../Providers/article_provider.dart';
-import 'package:provider/provider.dart';
-import '../widgets/likeb_comment_adge.dart';
-import '../widgets/comment_widget.dart';
-import '../Providers/articles.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static const routPage = '/articledetailsscreen';
@@ -27,20 +17,20 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
   Widget build(BuildContext context) {
     final mediaSize = MediaQuery.of(context).size;
 
-    Widget gradientContainer = Container(
-        margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
-        child: Container(
-          width: 60,
-          height: 3,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                stops: [0.3, 1],
-                colors: [Theme.of(context).primaryColor, Colors.white]),
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
-        ));
+    // Widget gradientContainer = Container(
+    //     margin: EdgeInsets.fromLTRB(mediaSize.width / 40, 0, 0, 0),
+    //     child: Container(
+    //       width: 60,
+    //       height: 3,
+    //       decoration: BoxDecoration(
+    //         gradient: LinearGradient(
+    //             begin: Alignment.centerLeft,
+    //             end: Alignment.centerRight,
+    //             stops: [0.3, 1],
+    //             colors: [Theme.of(context).primaryColor, Colors.white]),
+    //         borderRadius: BorderRadius.all(Radius.circular(30)),
+    //       ),
+    //     ));
     return Scaffold(
       drawer: LocalDrawer(),
       appBar: AppBar(
@@ -146,7 +136,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 20.0,
-                            color: Theme.of(context).textSelectionColor),
+                            color: Theme.of(context).textSelectionTheme.selectionColor),
                       )),
                   Container(
                       margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
