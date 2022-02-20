@@ -1,4 +1,4 @@
-# energia_app
+# Energia Powered Main Mobile App
 
 A new Flutter application.
 
