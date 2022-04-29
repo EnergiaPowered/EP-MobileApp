@@ -33,9 +33,8 @@ class ProfileViewModel {
     var response = await http.get('$baseUrl/blogs');
 
     List<ArticleModel> blogs = [];
-
     if (response.statusCode == 200) {
-      List<dynamic> values =  [];
+      List<dynamic> values = [];
       values = convert.json.decode(response.body);
       if (values.length > 0) {
         for (int i = 0; i < values.length; i++) {
