@@ -1,11 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
+
 var appcolor = Color(0xFF12c0c7);
 
-class HelpFun{
-
+class HelpFun {
   void startLoading(context) {
     showDialog(
       context: context,
@@ -35,9 +33,7 @@ class HelpFun{
     Navigator.pop(context);
   }
 
-  void myToast(String mess,context) {
-    Toast.show(mess, context,
-        duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+  void myToast(String mess, context) {
+    Toast.show(mess, duration: Toast.lengthLong, gravity: Toast.center);
   }
-
 }

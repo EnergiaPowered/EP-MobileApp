@@ -1,14 +1,14 @@
 class ArticleModel {
-  final String id;
-  final String title;
-  final String body;
-  final String department;
-  final String v;
-  final int likesNumber;
-  final int commentsNumber;
-  final bool isPinned;
+  final String? id;
+  final String? title;
+  final String? body;
+  final String? department;
+  final String? v;
+  final int? likesNumber;
+  final int? commentsNumber;
+  final bool? isPinned;
 
-  final String imageUrl;
+  final String? imageUrl;
 
   ArticleModel(
       {this.id,
@@ -21,7 +21,7 @@ class ArticleModel {
       this.commentsNumber,
       this.isPinned});
 
-  factory ArticleModel.fromJson(Map<String, dynamic> json) {
+  factory ArticleModel.fromJson(Map<String?, dynamic> json) {
     return ArticleModel(
         id: json['id'],
         title: json['title'], //
