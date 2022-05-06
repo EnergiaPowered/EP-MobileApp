@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 class Article with ChangeNotifier {
-  final String id;
-  final String title;
-  final String body;
-  final String department;
-  int likesNumber;
-  int commentsNumber;
-  bool isPinned;
-  bool isLiked;
-  List<String> _comments;
+  final String? id;
+  final String? title;
+  final String? body;
+  final String? department;
+  int? likesNumber;
+  int? commentsNumber;
+  bool? isPinned;
+  bool? isLiked;
+  List<String>? _comments;
 
-  final String imageUrl;
+  final String? imageUrl;
 
   Article({
     this.id,
@@ -26,13 +26,13 @@ class Article with ChangeNotifier {
   });
 
   List<String> get comments {
-    return _comments;
+    return _comments!;
   }
 
   Future<void> writeComment() async {}
   void toggleLike()  {
    
-    isLiked = !isLiked;
+    isLiked = !isLiked!;
     print(isLiked);
     print(id);
     notifyListeners();

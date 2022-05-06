@@ -15,9 +15,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<Profile> {
-  ProfileViewModel profileViewModel;
+  ProfileViewModel? profileViewModel;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentUid = FirebaseAuth.instance.currentUser!.email!.substring(2, 13);
   var firstName = "neme";
   var lastName = "name";
   var imageUrl = "NULL";
@@ -31,10 +31,11 @@ class _ProfileWidgetState extends State<Profile> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          firstName = documentSnapshot.data()['first_name'];
-          lastName = documentSnapshot.data()['last_name'];
-          imageUrl = documentSnapshot.data()['image_url'];
-          bio = documentSnapshot.data()['bio'];
+          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          firstName = data['first_name'];
+          lastName = data['last_name'];
+          imageUrl = data['image_url'];
+          bio = data['bio'];
         });
       } else {}
     });

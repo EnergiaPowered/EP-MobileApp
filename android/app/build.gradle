@@ -15,16 +15,16 @@ def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
 }
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+// apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+// apply plugin: 'com.google.gms.google-services'
 
 def keystoreProperties = new Properties()
    def keystorePropertiesFile = rootProject.file('key.properties')

@@ -4,9 +4,9 @@ import 'package:energia_app/services/App.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  final String playerId;
+  final String? playerId;
 
-  const SplashScreen({Key key, @required this.playerId}) : super(key: key);
+  const SplashScreen({Key? key, @required this.playerId}) : super(key: key);
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => App(
-            playerId: widget.playerId,
+            playerId: widget.playerId!,
           ),
         ),
       ),
@@ -84,14 +84,14 @@ class _SplashScreenState extends State<SplashScreen> {
                           'Copyright © Energia Powered',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyText2!
                               .copyWith(fontSize: 17, color: Colors.white),
                         ),
                         Text(
                           'All Rights Reserved',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyText2!
                               .copyWith(fontSize: 17, color: Colors.white),
                         ),
                       ],

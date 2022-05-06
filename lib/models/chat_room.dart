@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
 class ChatRoom {
-  final String id;
-  final String title;
-  final String lastMsg;
-  final String lastMsgAutherId;
-  final int date;
-  final String member1Id;
-  final String member2Id;
-  final String member1ImgUrl;
-  final String member2ImgUrl;
+  final String? id;
+  final String? title;
+  final String? lastMsg;
+  final String? lastMsgAutherId;
+  final int? date;
+  final String? member1Id;
+  final String? member2Id;
+  final String? member1ImgUrl;
+  final String? member2ImgUrl;
 
   ChatRoom({
     @required this.id,

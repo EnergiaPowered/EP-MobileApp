@@ -17,16 +17,18 @@ class SendImage extends StatefulWidget {
   final otherUid;
   SendImage(this.currentUid,this.channelId,this.currentEmail,this.otherUid);
   @override
-  _SendImageState createState() => _SendImageState(channelId,currentEmail);
+  _SendImageState createState() => _SendImageState();
 }
 
 class _SendImageState extends State<SendImage> {
+  // String? channelId;
+  // String? currentEmail;
   var channelId, currentEmail;
 
-  _SendImageState(this.channelId, this.currentEmail);
+  // _SendImageState(this.channelId, this.currentEmail);
 
   var appcolor = Color(0xFF03144c);
-  File sendImageFile;
+  File? sendImageFile;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   String playerId = "";
@@ -54,10 +56,10 @@ class _SendImageState extends State<SendImage> {
       await picker.getImage(source: ImageSource.gallery).then((image) {
         setState(() {
           if (Image == null) {
-            Toast.show('No Image Selected', context);
+            Toast.show('No Image Selected'/*, context*/);
           } else {
             //Toast.show(image.path, context);
-            checkPhoto(image.path);
+            checkPhoto(image!.path);
           }
         });
       });
@@ -187,15 +189,22 @@ class _SendImageState extends State<SendImage> {
 
     HelpFun().startLoading(context);
 
+    FirebaseStorage storage = FirebaseStorage.instance;
 
-    StorageReference firebaseStorageRef = FirebaseStorage.instance
-        .ref()
-        .child('${auth.currentUser.uid}/chats')
-        .child(channelId)
+    Reference firebaseStorageRef = storage.ref()
+        .child('${auth.currentUser!.uid}/chats')
+        .child(channelId!)
         .child(DateTime.now().toString());
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(File(path));
 
-    await uploadTask.onComplete;
+
+    // StorageReference firebaseStorageRef = FirebaseStorage.instance
+    //     .ref()
+    //     .child('${auth.currentUser!.uid}/chats')
+    //     .child(channelId!)
+    //     .child(DateTime.now().toString());
+    UploadTask uploadTask = firebaseStorageRef.putFile(File(path));
+
+    await uploadTask;
     final url = await firebaseStorageRef.getDownloadURL();
 
         firestore

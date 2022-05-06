@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class Comment with ChangeNotifier {
-  final String comment;
-  final String articleId;
-  final String userPhoto;
-  final String name;
+  final String? comment;
+  final String? articleId;
+  final String? userPhoto;
+  final String? name;
   
 
   Comment({

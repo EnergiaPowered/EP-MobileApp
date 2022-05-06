@@ -4,9 +4,9 @@ import '../widgets/localdrawer.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
   static const routPage = '/articledetailsscreen';
-  final ArticleModel articleModel;
+  final ArticleModel? articleModel;
 
-  const ArticleDetailsScreen({Key key, this.articleModel}) : super(key: key);
+  const ArticleDetailsScreen({Key? key, this.articleModel}) : super(key: key);
 
   @override
   _ArticleDetailsScreenState createState() => _ArticleDetailsScreenState();
@@ -41,7 +41,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
           ),
         ),
         title: Text("Article Details",
-            style: Theme.of(context).appBarTheme.textTheme.headline6),
+            style: Theme.of(context).appBarTheme.textTheme!.headline6),
         centerTitle: true,
       ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -173,14 +173,14 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                             height: 10,
                           ),
                           Text(
-                            'Title:${widget.articleModel.title}',
+                            'Title:${widget.articleModel!.title}',
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Text(
-                            'Content:${widget.articleModel.body}',
+                            'Content:${widget.articleModel!.body}',
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                           SizedBox(

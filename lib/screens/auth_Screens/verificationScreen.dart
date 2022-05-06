@@ -4,14 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:toast/toast.dart';
 
 class VerificationScreen extends StatefulWidget {
-  final String phone, email, fname, lname, password, imageUrl;
+  final String? phone, email, fname, lname, password, imageUrl;
 
   const VerificationScreen(
-      {Key key,
+      {Key? key,
       @required this.phone,
       @required this.email,
       @required this.fname,
@@ -28,8 +28,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   bool isCodeSent = false;
-  String _verificationId;
-  String otp;
+  String? _verificationId;
+  String? otp;
 
   @override
   void initState() {
@@ -101,27 +101,27 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               (Route<dynamic> route) => false);
         } else {
-          Toast.show("Error validating OTP, try again", context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+          Toast.show("Error validating OTP, try again"/*, context*/,
+              duration: Toast.lengthShort, gravity: Toast.top);
         }
       }).catchError((error) {
-        Toast.show("Try again in sometime", context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+        Toast.show("Try again in sometime"/*, context*/,
+            duration: Toast.lengthShort, gravity: Toast.top);
       });
     };
 
     // Phone Verification Failed ........................
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException authException) {
-      Toast.show(authException.message, context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+      Toast.show(authException.message!/*, context*/,
+          duration: Toast.lengthShort, gravity: Toast.top);
       setState(() {
         isCodeSent = false;
       });
     };
     // Phone Code Sent ........................
     final PhoneCodeSent codeSent =
-        (String verificationId, [int forceResendingToken]) async {
+        (String verificationId, [int? forceResendingToken]) async {
       _verificationId = verificationId;
       setState(() {
         _verificationId = verificationId;
@@ -152,12 +152,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
 // Phone Verification Completed on Manually Submission........................
   void _onFormSubmitted() async {
     AuthCredential _authCredential = PhoneAuthProvider.credential(
-        verificationId: _verificationId, smsCode: otp);
+        verificationId: _verificationId!, smsCode: otp!);
 
     auth.signInWithCredential(_authCredential).then((value) {
       if (value.user != null) {
         // Handle loogged in state
-        print(value.user.phoneNumber);
+        print(value.user!.phoneNumber);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -165,12 +165,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ),
             (Route<dynamic> route) => false);
       } else {
-        Toast.show("Error validating OTP, try again", context,
-            duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+        Toast.show("Error validating OTP, try again"/*, context*/,
+            duration: Toast.lengthShort, gravity: Toast.top);
       }
     }).catchError((error) {
-      Toast.show("Something went wrong", context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+      Toast.show("Something went wrong"/*, context*/,
+          duration: Toast.lengthShort, gravity: Toast.top);
     });
   }
 
@@ -226,7 +226,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
+                            .headline6!
                             .copyWith(fontSize: 18, color: kWhiteColor),
                       ),
                     ),
@@ -237,19 +237,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 Text(
                   'Enter your code',
-                  style: Theme.of(context).textTheme.headline5.copyWith(
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.bold, color: kWhiteColor),
                 ),
                 Text(
                   '******',
-                  style: Theme.of(context).textTheme.headline4.copyWith(
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
                       fontWeight: FontWeight.bold, color: kLightLightBlue),
                 ),
                 Text(
                   'We have sent you a SMS \nwith 6 digit verification code',
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle1
+                      .subtitle1!
                       .copyWith(color: klightgrey),
                   textAlign: TextAlign.center,
                 ),
@@ -265,31 +265,36 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         height: size.height * 0.1,
 
                         child: Center(
-                          child: PinCodeFields(
+                          child: 
+                         PinCodeTextField(
+                           appContext: context,
+                           onChanged: (value){},
                             keyboardType: TextInputType.number,
-                            borderColor: kgrey,
+                            pinTheme: PinTheme(
                             fieldWidth: 10,
+                            ),
                             length: 6,
                             textStyle: Theme.of(context)
                                 .textTheme
-                                .headline4
+                                .headline4!
                                 .copyWith(color: kWhiteColor),
                             animationDuration:
                                 const Duration(milliseconds: 100),
                             animationCurve: Curves.easeInOut,
-                            switchInAnimationCurve: Curves.easeIn,
-                            switchOutAnimationCurve: Curves.easeOut,
-                            animation: Animations.SlideInDown,
-                            onComplete: (output) {
+                            // switchInAnimationCurve: Curves.easeIn,
+                            // switchOutAnimationCurve: Curves.easeOut,
+                            animationType: AnimationType.slide,
+                            // animationType,: Animations.SlideInDown,
+                            onCompleted: (output) {
                               setState(() {
                                 otp = output;
                               });
-                              if (otp.length == 6) {
+                              if (otp!.length == 6) {
                                 _onFormSubmitted();
                               } else {
-                                Toast.show("Invalid OTP", context,
-                                    duration: Toast.LENGTH_SHORT,
-                                    gravity: Toast.TOP);
+                                Toast.show("Invalid OTP"/*, context*/,
+                                    duration: Toast.lengthShort,
+                                    gravity: Toast.top);
                               }
                               print(output);
                             },
@@ -327,16 +332,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         side: BorderSide(color: Colors.grey)),
                     color: kWhiteColor,
                     onPressed: () {
-                      if (otp.length == 6) {
+                      if (otp!.length == 6) {
                         _onFormSubmitted();
                       } else {
-                        Toast.show("Invalid OTP", context,
-                            duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+                        Toast.show("Invalid OTP"/*, context*/,
+                            duration: Toast.lengthShort, gravity: Toast.top);
                       }
                     },
                     child: Text(
                       'Verify',
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: kdarkBlue, fontWeight: FontWeight.bold),
                     ),
                     padding: EdgeInsets.all(20),
@@ -352,7 +357,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         "I didn't receive a code !",
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
+                            .headline6!
                             .copyWith(fontSize: 18, color: kgrey),
                       ),
                       GestureDetector(
@@ -364,7 +369,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             'Resend',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(fontSize: 20, color: kWhiteColor),
                           ),
                         ),

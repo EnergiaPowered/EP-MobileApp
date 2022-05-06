@@ -8,11 +8,11 @@ enum MessageType {
 }
 
 class MessageItem extends StatelessWidget {
-  final String text;
-  final String uid;
-  final int timestamp;
-  final Key key;
-  final String type;
+  final String? text;
+  final String? uid;
+  final int? timestamp;
+  final Key? key;
+  final String? type;
   MessageItem({
     @required this.text,
     @required this.uid,
@@ -40,7 +40,7 @@ class MessageItem extends StatelessWidget {
                       : CrossAxisAlignment.end,
                   children: [
                     Text(
-                      text,
+                      text!,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 20,
@@ -51,7 +51,7 @@ class MessageItem extends StatelessWidget {
                       padding: EdgeInsets.all(7.0),
                       child: Text(
                         DateFormat('jm').format(
-                          DateTime.fromMillisecondsSinceEpoch(timestamp),
+                          DateTime.fromMillisecondsSinceEpoch(timestamp!),
                         ),
                         style: TextStyle(
                             fontSize: 12,
@@ -77,7 +77,7 @@ class MessageItem extends StatelessWidget {
                               uid == 'me' ? Radius.circular(10) : Radius.zero,
                         ),
                         child: Image.network(
-                          text,
+                          text!,
                           scale: 0.5,
                           fit: BoxFit.cover,
                           width: MediaQuery.of(ctx).size.width * 3 / 5,
@@ -95,7 +95,7 @@ class MessageItem extends StatelessWidget {
                         padding: EdgeInsets.all(5.0),
                         child: Text(
                           DateFormat('jm').format(
-                            DateTime.fromMillisecondsSinceEpoch(timestamp),
+                            DateTime.fromMillisecondsSinceEpoch(timestamp!),
                           ),
                           style: TextStyle(
                             fontSize: 12,

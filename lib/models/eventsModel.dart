@@ -1,15 +1,15 @@
 class EventModel {
-  final String id;
+  final String? id;
 
-  final String image;
-  final String name;
-  final String startDate;
-  final String endDate;
-  final String status;
-  final String eventDescription;
-  final String eventLocation;
-  final String eventOrganizer;
-  final String v;
+  final String? image;
+  final String? name;
+  final String? startDate;
+  final String? endDate;
+  final String? status;
+  final String? eventDescription;
+  final String? eventLocation;
+  final String? eventOrganizer;
+  final String? v;
 
   EventModel(
       {this.id,

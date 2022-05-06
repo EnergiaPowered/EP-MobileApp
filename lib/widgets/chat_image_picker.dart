@@ -16,10 +16,10 @@ class _ChatImagePickerState extends State<ChatImagePicker> {
     await picker.getImage(source: ImageSource.gallery).then((image) {
       setState(() {
         if (Image == null) {
-          Toast.show('No Image Selected', context);
+          Toast.show('No Image Selected'/*,  context*/);
         } else {
           //Toast.show(image.path, context);
-          widget.sendImage(image.path, MessageType.IMAGE);
+          widget.sendImage(image!.path, MessageType.IMAGE);
         }
       });
     });

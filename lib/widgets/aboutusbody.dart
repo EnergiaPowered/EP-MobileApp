@@ -55,7 +55,7 @@ class AboutUsBody extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .merge(TextStyle(color: Colors.white)),
                 ),
               ),
@@ -67,7 +67,7 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.whoAreWe,
+                aboutObj.whoAreWe!,
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -76,7 +76,7 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.vision,
+                aboutObj.vision!,
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -85,7 +85,7 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.mission,
+                aboutObj.mission!,
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -95,7 +95,7 @@ class AboutUsBody extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.network(
-                    aboutObj.structureUrl,
+                    aboutObj.structureUrl!,
                     filterQuality: FilterQuality.medium,
                     fit: BoxFit.fill,
                     height: MediaQuery.of(context).size.height / 2,

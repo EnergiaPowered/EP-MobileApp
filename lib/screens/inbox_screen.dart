@@ -26,7 +26,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   var channelId = '123';
-  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentUid = FirebaseAuth.instance.currentUser!.email!.substring(2, 13);
   var currentEmail;
 
   var adminUid;
@@ -40,7 +40,7 @@ class _InBoxMessagesState extends State<InBoxMessages> {
   String playerId = "";
 
   Future<void> initData() async {
-    currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+    currentUid = FirebaseAuth.instance.currentUser!.email!.substring(2, 13);
     firestore
         .collection('admin')
         .doc("admin")
@@ -48,8 +48,9 @@ class _InBoxMessagesState extends State<InBoxMessages> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          adminUid = documentSnapshot.data()['uid'];
-          adminEmail = documentSnapshot.data()['Email'];
+          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          adminUid = data['uid'];
+          adminEmail = data['Email'];
         });
       } else {}
     }).whenComplete(() {
@@ -60,13 +61,14 @@ class _InBoxMessagesState extends State<InBoxMessages> {
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           setState(() {
+            Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
             /// = documentSnapshot.id;
-            currentEmail = documentSnapshot.data()['Email'];
-             final firstName = documentSnapshot.data()['first_name'];
-            final lastName = documentSnapshot.data()['last_name'];
+            currentEmail = data['Email'];
+             final firstName = data['first_name'];
+            final lastName = data['last_name'];
             name = "$firstName $lastName";
-            phone = documentSnapshot.data()['phone'];
-            imgUrl = documentSnapshot.data()['image_url'];
+            phone = data['phone'];
+            imgUrl = data['image_url'];
           });
         } else {}
       });
@@ -147,25 +149,26 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                       child: new ListView(
                         reverse: true,
                         children:
-                            snapshot.data.docs.map((DocumentSnapshot document) {
-                          //
+                            snapshot.data!.docs.map((DocumentSnapshot document) {
 
-                          return document.data()['type'] == 'text'
+                          Map<String,dynamic> data = document.data() as Map<String,dynamic>;
+
+                          return data['type'] == 'text'
                               ? drowNewMessage(
-                                  document.data()['message'],
-                                  document.data()['sederEmail'],
-                                  document.data()['data'],
+                                  data['message'],
+                                  data['sederEmail'],
+                                  data['data'],
                                 )
-                              : document.data()['type'] == 'image'
+                              : data['type'] == 'image'
                                   ? drowNewImage(
-                                      document.data()['message'],
-                                      document.data()['sederEmail'],
-                                      document.data()['data'],
+                                      data['message'],
+                                      data['sederEmail'],
+                                      data['data'],
                                     )
                                   : Drowsticars(
-                                      document.data()['message'],
-                                      document.data()['sederEmail'],
-                                      document.data()['data'],
+                                      data['message'],
+                                      data['sederEmail'],
+                                      data['data'],
                                     );
                         }).toList(),
                       ),

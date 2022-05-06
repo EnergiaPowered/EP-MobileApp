@@ -8,7 +8,7 @@ class ProfileViewModel {
   var baseUrl = 'https://energia21.herokuapp.com';
 
   Future<List<EventModel>> getEvents() async {
-    var response = await http.get('$baseUrl/events');
+    var response = await http.get(Uri.parse('$baseUrl/events'));
 
     List<EventModel> eventList = [];
 
@@ -30,7 +30,7 @@ class ProfileViewModel {
   }
 
   Future<List<ArticleModel>> getArticles() async {
-    var response = await http.get('$baseUrl/blogs');
+    var response = await http.get(Uri.parse('$baseUrl/blogs'));
 
     List<ArticleModel> blogs = [];
     if (response.statusCode == 200) {

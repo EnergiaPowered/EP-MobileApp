@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CommentWidget extends StatelessWidget {
-  final String image;
-  final String comment;
-  final String name;
+  final String? image;
+  final String? comment;
+  final String? name;
   CommentWidget({this.image, this.comment, this.name});
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class CommentWidget extends StatelessWidget {
           CircleAvatar(
             radius: 26,
             //child: Image.network(image),
-            backgroundImage: NetworkImage(image),
+            backgroundImage: NetworkImage(image!),
           ),
           Container(
             margin: EdgeInsets.only(left: 5),
@@ -28,14 +28,14 @@ class CommentWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name,
+                    Text(name!,
                         style:
-                            Theme.of(context).appBarTheme.textTheme.headline6),
+                            Theme.of(context).appBarTheme.textTheme!.headline6),
                     Padding(
                         padding: const EdgeInsets.only(
                             left: 13.0, right: 13, top: 2),
                         child: Text(
-                          comment,
+                          comment!,
                           style: TextStyle(
                             color: Colors.black,
                           ),

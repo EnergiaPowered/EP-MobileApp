@@ -8,8 +8,8 @@ class ChatRoomItem extends StatelessWidget {
   ChatRoomItem(this.room);
   String get roomImgUrl {
     if (room.member1Id == 'me') // change with user id
-      return room.member1ImgUrl;
-    return room.member2ImgUrl;
+      return room.member1ImgUrl!;
+    return room.member2ImgUrl!;
   }
 
   @override
@@ -46,7 +46,7 @@ class ChatRoomItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      room.title,
+                      room.title!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -58,7 +58,7 @@ class ChatRoomItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        room.lastMsg,
+                        room.lastMsg!,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.grey, fontSize: 18),

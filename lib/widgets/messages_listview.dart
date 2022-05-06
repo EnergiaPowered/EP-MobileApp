@@ -19,7 +19,7 @@ class _MessaagesListViewState extends State<MessaagesListView> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: StreamBuilder(
         stream: chatRef,
-        builder: (ctx, snapshot) {
+        builder: (ctx, AsyncSnapshot snapshot) {
           if (snapshot == null) {
             return Center(
               child: Text('Empty chat'),
@@ -31,7 +31,7 @@ class _MessaagesListViewState extends State<MessaagesListView> {
             );
           }
           print(snapshot.data.toString());
-          final msgs = snapshot.data.documents;
+          final msgs = snapshot.data!.documents;
           return msgs.length == 0
               ? Center(
                   child: Text('No Messages!, type a message :) '),

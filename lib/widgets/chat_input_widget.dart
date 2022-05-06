@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker/emoji_picker.dart';
+// import 'package:emoji_picker/emoji_picker.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' ;
 import 'package:energia_app/widgets/send_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -65,12 +66,16 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
 
   Widget get _emojiPicker {
     return EmojiPicker(
-      rows: 3,
+      config: Config(
+      //rows: 3,
       columns: 7,
       buttonMode: ButtonMode.MATERIAL,
-      recommendKeywords: ["racing", "horse"],
-      numRecommended: 10,
-      onEmojiSelected: (emoji, category) {
+      //recommendKeywords: ["racing", "horse"],
+      //numRecommended: 10,
+
+      ),
+      
+      onEmojiSelected: (category, emoji) {
         setState(() {
           _textMessage += emoji.emoji;
           _textController.text = _textMessage;

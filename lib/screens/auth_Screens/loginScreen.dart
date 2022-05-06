@@ -23,9 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool phoneValid = true;
   bool passValid = true;
-  String phone;
-  String password;
-  String playerId = '';
+  String? phone;
+  String? password;
+  String? playerId = '';
 
   void obscureFuncton() {
     setState(() {
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     print(':::::::::::::::${widget.playerID}');
-    initOneSignal();
+    // initOneSignal();
     super.initState();
   }
 
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6
+                              .headline6!
                               .copyWith(fontSize: 30, color: kWhiteColor)),
                     ],
                   ),
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyText2!
                               .copyWith(fontSize: 16, color: kWhiteColor)),
                     ],
                   ),
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Login'.toUpperCase(),
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline4
+                                      .headline4!
                                       .copyWith(
                                           color: kdarkBlue,
                                           fontWeight: FontWeight.bold),
@@ -221,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline6
+                                        .headline6!
                                         .copyWith(fontSize: 18),
                                     decoration: InputDecoration(
                                       hintText: 'Mobile Number',
@@ -231,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       border: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: kWhiteColor),
+                                            BorderSide(color: kWhiteColor!),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(25.0)),
                                       ),
@@ -250,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               'Enter your 11-digits phone number ',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyText1!
                                                   .copyWith(
                                                       fontSize: 13,
                                                       color: Colors.red[800]),
@@ -287,7 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline6
+                                        .headline6!
                                         .copyWith(fontSize: 18),
                                     decoration: InputDecoration(
                                       hintText: 'Password',
@@ -305,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           onPressed: () => obscureFuncton()),
                                       border: OutlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: kWhiteColor),
+                                            BorderSide(color: kWhiteColor!),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(25.0)),
                                       ),
@@ -325,7 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               'Enter at least 8 characters',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1
+                                                  .bodyText1!
                                                   .copyWith(
                                                       fontSize: 13,
                                                       color: Colors.red[800]),
@@ -389,16 +389,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     try {
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
-                                              email: phone, password: password)
+                                              email: phone!, password: password!)
                                           .then((value) {
                                         if (value.user != null) {
-                                          shared(value.user.displayName);
-                                          Notifications notifications =
-                                              new Notifications();
-                                          notifications.postNotification(
-                                              'Welcome back',
-                                              'We wish you a useful time \n Energia Team',
-                                              playerId);
+                                          shared(value.user!.displayName!);
+                                          // Notifications notifications =
+                                          //     new Notifications();
+                                          // notifications.postNotification(
+                                          //     'Welcome back',
+                                          //     'We wish you a useful time \n Energia Team',
+                                          //     playerId!);
                                         }
                                       });
 
@@ -424,7 +424,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     } on PlatformException catch (e) {
                                       print(e.toString() + ' PlatformError');
                                     } catch (e) {
-                                      print(e + ' Catched error');
+                                      print('$e Catched error');
                                     }
                                   } else if (phone == null &&
                                       password != null) {
@@ -447,7 +447,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Login',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline6
+                                      .headline6!
                                       .copyWith(
                                           color: kWhiteColor,
                                           fontWeight: FontWeight.bold),
@@ -467,7 +467,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       "You don't have an account?",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline6
+                                          .headline6!
                                           .copyWith(
                                               fontSize: 18, color: kblack),
                                     ),
@@ -477,7 +477,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SignUpScreen(playerId)),
+                                                  SignUpScreen(playerId!)),
                                           (Route<dynamic> route) => false,
                                         );
                                       },
@@ -488,7 +488,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           'Sign Up',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1
+                                              .bodyText1!
                                               .copyWith(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -520,21 +520,21 @@ class _LoginScreenState extends State<LoginScreen> {
     await preferences.setString('userName', userName);
   }
 
-  void initOneSignal() async {
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  // void initOneSignal() async {
+  //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
-      OSiOSSettings.autoPrompt: false,
-      OSiOSSettings.inAppLaunchUrl: false
-    });
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  //   OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
+  //     OSiOSSettings.autoPrompt: false,
+  //     OSiOSSettings.inAppLaunchUrl: false
+  //   });
+  //   OneSignal.shared
+  //       .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
-    playerId = status.subscriptionStatus.userId;
-    setState(() {
-      playerId = playerId;
-    });
-    print("playerId: $playerId");
-  }
+  //   var status = await OneSignal.shared.getPermissionSubscriptionState();
+  //   playerId = status.subscriptionStatus.userId;
+  //   setState(() {
+  //     playerId = playerId;
+  //   });
+  //   print("playerId: $playerId");
+  // }
 }

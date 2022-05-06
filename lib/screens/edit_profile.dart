@@ -15,12 +15,12 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  File _pickedProfileImage;
+  File? _pickedProfileImage;
 
   bool inputChanged = false;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentUid = FirebaseAuth.instance.currentUser!.email!.substring(2, 13);
 
   var firstName = "name";
   var lastName = "name";
@@ -55,13 +55,13 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
   void _pickImage() async {
     // ignore: deprecated_member_use
-    final pickedImageFile = await ImagePicker.pickImage(
+    final _picker = ImagePicker();
+    final pickedImageFile = await _picker.pickImage(
         source: ImageSource.gallery, imageQuality: 20);
     setState(() {
-      _pickedProfileImage = pickedImageFile;
+      _pickedProfileImage = File(pickedImageFile!.path) ;
     });
   }
 
@@ -74,11 +74,12 @@ class _EditProfileState extends State<EditProfile> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          fristNameControler.text = documentSnapshot.data()['first_name'];
-          lastNameControler.text = documentSnapshot.data()['last_name'];
-          imageUrl = documentSnapshot.data()['image_url'];
-          bioControler.text = documentSnapshot.data()['bio'];
-          emailControler.text = documentSnapshot.data()['email'];
+          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          fristNameControler.text = data['first_name'];
+          lastNameControler.text = data['last_name'];
+          imageUrl = data['image_url'];
+          bioControler.text = data['bio'];
+          emailControler.text = data['email'];
         });
       } else {}
     }).whenComplete(() {
@@ -116,12 +117,12 @@ class _EditProfileState extends State<EditProfile> {
                   icon: Icon(Icons.done),
                   onPressed: () {
                     if (!inputChanged && _pickedProfileImage == null) {
-                      Toast.show("Data not changed", context,
-                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                      Toast.show("Data not changed"/*, context*/,
+                          duration: Toast.lengthShort, gravity: Toast.bottom);
                     } else {
                       HelpFun().startLoading(context);
                       if (_pickedProfileImage != null) {
-                        uploadImage(_pickedProfileImage);
+                        uploadImage(_pickedProfileImage!);
                       } else {
                         _sendToServer(imageUrl);
                       }
@@ -191,14 +192,21 @@ class _EditProfileState extends State<EditProfile> {
                   CircleAvatar(
                     radius: 62,
                     backgroundColor: const Color(0xFF03144c),
-                    child: CircleAvatar(
+                    child: _pickedProfileImage != null ? CircleAvatar(
                       radius: 60,
-                      backgroundImage: _pickedProfileImage != null
-                          ? FileImage(_pickedProfileImage)
+                      backgroundImage: FileImage(_pickedProfileImage!)
+                     /* _pickedProfileImage != null
+                          ? FileImage(_pickedProfileImage!)
                           : (imageUrl != "NULL" && imageUrl != null)
-                              ? NetworkImage(imageUrl)
-                              : AssetImage("assets/images/user.png"),
-                    ),
+                              ? NetworkImage(imageUrl):
+                              AssetImage("assets/images/user.png")*/
+                    ): (imageUrl != "NULL" && imageUrl != null)? CircleAvatar(
+                      radius: 60,
+                      backgroundImage: NetworkImage(imageUrl)
+                      ): CircleAvatar(
+                      radius: 60,
+                      backgroundImage:  AssetImage("assets/images/user.png")
+                      ) ,
                   ),
                   textFieldEnable
                       ? Positioned(
@@ -252,19 +260,24 @@ class _EditProfileState extends State<EditProfile> {
       'bio': bioControler.text,
     }).whenComplete(() {
       HelpFun().closeLoading(context);
-      Toast.show("Data saved", context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      Toast.show("Data saved"/*, context*/,
+          duration: Toast.lengthShort, gravity: Toast.bottom);
     });
   }
 
   uploadImage(File image) async {
-    StorageReference firebaseStorageRef = FirebaseStorage.instance
-        .ref()
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference firebaseStorageRef = storage.ref()
         .child(currentUid)
         .child("profile_image")
         .child(DateTime.now().toString());
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    await uploadTask.onComplete;
+    // StorageReference firebaseStorageRef = FirebaseStorage.instance
+    //     .ref()
+    //     .child(currentUid)
+    //     .child("profile_image")
+    //     .child(DateTime.now().toString());
+    UploadTask uploadTask = firebaseStorageRef.putFile(image);
+    await uploadTask;
     final url = await firebaseStorageRef.getDownloadURL();
 
     _sendToServer(url);

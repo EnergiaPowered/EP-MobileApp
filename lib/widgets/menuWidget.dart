@@ -16,7 +16,7 @@ class MenuWidget extends StatefulWidget {
 class _MenuWidgetState extends State<MenuWidget> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  var currentUid = FirebaseAuth.instance.currentUser.email.substring(2, 13);
+  var currentUid = FirebaseAuth.instance.currentUser!.email!.substring(2, 13);
   String firstName = "";
   String lastName = "";
   var imageUrl = "NULL";
@@ -31,10 +31,11 @@ class _MenuWidgetState extends State<MenuWidget> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          firstName = documentSnapshot.data()['first_name'];
-          lastName = documentSnapshot.data()['last_name'];
-          imageUrl = documentSnapshot.data()['image_url'];
-          bio = documentSnapshot.data()['bio'];
+          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          firstName = data['first_name'];
+          lastName = data['last_name'];
+          imageUrl = data['image_url'];
+          bio = data['bio'];
         });
       } else {}
     });
@@ -126,10 +127,11 @@ class _MenuWidgetState extends State<MenuWidget> {
                   .then((DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists) {
                   setState(() {
-                    firstName = documentSnapshot.data()['first_name'];
-                    lastName = documentSnapshot.data()['last_name'];
-                    imageUrl = documentSnapshot.data()['image_url'];
-                    bio = documentSnapshot.data()['bio'];
+                    Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+                    firstName =data['first_name'];
+                    lastName =data['last_name'];
+                    imageUrl =data['image_url'];
+                    bio =data['bio'];
                   });
                 } else {}
               });

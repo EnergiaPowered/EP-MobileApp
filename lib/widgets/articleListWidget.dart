@@ -40,7 +40,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                   future: _profileViewModel.getArticles(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      articleList = snapshot.data;
+                      articleList = snapshot.data!;
                       return ListView.builder(
                           scrollDirection: widget.mainEvent? Axis.horizontal:Axis.vertical,
                           itemCount: articleList.length,
@@ -82,7 +82,7 @@ class _EventListWidgetState extends State<ArticleListWidget> {
                                               loadingBuilder:
                                                   (BuildContext context,
                                                       Widget child,
-                                                      ImageChunkEvent
+                                                      ImageChunkEvent?
                                                           loadingProgress) {
                                                 if (loadingProgress == null)
                                                   return child;

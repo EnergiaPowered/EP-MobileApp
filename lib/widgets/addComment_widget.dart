@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddComment extends StatelessWidget {
-  final String image;
-  final String name;
-  final String articleId;
-  final String phone;
+  final String? image;
+  final String? name;
+  final String? articleId;
+  final String? phone;
   AddComment({this.image, this.name, this.articleId, this.phone});
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AddComment extends StatelessWidget {
     void onSubmitt() {
       print("one step");
       articlesData.addComment(
-          _commentController.text, phone, articleId, image, name).then((value) => articlesData.fetchAndSetComments("1"));
+          _commentController.text, phone!, articleId!, image!, name!).then((value) => articlesData.fetchAndSetComments("1"));
       
     }
 

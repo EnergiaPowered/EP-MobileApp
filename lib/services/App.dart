@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import '../screens/home.dart';
 
 class App extends StatefulWidget {
-  final String playerId;
+  final String? playerId;
 
-  const App({Key key, @required this.playerId}) : super(key: key);
+  const App({Key? key, @required this.playerId}) : super(key: key);
   @override
   _AppState createState() => _AppState();
 }
@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
 
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  User _user;
+  User? _user;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _AppState extends State<App> {
   }
 
   void getCurrentUser() {
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
@@ -39,6 +39,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return _user != null ? Home() : LoginScreen(widget.playerId);
+    return _user != null ? Home() : LoginScreen(widget.playerId!);
   }
 }

@@ -33,47 +33,47 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String playerId = "ed905290-3c4a-4591-a781-893a9e42cd4d";
-  Notifications notifications;
+  // Notifications? notifications;
   ThemeData fontTheme = ThemeData(
     textTheme: ThemeData.light().textTheme.copyWith(
         // ignore: deprecated_member_use
-        title: TextStyle(color: Colors.white)),
+        titleLarge: TextStyle(color: Colors.white)),
     primaryColor: Color(0xFF21BFBD),
     appBarTheme: AppBarTheme(
         textTheme: ThemeData.light().textTheme.copyWith(
             // ignore: deprecated_member_use
-            title: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         color: Color(0xFF21BFBD),
         iconTheme: IconThemeData(color: Colors.white)),
     accentColor: Colors.deepOrange,
     fontFamily: 'Lato',
     iconTheme: IconThemeData(color: Colors.white),
   );
-  void initOneSignal() async {
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  // void initOneSignal() async {
+  //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
-      OSiOSSettings.autoPrompt: false,
-      OSiOSSettings.inAppLaunchUrl: false
-    });
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  //   OneSignal.shared.init("4aaffab3-0518-47aa-91bc-59e96cb99055", iOSSettings: {
+  //     OSiOSSettings.autoPrompt: false,
+  //     OSiOSSettings.inAppLaunchUrl: false
+  //   });
+  //   OneSignal.shared
+  //       .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
-    playerId = status.subscriptionStatus.userId;
-    setState(() {
-      playerId = playerId;
-    });
-    print("playerId: $playerId");
-  }
+  //   var status = await OneSignal.shared.getPermissionSubscriptionState();
+  //   playerId = status.subscriptionStatus.userId;
+  //   setState(() {
+  //     playerId = playerId;
+  //   });
+  //   print("playerId: $playerId");
+  // }
 
-  Widget nextPage;
+  Widget? nextPage;
   String name = '';
 
   Future<String> shared() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    return preferences.getString('userName');
+    return preferences.getString('userName')!;
   }
 
   @override
@@ -84,8 +84,8 @@ class _MyAppState extends State<MyApp> {
         name = value;
       });
     });
-    initOneSignal();
-    notifications = new Notifications();
+    // initOneSignal();
+    // notifications = new Notifications();
     super.initState();
   }
 

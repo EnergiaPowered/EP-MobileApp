@@ -46,7 +46,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           ),
         ),
         title: Text("Event Details",
-            style: Theme.of(context).appBarTheme.textTheme.headline6),
+            style: Theme.of(context).appBarTheme.textTheme!.headline6),
         centerTitle: true,
       ),
 /*----------------------------------------------------------------------------------------------------------------------------------------------- */

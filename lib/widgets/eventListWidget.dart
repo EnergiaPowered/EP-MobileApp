@@ -38,7 +38,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                     future: _profileViewModel.getEvents(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        eventList = snapshot.data;
+                        eventList = snapshot.data!;
                         return ListView.builder(
                             scrollDirection:widget.mainEvent? Axis.horizontal:Axis.vertical,
                             itemCount: eventList.length,
@@ -51,11 +51,11 @@ class _EventListWidgetState extends State<EventListWidget> {
                                           builder: (context) =>
                                               new EventDetailsScreen(
                                                   'department',
-                                                  eventList[index].startDate,
-                                                  eventList[index].eventOrganizer,
-                                                  eventList[index].eventLocation,
+                                                  eventList[index].startDate!,
+                                                  eventList[index].eventOrganizer!,
+                                                  eventList[index].eventLocation!,
                                                   eventList[index]
-                                                      .eventDescription)));
+                                                      .eventDescription!)));
                                 },
                                 child: Container(
                                     width: 260,
@@ -147,7 +147,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                   loadingBuilder:
                                                       (BuildContext context,
                                                           Widget child,
-                                                          ImageChunkEvent
+                                                          ImageChunkEvent?
                                                               loadingProgress) {
                                                     if (loadingProgress == null)
                                                       return child;

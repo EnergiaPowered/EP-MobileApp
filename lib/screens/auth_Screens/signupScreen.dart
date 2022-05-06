@@ -24,16 +24,16 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  Notifications notifications;
+  // Notifications? notifications;
   bool _obscureText = true;
-  String fname, lname, phone, phoneAsEmail, email, password;
+  String? fname, lname, phone, phoneAsEmail, email, password;
   bool fnameValid = true,
       lnameValid = true,
       phoneValid = true,
       emailValid = true,
       passwordValid = true;
-  String imageUrl;
-  File _image;
+  String? imageUrl;
+  File? _image;
   CollectionReference user = FirebaseFirestore.instance.collection('users');
 
   void obscureFuncton() {
@@ -67,9 +67,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       });
     } catch (ex) {
-      ScaffoldMessenger.maybeOf(context).showSnackBar(
+      ScaffoldMessenger.maybeOf(context)!.showSnackBar(
         SnackBar(
-          content: Text(ex.message),
+          content: Text(ex.toString()),
         ),
       );
     }
@@ -79,12 +79,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void uploadImage(context) async {
     try {
       FirebaseStorage storage =
-          FirebaseStorage(storageBucket: 'gs://energiaapp-3eaa3.appspot.com/');
-      StorageReference ref =
+          FirebaseStorage.instanceFor(bucket: 'gs://energiaapp-3eaa3.appspot.com/');
+      Reference ref =
           storage.ref().child('/profiles').child(p.basename('$phone.jpg'));
-      StorageUploadTask storageUploadTask = ref.putFile(_image);
+      UploadTask storageUploadTask = ref.putFile(_image!);
 
-      StorageTaskSnapshot taskSnapshot = await storageUploadTask.onComplete;
+      TaskSnapshot taskSnapshot = await storageUploadTask;
 
       /*  Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('success'),
@@ -95,17 +95,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         imageUrl = url;
       });
 
-      Toast.show('photo selected', context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+      Toast.show('photo selected'/*, context*/,
+          duration: Toast.lengthShort, gravity: Toast.top);
     } catch (ex) {
-      Toast.show(ex.message, context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
+      Toast.show(ex.toString()/*, context*/,
+          duration: Toast.lengthShort, gravity: Toast.top);
     }
   }
 
   @override
   void initState() {
-    notifications = new Notifications();
+    // notifications = new Notifications();
 
     super.initState();
   }
@@ -168,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme
-                          .headline6
+                          .headline6!
                           .copyWith(fontSize: 18, color: kWhiteColor),
                     ),
                   ),
@@ -181,7 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         right: 30.0, bottom: 20, top: 15, left: 30),
                     child: Text(
                       'Create Account'.toUpperCase(),
-                      style: Theme.of(context).textTheme.headline4.copyWith(
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
                           color: kWhiteColor, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -197,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         imageUrl != null
                             ? CircleAvatar(
-                                backgroundImage: NetworkImage(imageUrl),
+                                backgroundImage: NetworkImage(imageUrl!),
                                 radius: 75,
                               )
                             : Icon(Icons.account_box,
@@ -217,12 +217,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     pickImage(context);
                                   } else {
                                     Toast.show(
-                                        "Please, Enter your Phone Number first",
-                                        context,
+                                        "Please, Enter your Phone Number first"/*,
+                                        context*/,
                                         backgroundColor: Colors.red,
                                         backgroundRadius: 20,
-                                        duration: Toast.LENGTH_LONG,
-                                        gravity: Toast.TOP);
+                                        duration: Toast.lengthLong,
+                                        gravity: Toast.top);
                                   }
                                 }),
                           ),
@@ -258,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6
+                              .headline6!
                               .copyWith(fontSize: 18),
                           decoration: InputDecoration(
                             hintText: 'First Name',
@@ -267,7 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: kdarkBlue,
                             ),
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: kWhiteColor),
+                              borderSide: BorderSide(color: kWhiteColor!),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25.0)),
                             ),
@@ -285,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     'Enter your first name',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyText1!
                                         .copyWith(
                                             fontSize: 13, color: Colors.red),
                                   ),
@@ -321,7 +321,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6
+                              .headline6!
                               .copyWith(fontSize: 18),
                           decoration: InputDecoration(
                             hintText: 'Last Name',
@@ -330,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: kdarkBlue,
                             ),
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: kWhiteColor),
+                              borderSide: BorderSide(color: kWhiteColor!),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25.0)),
                             ),
@@ -348,7 +348,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     'Enter your last name',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1
+                                        .bodyText1!
                                         .copyWith(
                                             fontSize: 13, color: Colors.red),
                                   ),
@@ -392,7 +392,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .copyWith(fontSize: 18),
                   decoration: InputDecoration(
                     hintText: 'Mobile Number',
@@ -401,7 +401,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: kdarkBlue,
                     ),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: kWhiteColor),
+                      borderSide: BorderSide(color: kWhiteColor!),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
@@ -418,7 +418,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Enter your 11-digits phone number ',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(fontSize: 13, color: Colors.red),
                           ),
                         )
@@ -452,7 +452,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .copyWith(fontSize: 18),
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -461,7 +461,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: kdarkBlue,
                     ),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: kWhiteColor),
+                      borderSide: BorderSide(color: kWhiteColor!),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
@@ -478,7 +478,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Email is not valid',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(fontSize: 13, color: Colors.red),
                           ),
                         )
@@ -512,7 +512,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .copyWith(fontSize: 18),
                   decoration: InputDecoration(
                     hintText: 'Password',
@@ -527,7 +527,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         onPressed: () => obscureFuncton()),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: kWhiteColor),
+                      borderSide: BorderSide(color: kWhiteColor!),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
@@ -545,7 +545,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Password is wrong',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(fontSize: 13, color: Colors.red),
                           ),
                         )
@@ -575,25 +575,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         try {
                           var result = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
-                                  email: phoneAsEmail, password: password);
+                                  email: phoneAsEmail!, password: password!);
                           if (result != null) {
                             setUser();
-                            notifications.postNotification(
-                                "Welcome in Energia Powered",
-                                "initial notification we care about you $fname",
-                                widget.playerID);
+                            // notifications!.postNotification(
+                            //     "Welcome in Energia Powered",
+                            //     "initial notification we care about you $fname",
+                            //     widget.playerID);
                             await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(
-                                    email: phoneAsEmail, password: password);
+                                    email: phoneAsEmail!, password: password!);
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => Home()),
                               (Route<dynamic> route) => false,
                             );
                           } else {
-                            Toast.show("This number isn't exist", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.TOP);
+                            Toast.show("This number isn't exist"/*, context*/,
+                                duration: Toast.lengthShort,
+                                gravity: Toast.top);
                           }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
@@ -603,15 +603,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 '3333333333333333');
                           }
                         } catch (e) {
-                          print(e + 'dddddddddddddddddd');
+                          print(e.toString() + 'dddddddddddddddddd');
                         }
                       } else {
                         Toast.show(
-                            "Please ,Enter your data corrrectly", context,
+                            "Please ,Enter your data corrrectly"/*, context*/,
                             backgroundColor: Colors.red,
                             backgroundRadius: 20,
-                            duration: Toast.LENGTH_LONG,
-                            gravity: Toast.TOP);
+                            duration: Toast.lengthLong,
+                            gravity: Toast.top);
                         if (phone == null) {
                           setState(() {
                             phoneValid = false;
@@ -675,7 +675,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text(
                       'Register',
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: kdarkBlue, fontWeight: FontWeight.bold),
                     ),
                     padding: EdgeInsets.all(20),
@@ -692,7 +692,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         "You already have an account?",
                         style: Theme.of(context)
                             .textTheme
-                            .headline6
+                            .headline6!
                             .copyWith(fontSize: 18, color: kgrey),
                       ),
                       GestureDetector(
@@ -712,7 +712,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Sign In',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1
+                                .bodyText1!
                                 .copyWith(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

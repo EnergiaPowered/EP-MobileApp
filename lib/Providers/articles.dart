@@ -48,8 +48,8 @@ class Articles with ChangeNotifier {
   Future<void> addComment(String commenttext, String currentuserPhone,
       String myarticleId, String img, String name) async {
     String photoUrl = img;
-    final url =
-        'https://energiaapp-3eaa3.firebaseio.com/ArticlesComments/$myarticleId.json';
+    final url = Uri.parse('https://energiaapp-3eaa3.firebaseio.com/ArticlesComments/$myarticleId.json');
+        
     try {
       Comment comment = Comment(
           articleId: myarticleId, comment: commenttext, userPhoto: photoUrl);
@@ -74,13 +74,12 @@ class Articles with ChangeNotifier {
 
   Future<List<Comment>> fetchAndSetComments(String articleId) async {
     try {
-      final url =
-          'https://energiaapp-3eaa3.firebaseio.com/ArticlesComments/1.json';
+      final url = Uri.parse('https://energiaapp-3eaa3.firebaseio.com/ArticlesComments/1.json');
       final response = await http.get(url);
       final List<Comment> loadeComments = [];
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
-        return null;
+        // return null;
       }
       extractedData.forEach((articleId, comment) {
         loadeComments.add(

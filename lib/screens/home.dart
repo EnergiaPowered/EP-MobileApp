@@ -10,34 +10,41 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  GlobalKey<SliderMenuContainerState> _key =
-      new GlobalKey<SliderMenuContainerState>();
+  GlobalKey<SliderDrawerState> _key =
+      new GlobalKey<SliderDrawerState>();
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SliderMenuContainer(
+      body: SliderDrawer(
+        sliderShadow: SliderShadow(
           shadowSpreadRadius: 20,
-          drawerIconColor: Colors.white,
-          appBarColor: const Color(0xFF03144c),
-          key: _key,
-          trailing: Row(
+        ),
+          splashColor: Colors.white,
+          appBar: SliderAppBar(
+            appBarColor: const Color(0xFF03144c),
+            appBarPadding: const EdgeInsets.only(top: 30, right: 40),
+            appBarHeight: 60,
+            title: Center(
+              child: Text('Energia Powered',
+                  style: TextStyle(
+                      fontFamily: 'Lato',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+            ),
+             trailing: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
-          appBarPadding: const EdgeInsets.only(top: 30, right: 40),
-          // sliderMenuOpenOffset: 250,
-          appBarHeight: 60,
-          title: Center(
-            child: Text('Energia Powered',
-                style: TextStyle(
-                    fontFamily: 'Lato',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
           ),
-          sliderMenu: MenuWidget(),
-          sliderMain: MainHome()),
+          key: _key,
+         
+
+          // sliderMenuOpenOffset: 250,
+
+          slider: MenuWidget(),
+          child: MainHome()),
     );
   }
 }
