@@ -1,5 +1,6 @@
 import 'package:energia_app/models/aboutus.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class AboutUsBody extends StatelessWidget {
@@ -67,7 +68,7 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.whoAreWe!,
+                aboutObj.whoAreWe ?? '',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -76,7 +77,7 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.vision!,
+                aboutObj.vision ?? '',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -85,30 +86,39 @@ class AboutUsBody extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                aboutObj.mission!,
+                aboutObj.mission ?? '',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
             seperator,
             if (aboutObj.structureUrl != null) title("OUR STRUCTURE"),
             if (aboutObj.structureUrl != null)
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(
-                    aboutObj.structureUrl!,
-                    filterQuality: FilterQuality.medium,
-                    fit: BoxFit.fill,
-                    height: MediaQuery.of(context).size.height / 2,
-                    width: double.infinity,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  )),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PhotoView(
+                            imageProvider:
+                                NetworkImage(aboutObj.structureUrl ?? ''),
+                            //CachedNetworkImageProvider
+                          )));
+                },
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      aboutObj.structureUrl ?? '',
+                      filterQuality: FilterQuality.medium,
+                      fit: BoxFit.fitWidth,
+                      width: double.infinity,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    )),
+              ),
           ],
         ),
       ),

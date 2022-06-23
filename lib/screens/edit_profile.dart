@@ -55,13 +55,14 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
   void _pickImage() async {
     // ignore: deprecated_member_use
     final _picker = ImagePicker();
-    final pickedImageFile = await _picker.pickImage(
-        source: ImageSource.gallery, imageQuality: 20);
+    final pickedImageFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     setState(() {
-      _pickedProfileImage = File(pickedImageFile!.path) ;
+      _pickedProfileImage = File(pickedImageFile!.path);
     });
   }
 
@@ -74,7 +75,8 @@ class _EditProfileState extends State<EditProfile> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          Map<String, dynamic> data =
+              documentSnapshot.data() as Map<String, dynamic>;
           fristNameControler.text = data['first_name'];
           lastNameControler.text = data['last_name'];
           imageUrl = data['image_url'];
@@ -111,13 +113,14 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF03144C),
         actions: [
           textFieldEnable
               ? IconButton(
                   icon: Icon(Icons.done),
                   onPressed: () {
                     if (!inputChanged && _pickedProfileImage == null) {
-                      Toast.show("Data not changed"/*, context*/,
+                      Toast.show("Data not changed" /*, context*/,
                           duration: Toast.lengthShort, gravity: Toast.bottom);
                     } else {
                       HelpFun().startLoading(context);
@@ -192,21 +195,24 @@ class _EditProfileState extends State<EditProfile> {
                   CircleAvatar(
                     radius: 62,
                     backgroundColor: const Color(0xFF03144c),
-                    child: _pickedProfileImage != null ? CircleAvatar(
-                      radius: 60,
-                      backgroundImage: FileImage(_pickedProfileImage!)
-                     /* _pickedProfileImage != null
+                    child: _pickedProfileImage != null
+                        ? CircleAvatar(
+                            radius: 60,
+                            backgroundImage: FileImage(_pickedProfileImage!)
+                            /* _pickedProfileImage != null
                           ? FileImage(_pickedProfileImage!)
                           : (imageUrl != "NULL" && imageUrl != null)
                               ? NetworkImage(imageUrl):
                               AssetImage("assets/images/user.png")*/
-                    ): (imageUrl != "NULL" && imageUrl != null)? CircleAvatar(
-                      radius: 60,
-                      backgroundImage: NetworkImage(imageUrl)
-                      ): CircleAvatar(
-                      radius: 60,
-                      backgroundImage:  AssetImage("assets/images/user.png")
-                      ) ,
+                            )
+                        : (imageUrl != "NULL" && imageUrl != null)
+                            ? CircleAvatar(
+                                radius: 60,
+                                backgroundImage: NetworkImage(imageUrl))
+                            : CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    AssetImage("assets/images/user.png")),
                   ),
                   textFieldEnable
                       ? Positioned(
@@ -260,14 +266,15 @@ class _EditProfileState extends State<EditProfile> {
       'bio': bioControler.text,
     }).whenComplete(() {
       HelpFun().closeLoading(context);
-      Toast.show("Data saved"/*, context*/,
+      Toast.show("Data saved" /*, context*/,
           duration: Toast.lengthShort, gravity: Toast.bottom);
     });
   }
 
   uploadImage(File image) async {
     FirebaseStorage storage = FirebaseStorage.instance;
-    Reference firebaseStorageRef = storage.ref()
+    Reference firebaseStorageRef = storage
+        .ref()
         .child(currentUid)
         .child("profile_image")
         .child(DateTime.now().toString());

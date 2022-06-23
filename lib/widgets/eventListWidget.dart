@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class EventListWidget extends StatefulWidget {
   final Size size;
   final bool mainEvent;
-  EventListWidget(this.size,this.mainEvent);
+  EventListWidget(this.size, this.mainEvent);
 
   @override
   _EventListWidgetState createState() => _EventListWidgetState();
 }
 
 class _EventListWidgetState extends State<EventListWidget> {
-  List<EventModel> eventList = [];
+  List<EventModel>? eventList = [];
   ProfileViewModel _profileViewModel = new ProfileViewModel();
 
   @override
@@ -24,7 +24,8 @@ class _EventListWidgetState extends State<EventListWidget> {
         margin: EdgeInsets.fromLTRB(5, 10, 0, 10),
         height: widget.mainEvent ? 300 : widget.size.height * 0.8,
         decoration: BoxDecoration(
-          color:  widget.mainEvent ?Theme.of(context).primaryColor : Colors.white,
+          color:
+              widget.mainEvent ? Theme.of(context).primaryColor : Colors.white,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30), topLeft: Radius.circular(30)),
         ),
@@ -38,10 +39,12 @@ class _EventListWidgetState extends State<EventListWidget> {
                     future: _profileViewModel.getEvents(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        eventList = snapshot.data!;
+                        eventList = snapshot.data;
                         return ListView.builder(
-                            scrollDirection:widget.mainEvent? Axis.horizontal:Axis.vertical,
-                            itemCount: eventList.length,
+                            scrollDirection: widget.mainEvent
+                                ? Axis.horizontal
+                                : Axis.vertical,
+                            itemCount: eventList!.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
@@ -51,17 +54,23 @@ class _EventListWidgetState extends State<EventListWidget> {
                                           builder: (context) =>
                                               new EventDetailsScreen(
                                                   'department',
-                                                  eventList[index].startDate!,
-                                                  eventList[index].eventOrganizer!,
-                                                  eventList[index].eventLocation!,
-                                                  eventList[index]
-                                                      .eventDescription!)));
+                                                  eventList![index].startDate ??
+                                                      '',
+                                                  eventList![index]
+                                                          .eventOrganizer ??
+                                                      '',
+                                                  eventList![index]
+                                                          .eventLocation ??
+                                                      '',
+                                                  eventList![index]
+                                                          .eventDescription ??
+                                                      '')));
                                 },
                                 child: Container(
                                     width: 260,
                                     height: 300,
-                                    margin:
-                                        EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 5.0),
+                                    margin: EdgeInsets.fromLTRB(
+                                        10.0, 5.0, 5.0, 5.0),
                                     child: Stack(
                                       alignment: Alignment.topCenter,
                                       children: <Widget>[
@@ -77,7 +86,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: <Widget>[
-                                              Text("${eventList[index].name}",
+                                              Text("${eventList![index].name}",
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
@@ -92,18 +101,19 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       children: <Widget>[
                                                         listitle(
-                                                            "Start Date:${eventList[index].startDate}",
+                                                            "Start Date:${eventList![index].startDate}",
                                                             Icon(Icons
                                                                 .date_range)),
                                                         listitle(
-                                                            "End Date:${eventList[index].endDate}",
+                                                            "End Date:${eventList![index].endDate}",
                                                             Icon(Icons
                                                                 .date_range)),
                                                         listitle(
-                                                            "${eventList[index].eventLocation}",
+                                                            "${eventList![index].eventLocation}",
                                                             Icon(Icons
                                                                 .location_on)),
                                                         Padding(
@@ -113,11 +123,12 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                                   left: 16.0,
                                                                   top: 8.0),
                                                           child: Text(
-                                                            "${eventList[index].status}",
+                                                            "${eventList![index].status}",
                                                             style: TextStyle(
                                                               fontSize: 17,
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                             ),
                                                           ),
                                                         ),
@@ -132,7 +143,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
-                                          child: eventList[index].image == ''
+                                          child: eventList![index].image == ''
                                               ? Image.asset(
                                                   'assets/images/image.jpg',
                                                   fit: BoxFit.cover,
@@ -140,7 +151,7 @@ class _EventListWidgetState extends State<EventListWidget> {
                                                   width: 180,
                                                 )
                                               : Image.network(
-                                                  "https://drive.google.com/uc?exort=view&id=${eventList[index].image}",
+                                                  "https://drive.google.com/uc?exort=view&id=${eventList![index].image}",
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
                                                   height: double.infinity,

@@ -10,21 +10,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  GlobalKey<SliderDrawerState> _key =
-      new GlobalKey<SliderDrawerState>();
+  GlobalKey<SliderDrawerState> _key = new GlobalKey<SliderDrawerState>();
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SliderDrawer(
-        sliderShadow: SliderShadow(
-          shadowSpreadRadius: 20,
-        ),
+          // sliderShadow: SliderShadow(
+          //   shadowSpreadRadius: 20,
+          // ),
           splashColor: Colors.white,
           appBar: SliderAppBar(
             appBarColor: const Color(0xFF03144c),
             appBarPadding: const EdgeInsets.only(top: 30, right: 40),
-            appBarHeight: 60,
+            // appBarHeight: 80,
             title: Center(
               child: Text('Energia Powered',
                   style: TextStyle(
@@ -33,13 +32,13 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
             ),
-             trailing: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-          ),
+            drawerIconColor: Colors.white,
+            // trailing: Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            // ),
           ),
           key: _key,
-         
 
           // sliderMenuOpenOffset: 250,
 

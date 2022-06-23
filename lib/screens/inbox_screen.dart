@@ -48,7 +48,8 @@ class _InBoxMessagesState extends State<InBoxMessages> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         setState(() {
-          Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+          Map<String, dynamic> data =
+              documentSnapshot.data() as Map<String, dynamic>;
           adminUid = data['uid'];
           adminEmail = data['Email'];
         });
@@ -61,10 +62,12 @@ class _InBoxMessagesState extends State<InBoxMessages> {
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           setState(() {
-            Map<String,dynamic> data = documentSnapshot.data() as Map<String,dynamic>;
+            Map<String, dynamic> data =
+                documentSnapshot.data() as Map<String, dynamic>;
+
             /// = documentSnapshot.id;
             currentEmail = data['Email'];
-             final firstName = data['first_name'];
+            final firstName = data['first_name'];
             final lastName = data['last_name'];
             name = "$firstName $lastName";
             phone = data['phone'];
@@ -120,7 +123,11 @@ class _InBoxMessagesState extends State<InBoxMessages> {
     return currentUid != null
         ? Scaffold(
             appBar: AppBar(
-              title: Text('Admins'),
+              backgroundColor: const Color(0xFF03144C),
+              title: Text(
+                'Admins',
+                style: TextStyle(fontSize: 18),
+              ),
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset('assets/images/pp.png'),
@@ -148,10 +155,10 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                     Expanded(
                       child: new ListView(
                         reverse: true,
-                        children:
-                            snapshot.data!.docs.map((DocumentSnapshot document) {
-
-                          Map<String,dynamic> data = document.data() as Map<String,dynamic>;
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data() as Map<String, dynamic>;
 
                           return data['type'] == 'text'
                               ? drowNewMessage(
@@ -173,8 +180,8 @@ class _InBoxMessagesState extends State<InBoxMessages> {
                         }).toList(),
                       ),
                     ),
-                    ChatInputWidget(
-                        channelId, currentEmail, currentUid, adminUid, name, phone, imgUrl)
+                    ChatInputWidget(channelId, currentEmail, currentUid,
+                        adminUid, name, phone, imgUrl)
                   ],
                 );
               },
@@ -182,7 +189,11 @@ class _InBoxMessagesState extends State<InBoxMessages> {
           )
         : Scaffold(
             appBar: AppBar(
-              title: Text('Admins'),
+              backgroundColor: const Color(0xFF03144C),
+              title: Text(
+                'Admins',
+                style: TextStyle(fontSize: 18),
+              ),
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset('assets/images/pp.png'),

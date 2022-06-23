@@ -5,7 +5,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/cupertino.dart';
 
 class ProfileViewModel {
-  var baseUrl = 'https://energia21.herokuapp.com';
+  var baseUrl = 'https://energia21.herokuapp.com/api';
 
   Future<List<EventModel>> getEvents() async {
     var response = await http.get(Uri.parse('$baseUrl/events'));
@@ -23,6 +23,10 @@ class ProfileViewModel {
           }
         }
       }
+      eventList.forEach((element) {
+        debugPrint(element.image);
+      });
+
       return eventList;
     } else {
       throw Exception('error');

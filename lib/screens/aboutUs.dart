@@ -15,6 +15,7 @@ class _AboutUsState extends State<AboutUs> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          backgroundColor:  const Color(0xFF03144C),
           title: Text(
             "Energia Powered",
             style: TextStyle(fontSize: 18),

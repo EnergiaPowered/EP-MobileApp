@@ -42,7 +42,8 @@ class _MyAppState extends State<MyApp> {
     appBarTheme: AppBarTheme(
         textTheme: ThemeData.light().textTheme.copyWith(
             // ignore: deprecated_member_use
-            titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            titleLarge:
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         color: Color(0xFF21BFBD),
         iconTheme: IconThemeData(color: Colors.white)),
     accentColor: Colors.deepOrange,
@@ -70,10 +71,10 @@ class _MyAppState extends State<MyApp> {
   Widget? nextPage;
   String name = '';
 
-  Future<String> shared() async {
+  Future<String?> shared() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    return preferences.getString('userName')!;
+    return preferences.getString('userName');
   }
 
   @override
@@ -81,7 +82,7 @@ class _MyAppState extends State<MyApp> {
     //
     shared().then((value) {
       setState(() {
-        name = value;
+        name = value ?? '';
       });
     });
     // initOneSignal();
@@ -105,22 +106,25 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         theme: ThemeData(
-            backgroundColor: Colors.white,
-            primaryColor: const Color(0xFF03144C),
-            textSelectionTheme: TextSelectionThemeData(selectionColor:const Color(0xFF03144c) ),
-            textTheme: TextTheme(
-                headline6: TextStyle(
+          backgroundColor: Colors.white,
+          primaryColor: const Color(0xFF03144C),
+          textSelectionTheme:
+              TextSelectionThemeData(selectionColor: const Color(0xFF03144c)),
+          textTheme: TextTheme(
+              headline6: TextStyle(
+            fontFamily: 'Lato',
+            fontSize: 36,
+            color: const Color(0xFF03144c),
+            fontWeight: FontWeight.bold,
+          )),
+          appBarTheme: AppBarTheme(
+            toolbarTextStyle: TextStyle(
               fontFamily: 'Lato',
-              fontSize: 36,
-              color: const Color(0xFF03144c),
               fontWeight: FontWeight.bold,
-            )),
-            appBarTheme: AppBarTheme(
-                textTheme: TextTheme(
-                    headline6: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.bold,
-            )))),
+            ),
+          ),
+        ),
+
         debugShowCheckedModeBanner: false,
         home: SplashScreen(
           playerId: playerId,
